@@ -21,12 +21,30 @@
 
 'use strict';
 
-const applicationServerPublicKey = '<Your Public Key>';
+const applicationServerPublicKey = 'BGaEzLT02R43XfHtBdcv2QtAwdW55_WFTpN1qTZUyTfkPJeUdoGFq-9aH6DNdyzbrHkDxLCJdHFdeSfwhQy0NPY';
 
 const pushButton = document.querySelector('.js-push-btn');
 
 let isSubscribed = false;
 let swRegistration = null;
+
+if ('serviceWorker' in navigator && 'PushManager' in window) {
+  console.log('Service Worker and Push is Supported')
+
+  navigator.serviceWorker.register('sw.js')
+    .then((swReg) => {
+      console.log('Service Worker is registered', swReg)
+
+      swRegistration = swReg
+      initializeUI()
+    })
+    .catch((err) => {
+      console.log(`Service worker Error: ${err}`)
+    })
+} else {
+  console.warn('Servicee worker is not supported')
+  pushButton.textContent = 'Push Not Supported'
+}
 
 function urlB64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -41,4 +59,104 @@ function urlB64ToUint8Array(base64String) {
     outputArray[i] = rawData.charCodeAt(i);
   }
   return outputArray;
+}
+
+function initializeUI() {
+  pushButton.addEventListener('click', (evt) => {
+    pushButton.disabled = true
+    if (isSubscribed) {
+      // 取消订阅的操作
+      unsubscribeUser()
+    } else {
+      subscribeUser() // 如果没有订阅 问用户要不要订阅
+    }
+  })
+
+  // Set the initial subscription value
+  swRegistration.pushManager.getSubscription()
+    .then((subscription) => {
+      isSubscribed = !(subscription === null)
+
+      updateSubscriptionOnServer(subscription);
+
+      if (isSubscribed) {
+        console.log('User IS subscribed')
+      } else {
+        console.log('User is Not subsribed')
+      }
+
+      updateBtn()
+    })
+}
+
+function updateBtn() {
+  if (Notification.permission === 'denied') {// status 会有三个取值default granted denied 分别代表： 默认值（每次访问页面都询问）、 允许、拒绝
+    pushButton.textContent = 'Push Messaging Blocked.';
+    pushButton.disabled = true;
+    updateSubscriptionOnServer(null);
+    return;
+  }
+
+  if (isSubscribed) {
+    pushButton.textContent = 'Disable Push Messaging'
+  } else {
+    pushButton.textContent = 'Enable Push Messaging'
+  }
+
+  pushButton.disabled = false
+}
+
+function subscribeUser() {
+  const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+  swRegistration.pushManager.subscribe({  // pushManager.subscribe: subscribes to a push service.
+    userVisibleOnly: true,
+    applicationServerKey: applicationServerKey
+  })
+  .then(function(subscription) {
+    console.log('User is subscribed.');
+
+    updateSubscriptionOnServer(subscription);
+
+    isSubscribed = true;
+
+    updateBtn();
+  })
+  .catch(function(err) {
+    console.log('Failed to subscribe the user: ', err);
+    updateBtn();
+  });
+}
+
+function updateSubscriptionOnServer(subscription) {
+  // TODO: Send subscription to application server
+
+  const subscriptionJson = document.querySelector('.js-subscription-json');
+  const subscriptionDetails =
+    document.querySelector('.js-subscription-details');
+
+  if (subscription) {
+    subscriptionJson.textContent = JSON.stringify(subscription);
+    subscriptionDetails.classList.remove('is-invisible');
+  } else {
+    subscriptionDetails.classList.add('is-invisible');
+  }
+}
+
+function unsubscribeUser() {
+  swRegistration.pushManager.getSubscription()
+    .then(function(subscription) {
+      if (subscription) {
+        return subscription.unsubscribe()
+      }
+    })
+    .catch(function(error) {
+      console.log('Error unsubscribing', error)
+    })
+    .then(function() {
+      updateSubscriptionOnServer(null)
+
+      console.log('User is unsubscribed')
+      isSubscribed = false
+      updateBtn()
+    })
 }
