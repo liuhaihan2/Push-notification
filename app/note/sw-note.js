@@ -4,10 +4,28 @@ pwa
 // 其实就是使用pwa做web小程序
 
 // 一些问题
-// 为什么pwa 要使用 navigator来注册 sw.js 呢
-// *service worker  *Web storage（IndexedDB, Caches） fetch promise
-// pwa的优点和缺点  优点： https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Advantages  缺点：兼容性
-
+// *为什么pwa 要使用 navigator来注册 sw.js 呢
+    // 只读属性 Window.navigator 会返回一个 Navigator 对象的引用，可以用于请求运行当前代码的应用程序的相关信息。
+// *service worker  *Web storage（IndexedDB, Caches） fetch promise  关于push的接口  关于sync的使用
+// *pwa的优点和缺点  
+    // 优点： https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Advantages  缺点：兼容性
+// *生命周期
+    // https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers
+// * what is the difference between self.skipWaiting() and self.client.claim()
+// * 流程
+    // regist a sw after loading -> cache files during install -> delete old cache during activate ->
+    // notice if something update a sw, don't forget rename the CACHE_NAME -> 
+    // if you want to update a sw immediately, use self.skipWaiting() self.client.claim() -> 
+    // so, how to update a sw suitably 因为 当你update 一个 sw 有些特殊情况要注意-> the use of manifest -> 
+    // about cache the app data
+// * point 
+    // web woker
+    // lifecycle  以及每个阶段通常会处理的事情
+    // introduce self.skipWaiting() and self.client.claim()
+    // how to update a sw suitably
+    // how to 
+    // how to achivement pushing a message
+    // how to sync a message
 
 // cache 常用方法提示
 caches.open(CACHE_NAME) // open / create a cache
@@ -162,7 +180,7 @@ self.addEventListener('activate', (event) => {
         })
       })
   )
-})// 但是这里只讲了如何平滑删除决定弃用的缓存，没讲如何 update a servie worker
+})
 // you can update handle 
 navigator.serviceWorker.register('/sw.js').then(reg => {
   reg.update()
