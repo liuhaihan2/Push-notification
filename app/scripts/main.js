@@ -128,7 +128,7 @@ function subscribeUser() {
 }
 
 function updateSubscriptionOnServer(subscription) {
-  // TODO: Send subscription to application server
+  // TODO: Send subscription to application server 你需要给你的back-end一张你的名片
 
   const subscriptionJson = document.querySelector('.js-subscription-json');
   const subscriptionDetails =
