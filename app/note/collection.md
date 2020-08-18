@@ -67,7 +67,7 @@ Ele:not(s)
 - [原型继承](#原型继承)?
 - [如何判断数据类型](#如何判断数据类型)
 	- [instanceOf](#instanceOf)
-	- [如何实现instanceOf](#如何实现instanceOf) to see
+	- [如何实现instanceOf](#如何实现instanceOf)
 	- [typeOf](#typeOf)
 	- [toString](#toString)
 	- [undefined与null](#undefined与null)
@@ -88,9 +88,10 @@ Ele:not(s)
 	- [实现](#实现)
 	- [async/await](#async/await)
 	- [generator](#generator)
-- [函数的节流和去抖](#函数的节流和去抖) to see
+- [函数的节流和去抖](#函数的节流和去抖)
 - [跨域概念及其实现](#跨域概念及其实现)?
 - [class的理解和使用](#class的理解和使用)?
+- [箭头函数和普通函数](#箭头函数和普通函数)
 -----------------------------------------------
 - ### 栈和堆
 
@@ -443,6 +444,7 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 - ### 函数的节流和去抖
 	- #### 节流
 		> 规定在`一个单位时间内，只能触发一次函数`。如果这个单位时间内触发多次函数，只有一次生效。
+		> 使用场景： 游戏中的刷新率 DOM元素拖拽 Canvas画笔功能。一句话 `适合大量事件按时间做平均分配触发。`
 		> 实现
 			```javascript
 				const throttle = (fn, delay = 500) => {
@@ -452,12 +454,13 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 						flag = false;
 						setTimeout(() => {
 							fn.apply(this, args);
-							flag = true;
-						}, delay);
-					};
-				};
+							flag = true
+						}, delay)
+					}
+				}
 	- #### 防抖
 		> `在事件被触发n秒后再执行回调`，如果在这n秒内又被触发，则重新计时
+		> 使用场景：给按钮加函数防抖防止表单多次提交 对于输入框连续输入进行AJAX验证时 一句话:`适合多次事件一次响应的情况`
 		> 实现
 			```javascript
 				const debounce = (fn, delay) => {
@@ -473,6 +476,7 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 - ### 跨域概念及其实现
 > 同源是指"协议+域名+端口"三者相同，即便两个不同的域名指向同一个ip地址，也非同源
 - ### class的理解和使用
+- ### 箭头函数和普通函数
 
 ## 浏览器
 -----------------------------------------------
@@ -503,4 +507,11 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 - ### class和function
 	- #### 优缺点
 	- #### 使用场景
+
+## 小程序相关
+-----------------------------------------------
+- ### 小程序生命周期
+- ### mpvue生命周期
+- ### uniapp生命周期
+- ### taro生命周期
 

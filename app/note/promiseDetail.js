@@ -11,8 +11,8 @@ class Promise {
       this._handle({
         onFulfilled: onFulfilled || null,
         onRejected: onRejected || null,
-        resolve: resolve,
-        reject: reject
+        resolve,
+        reject,
       });
     });
   }
@@ -109,6 +109,7 @@ class Promise {
     }
 
   }
+
   _resolve(value) {
     if(this.state !== 'pending') return
     if (value && (typeof value === 'object' || typeof value === 'function')) {
@@ -160,7 +161,8 @@ class myPromise {
                 this.value = result;
                 this.onFulfilledCallbacks.forEach(cb => cb(this.value));
             }, 0);
-        };
+        }
+        
         let reject = reason => { // reject方法
             if (this.status !== PENDING) return;
             setTimeout(() => {
