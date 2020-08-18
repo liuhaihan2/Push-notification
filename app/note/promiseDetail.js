@@ -107,9 +107,8 @@ class Promise {
     } finally {
       cb(ret);
     }
-
   }
-
+  
   _resolve(value) {
     if(this.state !== 'pending') return
     if (value && (typeof value === 'object' || typeof value === 'function')) {

@@ -23,3 +23,11 @@ function throttle(fn, delay = 500) {
 		}, delay)
 	}
 }
+function aa() {
+	const name = 'ddd'
+	console.log('aa this', this)
+	return function bb() {
+		console.log('name', name)
+		console.log('bb this', this)
+	}
+}
