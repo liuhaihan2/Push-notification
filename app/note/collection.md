@@ -19,6 +19,7 @@
 	- [__proto__和prototype](#__proto__和prototype)
 	- [组合式继承](#组合式继承)
 	- [组合寄生式继承](#组合寄生式继承)
+	- [class继承](#class继承)
 - [如何判断数据类型](#如何判断数据类型)
 	- [instanceOf](#instanceOf)
 	- [如何实现instanceOf](#如何实现instanceOf)
@@ -28,7 +29,9 @@
 	- [undefined与null](#undefined与null)
 	- [如何判断一个数据类型是普通对象](#如何判断一个数据类型是普通对象)
 - [如何理解闭包](#如何理解闭包js)?
-- [Js垃圾回收机制](#Js垃圾回收机制) ?
+- [Js垃圾回收机制](#Js垃圾回收机制)
+- [缓存相关](#缓存相关)
+	- [强制缓存](#强制缓存)
 - [输入url到看到页面都经历了啥](#到看到页面都经历了啥)?
 - [EventLoop运行机制](#EventLoop运行机制)
 - [事件](#事件)?
@@ -51,13 +54,19 @@
 	- [generator](#generator)?
 - [函数的节流和去抖](#函数的节流和去抖)
 - [跨域概念及其实现](#跨域概念及其实现)?
-- [class的理解和使用](#class的理解和使用)?
-- [箭头函数和普通函数](#箭头函数和普通函数)?
+- [class的理解和使用](#class的理解和使用)
+	- [基本用法](#基本用法)
+	- [class继承](#class继承)
+	- [class的this指向问题](#class的this指向问题)
+	- [class实现](#class实现) ?
+- [箭头函数和普通函数](#箭头函数和普通函数)
 - [buffer&&stream](#buffer&&stream)?
 - [什么是高阶函数](#什么是高阶函数)?
-## CSS
+- [location.href](#location.href)
+- [es6-es10新特性](#es6-es10新特性)
+### CSS
 -----------------------------------------------
-- 选择器
+- #### 选择器
 Ele:nth-last-child(n) 
 Ele:nth-of-type(n) 
 Ele:nth-last-of-type(n) 
@@ -71,12 +80,12 @@ Ele:enabled
 Ele:disabled 
 Ele::selection 
 Ele:not(s)
-- css定位背景图片
-- background-clipbackground-clip: 规定背景的绘制区域
-- backround-origin: 规定背景图片的定位区域
-- transform: translate(150px, 100px);
-- 重绘和回流
-> reflow:当render树中的一部分或者全部因为大小边距等问题发生改变而需要重建的过程叫做回流, 就是当一些物理部分改变的时候，包括margin,padding,height,width,border等 repaint:当元素的一部分属性发生变化，如外观背景色不会引起布局变化而需要重新渲染的过程叫做重绘 就是一些修饰的属性改变的时候，比如颜色。 `回流一定会伴随着重绘，但是重绘不一定会引起回流。回流的代价比重绘高。`
+- #### css定位背景图片
+- #### background-clipbackground-clip: 规定背景的绘制区域 - backround-origin: 规定背景图片的定位区域
+- #### transform: translate(150px, 100px);
+- #### 重绘和回流
+	> reflow:当render树中的一部分或者全部因为大小边距等问题发生改变而需要重建的过程叫做回流, 就是当一些物理部分改变的时候，包括margin,padding,height,width,border等
+	> repaint:当元素的一部分属性发生变化，如外观背景色不会引起布局变化而需要重新渲染的过程叫做重绘 就是一些修饰的属性改变的时候，比如颜色。 `回流一定会伴随着重绘，但是重绘不一定会引起回流。回流的代价比重绘高。`
 - flex布局简写都代表了什么
 > flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto
 - flex-grow: 默认为0，即如果存在剩余空间，也不放大
@@ -121,7 +130,7 @@ Ele:not(s)
 
 - ### 基本数据类型
 > undefined，boolean，number，string，null，symbol，放在栈里，数据大小确定，内存空间大小可以分配，是直接按值存放的，所以可以直接访问 `基本类型的比较是值的比较`
-
+> `symbol`: 每个从Symbol()返回的symbol值都是`唯一`的
 - ### 引用数据类型
 > 对象、数组、函数、类数组、正则啥的 指针在栈中但是值在堆中 console.log({} == {}); // false `引用类型的比较是引用的比较`
 
@@ -395,6 +404,8 @@ Array.from(arguments) // es6
 	- #### __proto__和prototype
 		> __proto__存在于new出来的实例里面，指向创造它的构造函数的原型函数
 		> prototype存在于构造函数里面，指向它对应原型函数
+		> (new Foo()).__proto__ === Foo.prototype // true
+		> Foo.prototype.constructor === Foo // true
 	- #### 原型对象上函数内部this指向问题
 	> Person.prototype是一个对象，这个对象上你定义了一个getName方法，这个方法你return的是this.name，重点来了，你这个方法是怎么执行的呢，person.getName()执行的，所以getName方法中的this指的就是person这个你new出来的对象，而person这个对象上有name这个属性。
 	> 所以this指向的是new出来的那个实例,记住方法是始终都是那一个方法，一直在变得是this
@@ -549,8 +560,83 @@ Array.from(arguments) // es6
 		```
 
 - ### 如何理解闭包
+
 - ### Js垃圾回收机制
+	> GC(Garbage Collecation) js有垃圾自动回收机制，会定时周期性的执行回收操作
+	> 基本上就是： 找出那些不再使用的变量，然后释放其占用的内存
+	<!-- > 比如：局部变量只在函数执行的过程中存在 函数执行结束，局部变量的内存也会被回收。 -->
+	> 标记无用变量的两个方法：`标记清除	(最常用)` 和 `引用计数` 。 
+	- #### 标记清除
+		- 垃圾收集器在运行的时候会给存在内存中的所有变量都加上标记
+		- 去掉环境中的变量以及被环境中变量引用的变量的标记
+		- 这个时候还被标记的就是没有人认领的，可以被销毁并回收他们的内存了
+	- #### 引用计数
+		> 跟踪记录每个值被引用的的次数，如果一个引用类型的引用被赋值一次，那么就赋值1，如果同一个值被赋值给另一个变量，那就再加1，但是如果包含这个值的变量又给赋值成其他的，那就减1，所以计数为0的时候就代表着可以被回收了
+		> 缺点： 就是循环引用的问题, 如果objA.boyFriend = objb, objb.girlFriend = obja，那么objA和objB永远不会被回收
+	- #### 总结
+		所以为了性能，一旦某些变量不再用，最好用`null`来`解除引用`, 解除引用的真正目的是把一个变量标记为可回收，而不是真正的释放它
+
+- ### 缓存相关
+	> 浏览器每次发起请求，都会先在`浏览器缓存`中查找该请求的结果以及缓存标识
+	> 浏览器每次拿到返回的请求结果都会将该结果和缓存标识`存入浏览器缓存中`
+	> 强制缓存优先于协商缓存进行
+	- #### 强制缓存
+		> `强制缓存就是向浏览器缓存查找该请求结果`，并根据该结果的缓存规则来决定是否使用该缓存结果的过程
+		> 判断缓存是否过期的字段是
+			> `Cache-Control(http1.1)`:  Cache-Control:max-age=600 在600秒内再次发起该请求，则会直接使用缓存结果，强制缓存生效
+			> `Expires(http1.0 因为会客户端与服务端的时间发生误差淘汰了)`
+		> 如果缓存有效没有过期，那么请求返回200的状态码，并且Size显示`from disk cache`或`from memory cache`。
+		> 如果缓存获取失败，那么携带标识字段向服务器发起请求，字段是
+			> 请求`If-modified-since`/ 响应`Last-modified`:服务器端资源文件的最后修改时间，缺点只能精确到秒并且修改时间更新不代表内容更新会出现重复请求
+			> `(优先级更高)`请求`If-No-Match`:响应`Etag`:服务器根据实体内容生成的一段hash字符串，如果没修改就304，修改了就200
+	- #### 协商缓存
+		> 协商缓存就是`强制缓存失效后`，浏览器携带缓存标识向服务器发起请求，由服务器根据缓存标识决定是否使用缓存的过程
+		> 协商缓存生效，返回`304`
+		> 协商缓存失效(就跟没缓存一样正常请求)，返回200和请求结果结果
+		> 相关字段 `Etag / If-None-Match`和`Last-Modified / If-Modified-Since`
+
+	> `缓存的存储位置`分为以下四大类
+	- #### ServiceWorker
+		> Service Worker 是一个注册在指定源和路径下事件驱动的`独立线程`，因此window以及DOM都是不能访问的,必须是https协议或本地开发,采用 JavaScrip t控制关联的页面或者网站资源，拦截并修改访问和资源请求，更精细地缓存资源
+		> Service Worker的`缓存是永久性的`，关闭浏览器打开还是存在，除了手动调用API清除以及存储容量超过限制被清除外，一般都能持续存在
+		> 生命周期
+			> - Download – 下载注册的JS文件
+			> - Install – 安装
+			> - Activate – 激活
+			```javascript
+				`注册一个service worker`
+				if ('serviceWorker' in navigator) {
+					navigator.serviceWorker.register('./sw-demo-cache.js');
+				}
+			```
+		> 还可以监听fetch事件 目前一般用`install`用来缓存文件，`activate`用来缓存更新，`fetch`用来拦截请求直接`返回缓存数据`
+		```javascript
+			self.addEventListener('install', function(event) { /* 安装后... */ });
+			self.addEventListener('activate', function(event) { /* 激活后... */ });
+			self.addEventListener('fetch', function(event) { /* 请求后...这里可以拦截请求并返回缓存数据 */ });
+		```
+		> 所以是如何缓存数据的呢？
+		ServeiceWorker有两个API：`Cache`和`CacheStorage`, 
+		```javascript
+			this.addEventListener('fetch', function(event) {
+				event.respondWith(
+					caches.match(event.request) // 返回缓存数据
+				);
+			});
+		```
+	- #### memory cache
+		> 会缓存js和图片等文件
+		> 内存中的缓存，在尝试读取本地缓存时，总是先读内存，再读硬盘，毕竟访问内存更快。原则上可以存任何东西
+		> 内存缓存会将编译解析后的文件，直接存入该进程的内存中，占据该进程一定的内存资源，以方便下次运行使用时的快速读取。但进程关闭，缓存都清空
+		> 与 `memory cache` 相关的机制有 `preloader` 和 `preload` 两种：
+	- #### disk cache
+		> 是持久存储
+		> 硬盘缓存则是直接将缓存写入硬盘文件中，读取缓存需要对该缓存存放的硬盘文件进行I/O操作，然后重新解析该缓存内容，读取复杂，速度比内存缓存慢。但是要比发网络请求要快很多
+	- #### network request
+
 - ### 输入url到看到页面都经历了啥
+- ### 说说数组的常用方法和对应实现
+- ### 如何实现一个事件的发布订阅
 - ### EventLoop运行机制
 	> 概念定义：callStack是用来执行JS代码 callbackQueue用来存异步事件callback EventLoop是个协调者，他一直给callStack介绍工作，不让它闲着
 	> 浏览器默认每个Tab页面一个进程，互不影响，主要用于页面渲染，脚本执行，事件处理等
@@ -628,6 +714,7 @@ Array.from(arguments) // es6
 		```
 	- #### 深拷贝
 		> 对对象以及对象的所有子对象进行拷贝,复制之后的对象对被复制的对象没有任何影响
+		> 循环引用是指一个对象A包含一个指向对象B的指针，对象B包含一个指向对象A的指针
 		`可以通过prototype来区分下箭头函数和普通函数，箭头函数是没有prototype的`
 		```javascript
 			`好处：一行实现  坏处：无法实现对函数 、RegExp等特殊对象的克隆，会抛弃对象的constructor,所有的构造函数会指向Object`
@@ -1003,9 +1090,182 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 - ### 跨域概念及其实现
 > 同源是指"协议+域名+端口"三者相同，即便两个不同的域名指向同一个ip地址，也非同源
 - ### class的理解和使用
+	> class仅仅是对原型对象运用的语法糖 `typeof class === 'function'` 可见它不是新的数据类型，只是封装好的语法糖
+	- #### 基本用法
+		```javascript
+			function Person(name,age) {
+					this.name = name;
+					this.age = age;
+			}
+			Person.prototype.sayInfo = function () {
+					console.log(`${this.name}是${this.age}岁`)
+			}
+			const liLei = new Person('LiLei',20)
+			liLei.sayInfo() //LiLei是20岁
+			`把上面的转换成class`
+			class Person{ //定义了一个名字为Person的类
+				constructor(name,age){ //constructor是一个构造方法，用来接收参数 没有constructor的类会默认生成一个constructor构造器
+					this.name = name;  //this代表的是实例对象
+					this.age = age;
+				}
+				sayInfo(){ //这样直接写在constructor外面的就等于直接在原型对象上定义一个函数
+					console.log(`${this.name}是${this.age}岁`)
+				}
+			}
+			const liLei = new Person('LiLei',21)
+			liLei.sayInfo()
+			`其实说白了就是构造函数的另一种写法`
+			console.log(typeof Person);//function
+			console.log(Person===Person.prototype.constructor);//true
+		```
+- #### class继承
+	> 继承是通过`extend`这个关键字实现的
+	> `super`
+	> 用来访问父类的构造器或者函数用的, super只能访问父类的方法和变量，`不能访问私有变量`
+	> `static`
+	> 我们可以把一个方法赋值给类的函数本身，而不是赋给它的 "prototype"。这样的方法被称为 静态的（static）。可以是属性，也可以是方法
+	> static方法不能被实例对象调用，`只能通过类名来调用`, 可以被继承,如果静态方法包含this关键字，这个this指的是类，而不是实例。
+	> 类有两种定义属性的方式： `constructor`里面或者`get name/set name`
+	> 静态的都可以被继承
+	```javascript
+		class Student {
+			constructor(name){
+				this.name = name
+			}
+			get prop() {
+				return 'getter'
+			}
+			set prop(value) {
+				console.log('setter: '+value)
+			}
+			sayName(){
+				console.log(this.name)
+			}
+			static hello() {
+				console.log('hello, im a static func')
+			}
+			testFn(){
+				console.log('我是父类的函数！')
+			}
+		}
+		class Worker extends Student{
+				sayWork(){
+						console.log(this.name)
+				}
+				testFn(){
+						console.log('我是子类的函数！')
+				}
+		}
+		const person = new Worker('liLei')
+		person.sayName() // liLei
+		person.sayWork() // liLei
+		person.testFn() //我是子类的函数！由此可见，父类的同名方法被覆盖掉了
+		person.prop = 'ddd' // 'setter: ddd'
+		person.prop // getter
+
+		`添加super来补充继承`
+		class Worker extends Student{
+			constructor(name,age,sex){
+				super(name) //也可以不传入参数，但是这里必须先调用super，算是对子类构造函数的一种扩展, 才有下文的this对象，这里扩展了一个变量age 可以把super看成父类的一个实例
+				this.age = age
+				this.sex = sex
+			}
+			testFn(){
+				super.testFn()
+				console.log("年龄" + this.age)
+				console.log("性别" + this.sex)
+				console.log('我是子类的函数！')
+			}
+		}
+
+		const Tom = new Worker('Tom', 20, 'boy')
+		Tom.testFn() // 我是父类的函数！ 年龄20 性别boy 我是子类的函数！
+		Worker.hello() // hello, i'm a static func
+		Tom.hello() // student.sayName is not a function
+	```
+- #### class的this指向问题
+	> 由于 class 内部是`严格模式`，所以 this 实际指向的是`undefined`
+	```javascript
+	class Logger {
+		printName(name = 'there') {
+			this.print(`Hello ${name}`);
+		}
+
+		print(text) {
+			console.log(text);
+		}
+	}
+	const logger = new Logger();
+	logger.printName() // Hello there
+	const { printName } = logger;
+	printName(); // TypeError: Cannot read property 'print' of undefined
+
+	`解决办法`
+  constructor() {
+    this.printName = this.printName.bind(this);
+  }
+	constructor() {
+    this.getThis = () => this; // 箭头函数内部的this总是指向定义时所在的对象
+  }
+- #### class的实现
+	> 具体参见class实现.js
+
 - ### 箭头函数和普通函数
+	> - 箭头函数不会创建自己的this
+	> - 箭头函数继承而来的this指向永远不变
+	> - 箭头函数没有arguments
+	> - 箭头函数没有原型prototype
+	> 箭头函数没有自己的this，`它会捕获自己在定义时（注意，是定义时，不是调用时）所处的外层执行环境的this`，并继承这个this值。所以，箭头函数中this的指向在它被定义的时候就已经确定了，之后永远不会改变。
+```javascript
+	var id = 'Global';
+	function fun1() {
+			// setTimeout中使用普通函数
+			setTimeout(function(){
+					console.log(this.id);
+			}, 2000);
+	}
+	function fun2() {
+			// setTimeout中使用箭头函数
+			setTimeout(() => {
+					console.log(this.id); // 这个箭头函数的this在定义时就确定了，它继承了它外层fun2的执行环境中的this
+			}, 2000)
+	}
+	fun1.call({id: 'Obj'});     // 'Global'
+	fun2.call({id: 'Obj'});     // 'Obj'
+
+	`这里要注意，定义对象的大括号{}是无法形成一个单独的执行环境的，它依旧是处于全局执行环境中！！`
+	var id = 'GLOBAL';
+	var obj = {
+		id: 'OBJ',
+		a: function(){
+			console.log(this.id);
+		},
+		b: () => {
+			console.log(this.id); // 继承定义它的环境的this，定义它的时候这里属于全局执行环境
+			console.log(arguments); // 因为外层全局环境没有arguments对象 会报错arguments is not defined
+		}
+	};
+	obj.a();    // 'OBJ'
+	obj.b();    // 'GLOBAL'
+
+```
 - ### buffer&stream
 - ### 什么是高阶函数
+
+- ### location.href
+	> window.location.href // 获取当前url
+
+- ### es6-es10新特性
+```javascript
+	`es7 幂运算符**，具有与Math.pow()一样的功能，代码如下`
+	console.log(2**10) // 1024 
+	console.log(Math.pow(2, 10)) // 1024
+
+	`es8 object.entries()`
+	for (let [key, value] of Object.entries(object1)) {
+		console.log(`${key}: ${value}`)
+	}
+```
 
 ## 浏览器
 -----------------------------------------------
