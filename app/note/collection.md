@@ -1,4 +1,6 @@
 [css](#css)
+	- [选择器](#选择器)
+	- [css定位背景图片](#css定位背景图片)
 [浏览器](#浏览器)
 [Vue](#Vue)
 [React](#React)
@@ -66,7 +68,7 @@
 - [es6-es10新特性](#es6-es10新特性)
 ### CSS
 -----------------------------------------------
-- #### 选择器
+- ### 选择器
 Ele:nth-last-child(n) 
 Ele:nth-of-type(n) 
 Ele:nth-last-of-type(n) 
@@ -80,28 +82,29 @@ Ele:enabled
 Ele:disabled 
 Ele::selection 
 Ele:not(s)
-- #### css定位背景图片
-- #### background-clipbackground-clip: 规定背景的绘制区域 - backround-origin: 规定背景图片的定位区域
-- #### transform: translate(150px, 100px);
-- #### 重绘和回流
+- ### css背景图片相关
+	- #### background-clipbackground-clip:
+	> 规定背景的绘制区域 - backround-origin: 规定背景图片的定位区域
+- ### transform: translate(150px, 100px);
+- ### 重绘和回流
 	> reflow:当render树中的一部分或者全部因为大小边距等问题发生改变而需要重建的过程叫做回流, 就是当一些物理部分改变的时候，包括margin,padding,height,width,border等
 	> repaint:当元素的一部分属性发生变化，如外观背景色不会引起布局变化而需要重新渲染的过程叫做重绘 就是一些修饰的属性改变的时候，比如颜色。 `回流一定会伴随着重绘，但是重绘不一定会引起回流。回流的代价比重绘高。`
-- flex布局简写都代表了什么
+- ### flex布局
 > flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto
 - flex-grow: 默认为0，即如果存在剩余空间，也不放大
 - flex-shrink: 定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小,0就不缩小
 - flex-basis：它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。auto表示项目本来大小
-- 垂直水平居中
+- ### 垂直水平居中
 - float和inline的区别和联系
-- 元素透明
+- ### 元素透明
 	- overflow:hidden/* 占据空间，无法点击 */
 	- opacity:0/* 占据空间，可以点击 */
 	- visibility:hidden/* 占据空间，无法点击 */
 	- display:none
 	- position:absolute/* left top 设置的非常远 */
 	- z-index:-1000/* 不占据空间，无法点击 */
-- 清除浮动
-- 伪类和伪元素：
+- ### 清除浮动
+- ### 伪类和伪元素：
 > 伪类本质上是为了弥补常规CSS选择器的不足，以便获取到更多信息, 伪元素本质上是创建了一个有内容的虚拟容器；
 ```css
 	q:lang(de)::after{
@@ -111,7 +114,7 @@ Ele:not(s)
 	/* 伪类：:active		:focus :hover		:link :visited	:first-child
 			:lang :nth-child(odd) :nth-child(even) */
 ```
-- 盒模型
+- ###盒模型
 > magin+border+padding+content(width), 但实际盒子的大小没有margin，加上margin是指占地面积
 - W3C: 属性width,height只包含内容content，不包含border和padding。
 - IE: 属性width,height包含border和padding，指的是content+padding+border
