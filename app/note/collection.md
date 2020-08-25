@@ -8,10 +8,11 @@
 - [栈和堆](#栈和堆)
 - [基本数据类型](#基本数据类型)
 - [引用数据类型](#引用数据类型)
+- [数组方法汇总](#数组方法汇总)
 - [什么是类数组 类数组如何变成数组](#类数组)
 - [变量提升](#变量提升)
 	- [LexicalEnvironmet](#LexicalEnvironmet)
-	- [var](#var)
+	- [var](#var)          
 	- [函数](#函数)
 	- [let&const](#let&const)
 	- [TDZ(tempral dead zoon)](#TDZ)
@@ -28,7 +29,7 @@
 	- [toString](#toString)
 	- [undefined与null](#undefined与null)
 	- [如何判断一个数据类型是普通对象](#如何判断一个数据类型是普通对象)
-- [如何理解闭包](#如何理解闭包js)?
+- [如何理解闭包](#如何理解闭包)?
 - [Js垃圾回收机制](#Js垃圾回收机制)
 - [缓存相关](#缓存相关)
 	- [强制缓存](#强制缓存)
@@ -58,12 +59,15 @@
 	- [基本用法](#基本用法)
 	- [class继承](#class继承)
 	- [class的this指向问题](#class的this指向问题)
-	- [class实现](#class实现) ?
+	- [class实现](#class实现)
 - [箭头函数和普通函数](#箭头函数和普通函数)
 - [buffer&&stream](#buffer&&stream)?
-- [什么是高阶函数](#什么是高阶函数)?
-- [location.href](#location.href)
-- [es6-es10新特性](#es6-es10新特性)
+- [函数式编程](#函数式编程)
+	- [函数柯里化](#函数柯里化)
+	- [什么是高阶函数](#什么是高阶函数)
+	- [高阶函数与高阶组件](#高阶函数与高阶组件)
+- [location.href](#location.href)?
+- [es6-es10新特性](#es6-es10新特性)?
 ### CSS
 -----------------------------------------------
 - #### 选择器
@@ -131,8 +135,155 @@ Ele:not(s)
 - ### 基本数据类型
 > undefined，boolean，number，string，null，symbol，放在栈里，数据大小确定，内存空间大小可以分配，是直接按值存放的，所以可以直接访问 `基本类型的比较是值的比较`
 > `symbol`: 每个从Symbol()返回的symbol值都是`唯一`的
+
 - ### 引用数据类型
 > 对象、数组、函数、类数组、正则啥的 指针在栈中但是值在堆中 console.log({} == {}); // false `引用类型的比较是引用的比较`
+
+- ### 数组方法汇总
+ > 会改变原数组： reverse() sort() splice() pop() push() shift() unshifit()
+ > 高阶：sort(), map(), forEach()
+	```javascript
+		`push() && pop()`
+		`push在数组末尾添加一个元素，返回数组的长度, pop删除数组末尾一个元素，返回该元素`
+		const arr = [1,3,5]
+		const pushArrLen = a.push(7) // arr = [1,3,5,7]  pushArrLen = 4
+		const arr = [1,3,5]
+		const popArrLen = a.pop() // arr = [1,3]  popArrLen = 5
+
+		`unshift() && shift()`
+		`unshift在数组开头添加一个元素，返回数组的长度, shift删除数组第一个元素,返回该元素`
+		const arr = [1,3,5]
+		const unshiftArrLen = arr.unshift(7) // arr = [7,1,3,5]  unshiftArrLen = 4
+		const arr = [1,3,5]
+		const shiftArrLen = a.pop() // arr = [3,5]  shiftArrLen = 1
+
+		`slice(start, end) `
+		`接收两个参数，start < end，返回 [start, end) 区间之间的元素数组，不改变原数组`
+		`可以接收负数作为参数， -1 为倒数第一个元素，-2 为倒数第二个元素，依此类推`
+		const arr = [1, 2, 3, 4, 5, 6, 7, 8]
+		const sliceArr = arr.slice(3, 5) // sliceArr = [4, 5]
+
+		`splice(index, howmany, item1, item2...itemx)`1
+		`方法向/从数组中添加/删除项目，然后返回被删除的项目。该方法会改变原始数组。`
+		const arr = [1, 2, 3, 4, 5]
+		const spliceArr = arr.splice(2, 3, 6, 7, 8) // arr = [1, 2, 6, 7, 8]  spliceArr = [3, 4, 5]
+
+		`includes()`
+		`es7`
+		const arr = [1, 2, 3, 4, 5]
+		const includeNum4 = arr.includes(4)
+		const includeNum7 = arr.includes(7)
+		// includeNum4 = true  includeNum7 = false
+
+		`concat()`
+		`方法在一个数组后面拼接新的元素，可接收 n 个参数，参数可以是任意数据类型，如果是数组，则将数组跟原数组拼接，如果是其他数据类型，则将该元素添加到原数组后面 该方法不改变原数组，会返回拼接好的新数组，因此可以 执行 链式操作`
+		const arr = [1,3,5]
+		const concatArr = arr.concat(2,4).concat(6,7,8).concat('hello world').concat(() => {}, [9,10,[11,12]])
+		=> arr = [1,3,5]
+			concatArr = [1, 3, 5, 2, 4, 6, 7, 8, 'hello world', () => {}, 9, 10, [11, 12]]
+
+		`reverse`
+		`方法将一个数组倒置，该方法返回新的数组，且会改变原数组`
+		const arr = [1, 2, 3, 4]
+		const reverseArr = arr.reverse() // arr = [4, 3, 2, 1]  reverseArr = [4, 3, 2, 1]
+
+		`forEach()`
+		`这是最常用的用来遍历数组的方法，需要注意的是该方法不会改变原数组，而且没有返回值。`
+		const arr = [1,3,4,5,6,8]
+		arr.forEachI(item => {
+			console.log(item)
+		})
+		// 1,3,4,5,6,8
+
+		`filter()`
+		`该方法顾名思义，这个方法是用来过滤的，该方法返回一个每一项都符合条件的新数组，不改变原数组`
+		const arr = [1,5,3,22,6]
+		const filterItem = arr.filter(item => item % 2 === 0) // filterItem = [22,6]
+
+		`every()`
+		`接收一个函数作为参数，判断数组中每一项都是否满足条件，只有所有项都满足条件，才会返回true。`
+		const arr = [1,5,2,4,11]
+		const isBig = arr.every(item => item > 5) // isBig = false
+
+		`some()`
+		 `方法接收一个函数作为参数，数组中只要有一项满足条件，则返回 true，如果都不满足条件，则返回 false`
+
+		const arr = [
+			{ price: 10, name: 'apple' },
+			{ price: 20, name: 'orange' },
+			{ price: 15, name: 'banana' }
+		]
+		const isCheap = arr.some(item => item.price < 15) // true
+		
+		`map()`
+		`也是常用来遍历的方法，该方法会返回一个新的数组，但不会改变原数组，默认返回 undefined`
+		const arr = [1,5,3,2,66]
+		const newArr = arr.map(item => item + 1) // [2,6,4,3,67]
+
+		`find()`
+		`该方法根据检索条件，找到数组中第一个满足条件的元素，若找不到则返回 undefined`
+		const arr = [1,5,3,22,6]
+		const bigNum = arr.find(item => item > 6) // bigNum = 22
+
+		`findIndex()`
+		`该方法与 find() 类似根据检索条件，不同的是该方法返回的是索引`
+		const arr = [1,5,3,22,6]
+		const bigNumIndex = arr.findIndex(item => item > 6) // bigNumIndex = 3
+
+		`indexOf() && lastIndexOf()`
+		`两个方法都用来查找索引，接收两个参数，第一个参数是要查找的元素，第二个参数是查找的起始位置(默认第一项和最后一项的位置)。都会返回该元素的正索引，不同的是当有第二个参数时，indexOf() 只查找该元素之后的元素，lastIndexOf() 只查找该元素之前的元素。若找到该元素则返回索引，若找不到则返回 -1`
+		const arr = [1, 3, 5, 7, 9]
+		const index = arr.indexOf(7, 0) // 3
+		const lastIndex = arr.lastIndexOf(7, 2) // -1
+
+		`reduce()`
+		reduce((prev, current, index, array) => {}, initialValue)
+		// 数组求积
+		const pow = arr.reduce((prev, current) => prev * current, 1)
+		//数组去重：
+		const arr = [1,3,4,2,5,3,4]
+		const slimArr = arr.reduce((prev, current) => {
+			if(prev.includes(current)) {
+				return prev
+			} else {
+				return prev.concat(current)
+			}
+		}, [])
+
+		`sort()`
+		`会改变原数组`
+		const arr = [
+			{ id: 4, name: 'michael' },
+			{ id: 2, name: 'kangkang' },
+			{ id: 3, name: 'meria' },
+			{ id: 1, name: 'jane' },
+		]
+		const newArr = arr.sort((a, b) => b.id - a.id)
+		newArr = [
+			{ id: 4, name: 'michael' },
+			{ id: 3, name: 'meria' },
+			{ id: 2, name: 'kangkang' },
+			{ id: 1, name: 'jane' }
+		]
+		
+		`join() && split()`
+		`join方法只接收一个参数：即分隔符，该方法返回拼接后的字符串，不改变原数组。`
+		`split方法只接收一个参数：方法将一个字符串分割为数组，接收一个参数，以该参数为分割符`
+		const arr = [1, 3, 'hello']
+		const str = 'charming javascript'
+
+		const newArr = arr.join('-') // newArr = '1-3-hello'
+		const strArr1 = str.split('') // ["c", "h", "a", "r", "m", "i", "n", "g", " ", "j", "a", "v", "a", "s", "c", "r", "i", "p", "t"]
+
+		`重复字符串`
+		通过join()方法可以实现重复字符串，只需传入字符串以及重复的次数，就能返回重复后的字符串
+		const repeatStr = (str, n) => new Array(n).join(str)
+		const newStr = repeatStr('hi', 3) // newStr = 'hihihi'
+
+
+
+	```
+
 
 - ### 类数组
 > 差别 拥有length属性，其它属性（索引）为非负整数 不具有数组所具有的方法；类数组是一个普通对象，而真实的数组是Array类型
@@ -560,6 +711,18 @@ Array.from(arguments) // es6
 		```
 
 - ### 如何理解闭包
+> 函数是在当前词法作用域之外执行。
+```javascript
+	function foo(){
+			var a = 2;
+			function bar(){
+					console.log(a);
+			}
+			return bar;
+	}
+	var baz = foo();
+	baz(); // 2 —— 这就是闭包
+```
 
 - ### Js垃圾回收机制
 	> GC(Garbage Collecation) js有垃圾自动回收机制，会定时周期性的执行回收操作
@@ -808,6 +971,7 @@ Array.from(arguments) // es6
 		}
 		```
 	- #### Object.create()
+		> 除了自身属性之外，原型链上没有任何属性，也就是没有继承Object的任何东西, 调用toString方法会报错
 		> 返回F构造函数的实例，而这个实例的原型对象(__proto__)指向第一个参数
 		> Object.create()的基本实现
 		```javascript
@@ -817,7 +981,7 @@ Array.from(arguments) // es6
 			Fn.prototype = proto;
 			Fn.prototype.constructor = Fn;
 			return new Fn();
-		};
+		}
 		```
 	- #### new的简单实现
 		```javascript
@@ -1207,7 +1371,7 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 	constructor() {
     this.getThis = () => this; // 箭头函数内部的this总是指向定义时所在的对象
   }
-- #### class的实现
+- #### class实现
 	> 具体参见class实现.js
 
 - ### 箭头函数和普通函数
@@ -1250,7 +1414,104 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 
 ```
 - ### buffer&stream
-- ### 什么是高阶函数
+- ### 函数式编程
+	> `函数式编程就是将函数作为另外一个函数的参数或者返回值`
+	- #### 函数柯里化
+		> 是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术
+		> 用处：参数复用，延迟执行
+		```javascript
+		`一个简单的函数柯里化`
+		function curriedAdd (x) {
+			return function(y) {
+				return x + y
+			}
+		}
+		curriedAdd(1)(3)// 4
+		let aa = curriedAdd(30)
+		aa(44)// 74
+
+		`柯里化中心思想算是`
+		function trueCurry(fn, ...arg) {
+			if (arg.length >= fn.length) {
+				return fn(...arg)
+			}
+			return trueCurry(fn, ...arg, ...arg2)
+		}
+
+		```
+	- #### 什么是高阶函数
+		> `一个函数就可以接收另一个函数作为参数`，这种函数就称之为高阶函数
+		> 例如Array.prototype.map, Array.prototype.filter和Array.prototype.reduce是JavaScript原生的高阶函数。
+		```javascript
+			function add(x, y, f) {
+					return f(x) + f(y);
+			}
+			add(-5, 6, Math.abs) // 11
+		```
+	- #### 高阶函数与高阶组件
+		> 高阶组件：以组件作为参数的组件，结果return一个组件。 或者一个 React 组件包裹着另外一个 React 组件。
+		> HOC就是高阶组件模式 High Order Component
+		```javascript
+		// wrapWithUsername.js
+		import React, {Component} from 'react'
+		export default (WrappedComponent) => {
+				class NewComponent extends Component {
+						constructor() {
+								super();
+								this.state = {
+										username: ''
+								}
+						}
+					
+						componentWillMount() {
+								let username = localStorage.getItem('username');
+								this.setState({
+										username: username
+								})
+						}
+
+						render() {
+								return <WrappedComponent username={this.state.username}/>
+						}
+				}
+
+				return NewComponent
+		}
+		// use
+		//高阶的Welcome组件
+		import React, {Component} from 'react';
+		import wrapWithUsername from 'wrapWithUsername';
+
+		class Welcome extends Component {
+
+				render() {
+						return (
+								<div>welcome {this.props.username}</div>
+						)
+				}
+		}
+
+		Welcome = wrapWithUsername(Welcome);
+
+		export default Welcome;
+
+		//高阶的goodbye组件
+		`所以我对高阶组件优点的理解就是可以把公用的 逻辑提出来`
+		import React, {Component} from 'react';
+		import wrapWithUsername from 'wrapWithUsername';
+
+		class Goodbye extends Component {
+				render() {
+						return (
+								<div>goodbye {this.props.username}</div>
+						)
+				}
+		}
+		`这里就用到了高阶组件`
+		Goodbye = wrapWithUsername(Goodbye);
+		export default Goodbye;
+		```
+
 
 - ### location.href
 	> window.location.href // 获取当前url
