@@ -100,3 +100,88 @@ let Child = (Parent => {
 	}
 	return C
 })(Parent)
+class Promise {
+	// 相当于定义在构造函数的属性
+	callbacks = []
+	state = 'pending'
+	value = null
+	constructor(fn) {
+		fn(_resolve.bind(this), _reject.bind(this))
+	}
+
+	static resolve(value) {
+		if (value && value instanceof Promise) {
+			return
+		} else if (value && typeof value === 'object' && typeof value.then === 'function') {
+			let then = value.then
+			return new Promise(resolve => {
+				then(resolve)
+			})
+		} else if (value) {
+			return new Promise(resolve => resolve(value))
+		} else {
+			return new Promise(resolve => resolve())
+		}
+	}
+
+	static reject(error) {
+		if (value && typeof value === 'object' && typeof value.then === 'function') {
+			let then = value.then
+			return new Promise((resolve, reject) => {
+				then(reject)
+			})
+		}
+		return new Promise((resolve, reject) => reject(error))
+	}
+
+	then(onFulfilled, onRejected) {
+		return new Promise((resolve, reject) => (_handle({
+			fulfilled: onFulfilled,
+			rejected: onRejected,
+			resolve,
+			reject,
+		})))
+	}
+	
+	_handle(callback) {
+		if (this.state === 'pending') {
+			this.callbacks.push(callback)
+			return
+		}
+		let cb = this.state === 'fulfilled' ? callback.onFulfilled : callback.onRejected
+		let ret
+		try {
+			ret = cb(this.value)
+			cb = this.state === 'fufilled' ? callback.resolve : callback.reject
+		} catch(err) {
+			reject(err)
+		} finally {
+			cb(ret)
+		}
+	}
+
+	// 这个等于一个开关，可以让state从pending变成fulfilled
+	_resolve(value) {
+		if (this.state !== 'pending') {
+			return
+		}
+		// 这里对thenable对象做一个兼容，但是我并不知道什么情况下会用到
+		if (value && typeof value === 'object' && typeof value.then === 'function') {
+			value.then(this._resolve(), this._reject())
+			return 
+		}
+
+		this.state = 'fulfilled'
+		this.value = value
+		this.callbacks.forEach(callback => this._handle(callback))
+	}
+
+	_reject(error) {
+		if (this.state !== 'pending') {
+			return
+		}
+		this.state = 'rejected'
+		this.value = error
+		this.callbacks.forEach(callback => this._handle(callback))
+	}
+}
