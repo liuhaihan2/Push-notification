@@ -1,10 +1,18 @@
 [css](#css)
-	- [选择器](#选择器)
-	- [css定位背景图片](#css定位背景图片)
+- [选择器](#选择器)
+- [css定位背景图片](#css定位背景图片)
 [浏览器](#浏览器)
+- [302和304](#302和304)
+- [各种攻击](#各种攻击)
+- [cookie和sessionk](#cookie和session)
+[Commen](#Commen)
+- [如何理解mvvm](#如何理解mvvm) ?
+- [refs在vue和react里面的使用](#refs在vue和react里面的使用) ?
+- [vue和React的相同点](#vue和React的相同点) ? 
+- [vue和react的diff算法](#vue和react的diff算法) ?
+- [路由hash和history](#路由hash和history)
 [Vue](#Vue)
 [React](#React)
-[Commen](#Commen)
 [小程序相关](#小程序相关)
 [js](#JS)
 - [栈和堆](#栈和堆)
@@ -70,6 +78,7 @@
 	- [高阶函数与高阶组件](#高阶函数与高阶组件)
 - [location.href](#location.href)?
 - [es6-es10新特性](#es6-es10新特性)?
+- [importVSrequier](#importVSrequier)
 ### CSS
 -----------------------------------------------
 - ### 选择器
@@ -282,11 +291,7 @@ Ele:not(s)
 		通过join()方法可以实现重复字符串，只需传入字符串以及重复的次数，就能返回重复后的字符串
 		const repeatStr = (str, n) => new Array(n).join(str)
 		const newStr = repeatStr('hi', 3) // newStr = 'hihihi'
-
-
-
 	```
-
 
 - ### 类数组
 > 差别 拥有length属性，其它属性（索引）为非负整数 不具有数组所具有的方法；类数组是一个普通对象，而真实的数组是Array类型
@@ -715,6 +720,8 @@ Array.from(arguments) // es6
 
 - ### 如何理解闭包
 > 函数是在当前词法作用域之外执行。
+> 闭包是指有权访问另一个函数作用域中的变量的函数
+> 闭包可以访问当前函数以外的变量 闭包可以更新闭包中外部变量的值
 ```javascript
 	function foo(){
 			var a = 2;
@@ -725,6 +732,17 @@ Array.from(arguments) // es6
 	}
 	var baz = foo();
 	baz(); // 2 —— 这就是闭包
+
+	`经常出现的面试题`
+	var data = [];
+	for (var i = 0; i < 3; i++) {
+		data[i] = function () {
+			console.log(i);
+		};
+	}
+	data[0](); // 3
+	data[1](); // 3
+	data[2](); // 3
 ```
 
 - ### Js垃圾回收机制
@@ -1255,7 +1273,65 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 				}
 			```
 - ### 跨域概念及其实现
-> 同源是指"协议+域名+端口"三者相同，即便两个不同的域名指向同一个ip地址，也非同源
+	> 同源是指"协议+域名+端口"三者相同，即便两个不同的域名指向同一个ip地址，也非同源
+	> 可以跨域：<img src=XXX> <link href=XXX> <script src=XXX>
+	- #### jsonP
+		> 使用script标签的src发送HTTP请求，服务器直接返回一段JS代码的函数调用，将服务器数据放在函数实参中，前端提前写好响应的函数准备回调，接收数据，实现跨域数据交互；
+	- #### CORS(Cross-origin resource sharing)
+		> 服务端设置 Access-Control-Allow-Origin 就可以开启 CORS。 该属性表示哪些域名可以访问资源，如果设置通配符则表示所有网站都可以访问资源
+		> 浏览器将CORS请求分成两类：`简单请求: GET HEAD POST && Content-Type: text/plain,multipart/form-data,application/x-www-form-urlencoded`和`非简单请求: 不是简单请求的都是`	
+		> `复杂请求`： 复杂请求的CORS请求，会在正式通信之前，增加一次HTTP查询请求OPTION"预检"请求
+		> 用 OPTIONS 方法，询问。预检请求包括三个字段
+			> - `Origin`: 表示请求来自哪个域
+			> - `Access-Control-Request-Method`：必须，浏览器会使用的请求方法
+			> - `Access-Control-Request-Headers`: 浏览器发送 CORS 请求会额外发送的头部信息段；
+		> 服务器会回应以下几个字段给预检请求
+			> - `Access-Control-Allow-Methods`:  必需，逗号分隔的字符串，表示服务器支持的所有跨域请求方法
+			> - `Access-Control-Allow-Headers`：浏览器支持的所有头部字段；
+			> - `Access-Control-Allow-Credentials`：true 代表会发送cookie
+			> - `Access-Control-Allow-Max-Age`:  指定本次请求的有效期
+		- #### postMessage
+			> window上的一个属性
+			> postMessage()方法允许来自不同源的脚本采用异步方式进行有限的通信，可以实现跨文本档、多窗口、跨域消息传递
+			```javascript
+				// a.html
+				<iframe src="http://localhost:4000/b.html" frameborder="0" id="frame" onload="load()"></iframe> //等它加载完触发一个事件
+				//内嵌在http://localhost:3000/a.html
+					<script>
+						function load() {
+							let frame = document.getElementById('frame')
+							frame.contentWindow.postMessage('我爱你', 'http://localhost:4000') //发送数据
+							window.onmessage = function(e) { //接受返回数据
+								console.log(e.data) //我不爱你
+							}
+						}
+					</script>
+				</iframe>
+				// http://localhost:4000/b.html
+					window.onmessage = function(e) {
+						console.log(e.data) //我爱你
+						e.source.postMessage('我不爱你', e.origin)
+					}
+			```
+		- #### nginx反向代理
+			> 反向代理（Reverse Proxy）方式是指以代理服务器来接受Internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给Internet上请求连接的客户端，此时代理服务器对外就表现为一个服务器。 
+			> 解压打开配置文件：nginx-1.14.2 ➡conf➡nginx.conf
+			> 最后nginx reload
+			listen       8065;
+			server_name  localhost; # 设置要监听的主机名
+			#charset koi8-r;
+			#access_log  logs/host.access.log  main;
+
+			location / {
+				root   E:\\nginx ;
+				index demo.html demo.htm;
+			}	
+			# 匹配localhost请求地址中的'/api'字段并用设置的proxy_pass属性值替换
+			location /api { 
+					rewrite  ^/api/(.*)$ /$1 break;
+					proxy_pass   http://api.map.baidu.com/location/ip; 
+			}	
+			
 - ### class的理解和使用
 	> class仅仅是对原型对象运用的语法糖 `typeof class === 'function'` 可见它不是新的数据类型，只是封装好的语法糖
 	- #### 基本用法
@@ -1375,6 +1451,7 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
     this.getThis = () => this; // 箭头函数内部的this总是指向定义时所在的对象
   }
 - #### class实现
+	> class仅仅是对原型对象运用的语法糖 `typeof class === 'function'` 可见它不是新的数据类型，只是封装好的语法糖
 	> 具体参见class实现.js
 
 - ### 箭头函数和普通函数
@@ -1417,6 +1494,48 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 
 ```
 - ### buffer&stream
+	- #### buffer
+		> 每当我们使用`Buffer.alloc(size)`请求一个Buffer内存时，Buffer会以`8KB`为界限来判断分配的是大对象还是小对象，小对象存入剩余内存池，不够再申请一个8KB的内存池；`大对象直接采用C++层面申请的内存`。因此，对于一个大尺寸对象，申请一个大内存比申请众多小内存池快很多。
+	- #### stream
+		> 在文件I/O、网络I／O中数据的传输都可以称之为流，流是能统一描述所有常见输入输出类型的模型，是顺序读写字节序列的抽象表示
+		> 流分为可读流，可写流，可读可写流(有的流即可以读又可以写，如TCP连接，Socket连接等，称为读写流，还有一种在读写过程中可以修改和变换数据的读写流称为Transform流)`可读、可写流会将数据存储到内部的缓存中`
+		> `流是有方向的`。A端输入数据到B端，对B就是输入流，得到的对象就是可读流,对A就是输出端、得到的对象是可写流
+		> `在node中，这些流中的数据就是Buffer对象`
+	- #### pipe
+		> 水流从一端到另一端流动需要管道作为通道或媒介。流也是这样，数据在端之间的传送也需要管道
+		```javascript
+		// 将 readable 中的所有数据通过管道传递给名为 file.txt 的文件
+		const readable = getReadableStreamSomehow();
+		const writable = getWritableStreamSomehow('file.txt');
+		// readable 中的所有数据都传给了 'file.txt'
+		readable.pipe(writable);
+
+		// 对流进行链式地管道操作
+		const r = fs.createReadStream('file.txt');
+		const z = zlib.createGzip();
+		const w = fs.createWriteStream('file.txt.gz');
+		r.pipe(z).pipe(w);
+
+		// 一个文件下载的例子，使用回调函数的话需要等到服务器读取完文件才能向浏览器发送数据
+		var http = require('http') ;
+		var fs = require('fs') ;
+		var server = http.createServer(function (req, res) {
+				fs.readFile(__dirname + '/data.txt', function (err, data) {
+						res.end(data);
+				}) ;
+		}) ;
+		server.listen(8888) ;
+
+		// 而采用流的方式，只要建立连接，就会接受到数据，不用等到服务器缓存完data.txt
+		var http = require('http') 
+		var fs = require('fs') 
+		var server = http.createServer(function (req, res) {
+				var stream = fs.createReadStream(__dirname + '/data.txt') 
+				stream.pipe(res) 
+		}) 
+		server.listen(8888)
+		```
+
 - ### 函数式编程
 	> `函数式编程就是将函数作为另外一个函数的参数或者返回值`
 	- #### 函数柯里化
@@ -1531,15 +1650,55 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 	}
 ```
 
+- ### importVSrequier
+	- #### CommonJS 
+		> 模块使用require()加载和module.exports输出 `同步加载`，后面的代码必须等待这个命令执行完，才会执行
+	- #### ES6 模块
+		> ES6 模块使用import和export import命令可以加载 CommonJS 模块，import命令会被 JavaScript 引擎静态分析，在编译时就引入模块代码，而不是在代码运行时加载，JS 引擎对脚本静态分析的时候，遇到模块加载命令import，就会生成一个只读引用。等到脚本真正执行时，再根据这个只读引用，到被加载的那个模块里面去取值。所以只能整体加载，不能只加载单一的输出项。
+	- #### 差异
+		> CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。
+		> CommonJS是`运行时加载`， ES6模块是`编译时加载`
+		> `运行时加载`: CommonJS 模块就是对象；即在输入时是先加载整个模块，生成一个对象，然后再从这个对象上面读取方法，这种加载称为“运行时加载”。
+		> `编译时加载`: ES6 模块不是对象，而是通过 export 命令显式指定输出的代码，import时采用静态命令的形式。即在import时可以指定加载某个输出值，而不是加载整个模块，这种加载称为“编译时加载”。
+		> CommonJS 加载的是一个对象（即module.exports属性），该对象只有在脚本运行完才会生成。而 ES6 模块不是对象，它的对外接口只是一种静态定义，在代码静态解析阶段就会生成。
+
 ## 浏览器
 -----------------------------------------------
-- #### 302和304
+- ### 302和304
 > 302代表暂时重定向，304代表资源没有变动用本地缓存就行
+> 相关字段
 
+- ### 各种攻击
+	> XSS：恶意攻击者往 Web 页面里插入恶意 Script 代码，当用户浏览该页之时，嵌入其中 Web 里面的 Script 代码会被执行，从而达到恶意攻击用户的目的。
+	> CSRF：CSRF 攻击是攻击者借助受害者的 Cookie 骗取服务器的信任，可以在受害者毫不知情的情况下以受害者名义伪造请求发送给受攻击服务器，从而在并未授权的情况下执行在权限保护之下的操作。
+
+- ### cookie和session
+	> 描述：HTTP协议是无状态的协议，所以服务端需要记录用户的状态, 那这种机制就是session
+	> session是个为http增加状态的一种概念，cookie可以说是这种概念
+	> Session是在服务端保存的一个数据结构，用来跟踪用户的状态，这个数据可以保存在集群、数据库、文件中； Cookie是客户端保存用户信息的一种机制，用来记录用户的一些信息，也是实现Session的一种方式。
+	> cookie是存储于浏览器内存中的
 
 ## Commen
 -----------------------------------------------
 - ### 如何理解mvvm
+	> Model-View-ViewModel的简写
+	> 我的理解就是`把负责视图的 HTML 代码和负责业务逻辑的 JS 代码分离开`
+	- #### View层
+	> View 是`视图层，也就是用户界面`。前端主要由 HTML 和 CSS 来构建，为了更方便地`展现 ViewModel 或者 Model 层的数据`，和Model层并没有直接联系，而是通过ViewModel层进行交互
+	- #### Model层
+	> Model 是指`数据模型`，模型层，负责处理业务逻辑以及和服务器端进行交互
+	- #### ViewModel层
+	> ViewModel `是由前端开发人员组织生成和维护的视图数据层`。`mvvm模式的核心`，`它是连接view和model的桥梁` 在这一层，前端开发者`对从后端获取的 Model 数据进行转换处理，做二次封装，以生成符合 View 层使用预期的视图数据模型, 用来描述View层的`。
+		>> 需要注意的是 ViewModel 所封装出来的数据模型包括视图的`状态`和`行为`两部分
+		>> `状态`: 页面的这一块展示什么，那一块展示什么这些都属于视图状态（展示）
+		>> `行为`: 页面加载进来时发生什么，点击这一块发生什么，这一块滚动时发生什么这些都属于视图行为（交互）
+		>> `双向绑定`：ViewModel 的内容会实时展现在 View 层, ViewModel变化时，自动更新View，View变化时，自动更新ViewModel
+		>> 总结：`解耦了 View 层和 Model 层，这个解耦是至关重要的，它是前后端分离方案实施的重要一环。`
+	- #### 数据绑定
+	脏值检查（angular.js）
+数据劫持（vue.js）
+发布者-订阅者模式（backbone.js）
+
 - ### refs在vue和react里面的使用
 - ### vue和React的相同点
 	- 都使用Virtual DOM + Diff算法
@@ -1547,15 +1706,84 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 	- 都是响应式，推崇单向数据流
 	- 都有成熟的社区，都支持服务端渲染
 - ### vue和react的diff算法
+- ### 路由hash和history
+	- #### hash
+	> 监听onhashchange事件，`仅 # 之前的内容包含在 http 请求中`,因此改变 hash 不会重新加载页面,下面#号后面就是hash
+	http://music.163.com/`#`/friendhttps://pan.baidu.com/disk/home#list/vmode=list
+	> 所以hash 模式下，，对后端来说，即使没有对路由做到全面覆盖，也不会报 404
+
+	- #### hashRouterHandler的实现
+		> 实现思路：通过load和hashchange监听 url 中 hash 的变化，然后渲染不同的内容，这种路由`不向服务器发送请求，不需要服务端的支持`
+		```javascript
+		class HashRouter {
+			handler = {}
+
+			constructor() {
+				this.refresh = this.refesh.bind(this)
+				window.addEventListener('load', refresh, false)
+				window.addEventListener('hashchange', refresh, false)
+			}
+
+			getHash(url) {
+				if (!url) { return '' }
+				const index = url.indexOf('#')
+				return index > 0 ? url.splice(index + 1) : '/'
+			}
+
+			refresh({newUrl, oldUrl}) {
+				this.curUrl = this.getHash(newUrl ? newUrl : window.location.hash)
+				this.emit('change', this.curUrl, getHash(oldUrl))
+			}
+
+			on(name, fn) {
+				//大致这样
+				this.handler[name] = fn
+			}
+
+			emit(name, ...arg) {
+				if (this.handler[name]) {
+					this.handler[name](...arg)
+				}
+			}
+		}
+		const router = new HashRouter()
+		router.on('change', (newUrl, oldUrl) => {
+			let route = null
+			if (newUrl === oldUrl) { return }
+			for (let i = 0; i < routerRecord.length - 1; i++) {
+				newUrl === routerRecord[i]['path']
+				rotue = routerRecord[i]
+				break
+			}
+			if (!route) {
+				// show 404 component
+			}
+			ReactDom.render(route.component, document.getElementById('app'))
+		})
+		```
+	- #### history
+		> 主要靠window.history这个对象里面的api 最常用的三个方法`back、forward、go` 两个可以自定义目标url`pushState(obj, title, url)：前进到指定的URL   replaceState(obj, title, url)：用 url 替换当前的路由`
+		> 都不会刷新页面
+		> 实现 看不懂
+`
 
 ## Vue 
 -----------------------------------------------
 - ### 生命周期
 - ### 如何实现双向绑定
-- ### 路由hash和history
 - ### keepAlive
-- ### 什么是spa
-
+- ### SPA&&SEO&&SSR
+	- #### SPA
+		> single page application 
+		> 通过动态地重写页面的部分与用户交互，而避免了过多的数据交换，响应速度自然相对更高
+		> 缺点 首屏加载太慢 不利于SEO
+	- #### SEO
+		> Search Engine Optimization
+		> 说白了就是搜索引擎搜索不到
+	- #### SPA
+		>  Server-Side Rendering(服务器端渲染)的缩写
+		> 又想SPA而又不影响SEO，可以将SEO的关键信息直接在后台就渲染成HTML，而保证搜索引擎的爬虫都能爬取到关键数据
+		> 缺点 window、docment和alert等，如果使用的话需要对运行的环境加以判断
 ## React
 -----------------------------------------------
 - ### 生命周期
