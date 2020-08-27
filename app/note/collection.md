@@ -1,19 +1,60 @@
+Css 双向绑定
 [css](#css)
 - [选择器](#选择器)
 - [css定位背景图片](#css定位背景图片)
+- [transform](#transform)
+- [重绘和回流](#重绘和回流)
+- [flex布局](#flex布局)
+- [垂直水平居中](#垂直水平居中)
+- [元素透明](#元素透明)
+- [清除浮动](#清除浮动)
+- [伪类和伪元素](#伪类和伪元素)
+- [盒模型](#盒模型)
+
 [浏览器](#浏览器)
-- [302和304](#302和304)
-- [各种攻击](#各种攻击)
+- [302和304](#302和304) ?
+- [各种攻击](#各种攻击) ?
 - [cookie和sessionk](#cookie和session)
+
 [Commen](#Commen)
-- [如何理解mvvm](#如何理解mvvm) ?
+- [如何理解mvvm](#如何理解mvvm) 
+	- [View层](#View层)
+	- [Model层](#Model层)
+	- [ViewModel层](#ViewModel层)
+	- [数据绑定](#数据绑定)
 - [refs在vue和react里面的使用](#refs在vue和react里面的使用) ?
 - [vue和React的相同点](#vue和React的相同点) ? 
 - [vue和react的diff算法](#vue和react的diff算法) ?
 - [路由hash和history](#路由hash和history)
+	- [hash](#hash) 
+	- [hashRouterHandler的实现](#hashRouterHandler的实现)  
+	- [history](#history) 
+
 [Vue](#Vue)
+- [生命周期](#生命周期)
+- [如何实现双向绑定](#如何实现双向绑定)
+- [keepAlive](#keepAlive)
+- [SPA&&SEO&&SSR](#SPA&&SEO&&SSR)
+	- [SPA](#SPA) 
+	- [SEO](#SEO) 
+	- [SSR](#SSR) 
+- [vue数据劫持](#vue数据劫持)
+
 [React](#React)
+- [生命周期](#生命周期)?
+- [class和function](#class和function)?
+	- [优缺点](#优缺点)
+	- [使用场景](#使用场景)
+	
 [小程序相关](#小程序相关)
+- [小程序生命周期](#小程序生命周期)
+- [mpvue生命周期](#mpvue生命周期)
+- uniapp生命周期
+- taro生命周期
+- 如何实现0.5px
+- rem和px的转换
+- 小程序的适配问题
+
 [js](#JS)
 - [栈和堆](#栈和堆)
 - [基本数据类型](#基本数据类型)
@@ -39,7 +80,7 @@
 	- [toString](#toString)
 	- [undefined与null](#undefined与null)
 	- [如何判断一个数据类型是普通对象](#如何判断一个数据类型是普通对象)
-- [如何理解闭包](#如何理解闭包)?
+- [如何理解闭包](#如何理解闭包)
 - [Js垃圾回收机制](#Js垃圾回收机制)
 - [缓存相关](#缓存相关)
 	- [强制缓存](#强制缓存)
@@ -82,33 +123,38 @@
 ### CSS
 -----------------------------------------------
 - ### 选择器
-Ele:nth-last-child(n) 
-Ele:nth-of-type(n) 
-Ele:nth-last-of-type(n) 
-Ele:last-child 
-Ele:first-of-type 
-Ele:only-child 
-Ele:only-of-type 
-Ele:empty 
-Ele:checked 
-Ele:enabled 
-Ele:disabled 
-Ele::selection 
-Ele:not(s)
+	:nth-last-child(n) 
+	:nth-of-type(n) 
+	:nth-last-of-type(n) 
+	:last-child 
+	:first-of-type 
+	:only-child 
+	:only-of-type 
+	:empty 
+	:checked 
+	:enabled 
+	:disabled 
+	::selection 
+	:not(s)
 - ### css背景图片相关
 	- #### background-clipbackground-clip:
 	> 规定背景的绘制区域 - backround-origin: 规定背景图片的定位区域
-- ### transform: translate(150px, 100px);
+- ### transform
+	> : translate(150px, 100px);
 - ### 重绘和回流
 	> reflow:当render树中的一部分或者全部因为大小边距等问题发生改变而需要重建的过程叫做回流, 就是当一些物理部分改变的时候，包括margin,padding,height,width,border等
 	> repaint:当元素的一部分属性发生变化，如外观背景色不会引起布局变化而需要重新渲染的过程叫做重绘 就是一些修饰的属性改变的时候，比如颜色。 `回流一定会伴随着重绘，但是重绘不一定会引起回流。回流的代价比重绘高。`
+
 - ### flex布局
 > flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto
 - flex-grow: 默认为0，即如果存在剩余空间，也不放大
 - flex-shrink: 定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小,0就不缩小
 - flex-basis：它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。auto表示项目本来大小
+
 - ### 垂直水平居中
-- float和inline的区别和联系
+
+- ### float和inline的区别和联系
+
 - ### 元素透明
 	- overflow:hidden/* 占据空间，无法点击 */
 	- opacity:0/* 占据空间，可以点击 */
@@ -116,7 +162,9 @@ Ele:not(s)
 	- display:none
 	- position:absolute/* left top 设置的非常远 */
 	- z-index:-1000/* 不占据空间，无法点击 */
+	
 - ### 清除浮动
+
 - ### 伪类和伪元素：
 > 伪类本质上是为了弥补常规CSS选择器的不足，以便获取到更多信息, 伪元素本质上是创建了一个有内容的虚拟容器；
 ```css
@@ -127,7 +175,7 @@ Ele:not(s)
 	/* 伪类：:active		:focus :hover		:link :visited	:first-child
 			:lang :nth-child(odd) :nth-child(even) */
 ```
-- ###盒模型
+- ### 盒模型
 > magin+border+padding+content(width), 但实际盒子的大小没有margin，加上margin是指占地面积
 - W3C: 属性width,height只包含内容content，不包含border和padding。
 - IE: 属性width,height包含border和padding，指的是content+padding+border
@@ -1693,11 +1741,7 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 		>> `状态`: 页面的这一块展示什么，那一块展示什么这些都属于视图状态（展示）
 		>> `行为`: 页面加载进来时发生什么，点击这一块发生什么，这一块滚动时发生什么这些都属于视图行为（交互）
 		>> `双向绑定`：ViewModel 的内容会实时展现在 View 层, ViewModel变化时，自动更新View，View变化时，自动更新ViewModel
-		>> 总结：`解耦了 View 层和 Model 层，这个解耦是至关重要的，它是前后端分离方案实施的重要一环。`
-	- #### 数据绑定
-	脏值检查（angular.js）
-数据劫持（vue.js）
-发布者-订阅者模式（backbone.js）
+		>> 总结：`解耦了 View 层和 Model 层，并且使 View 和 Modal 是同步的`
 
 - ### refs在vue和react里面的使用
 - ### vue和React的相同点
@@ -1770,8 +1814,151 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 ## Vue 
 -----------------------------------------------
 - ### 生命周期
+	> Vue实例需要经过创建、初始化数据、编译模板、挂载DOM、渲染、更新、渲染、卸载等一系列过程，这个过程就是Vue的生命周期
+	> 在Vue的整个生命周期中提供很多钩子函数在生命周期的不同时刻调用:
+		> - beforeCreate: 啥都没有 可以展示Loading
+		> - created: 主要完成了数据绑定的配置、计算属性与方法的挂载，已将有data和method可以发请求
+		> - beforeMount: 主要完成了页面模板的解析,在此生命周期钩子执行时$el被创建，但是页面只是在内存中，并未作为DOM渲染。
+		> - mounted: 主要做了将页面从内存中渲染到DOM的操作。页面已经渲染完成
+		> - beforeUpdate: 当数据发生更新时beforeUpdate钩子便会被调用, 此时Vue实例中数据已经是最新的，但是在页面中的数据还是旧的，在此时可以进一步地更改状态，这不会触发附加的重渲染过程
+		> - updated: 当数据发生更新并在DOM渲染完成后updated钩子便会被调用，在此时组件的DOM已经更新，可以执行依赖于DOM的操作。
+		> - beforeDestroy: 在Vue实例被销毁之前beforeDestroy钩子便会被调用，在此时实例仍然完全可用。
+		> - destroyed: 在Vue实例被销毁之后destroyed钩子便会被调用，就是啥都没有了
+	<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue生命周期</title>
+</head>
+<body>
+    <div id="app">
+        <div>{{msg}}</div>
+        <button @click="updateMsg">updateMsg</button>
+        <button @click="destroyVue">destroyVue</button>
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'Vue Lifecycle'
+        },
+        beforeCreate: function() {
+            console.log("beforeCreate");
+            console.log(this.$el); //undefined
+            console.log(this.$data); //undefined 
+            console.log(this.msg); // undefined
+            console.log("--------------------");
+        },
+        created: function() {
+            console.log("created");
+            console.log(this.$el); //undefined
+            console.log(this.$data); //{__ob__: Observer} 
+            console.log(this.msg); // Vue Lifecycle
+            console.log("--------------------");
+        },
+        beforeMount: function() {
+            console.log("beforeMount");
+            console.log(this.$el); //<div id="app">...</div>
+            console.log(this.$data); // {__ob__: Observer}
+            console.log(this.msg); // Vue Lifecycle
+            console.log("--------------------");
+        },
+        mounted: function() {
+            console.log("mounted");
+            console.log(this.$el); //<div id="app">...</div>
+            console.log(this.$data); //{__ob__: Observer} 
+            console.log(this.msg); // Vue Lifecycle
+            console.log("--------------------");
+        },
+        beforeUpdate: function () {
+            console.log("beforeUpdate");
+            console.log(this.$el);
+            console.log(this.$data);
+            console.log(this.msg);
+            debugger;
+            console.log("--------------------");
+        },
+        updated: function () {
+            console.log("updated");
+            console.log(this.$el);
+            console.log(this.$data);
+            console.log(this.msg);
+            console.log("--------------------");
+        },
+        beforeDestroy: function () {
+            console.log("beforeDestroy");
+            console.log(this.$el);
+            console.log(this.$data);
+            console.log(this.msg);
+            console.log("--------------------");
+        },
+        destroyed: function () {
+            console.log("destroyed");
+            console.log(this.$el);
+            console.log(this.$data);
+            console.log(this.msg);
+            console.log("--------------------");
+        },
+        methods:{
+            updateMsg: function(){
+                this.msg = "Vue Update";
+            },
+            destroyVue: function(){
+                this.$destroy();
+            }
+        }
+    })
+</script>
+</html>
+
 - ### 如何实现双向绑定
+	> 通过`数据劫持`结合`发布者-订阅者模式`的方式来实现的
+	> 在 Vue 的 MVVM 设计中，我们主要针对 `Compile（模板编译)`、`Observer（数据劫持)`、`Watcher（数据监听）`和 `Dep（发布订阅）`几个部分来实现
+	> 详见VueMVVM.js
+	```javascript
+	`一个基本的绑定`
+	(function() {
+    var root = this;
+    function watch(target, func) {
+        var proxy = new Proxy(target, {
+            get: function(target, prop) {
+                return target[prop];
+            },
+            set: function(target, prop, value) {
+                target[prop] = value;
+                func(prop, value);
+            }
+        });
+        return proxy;
+    }
+    this.watch = watch;
+		})()
+		var obj = {
+				value: 1
+		}
+		var newObj = watch(obj, function(key, newvalue) {
+				if (key == 'value') document.getElementById('container').innerHTML = newvalue;
+		})
+		document.getElementById('button').addEventListener("click", function() {
+				newObj.value += 1
+		});
+
+	```
 - ### keepAlive
+> keepalive 是 Vue 内置的一个组件，可以使被包含的组件保留状态，或避免重新渲染 。也就是所谓的组件缓存、、
+> 跳转到详情页面时，需要保持列表页的滚动条的深度，等返回的时候依然在这个位置，这样可以提高用户体验
+> include代表只缓存那几个组件，里面是组件名
+> 具体参见keepalive用法.vue
+```Html
+<keep-alive>
+	<router-view />
+</keep-alive>
+<keep-alive :include="['ListView', 'DetailView']">
+	<router-view />
+</keep-alive>
+```
+
 - ### SPA&&SEO&&SSR
 	- #### SPA
 		> single page application 
@@ -1780,10 +1967,78 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 	- #### SEO
 		> Search Engine Optimization
 		> 说白了就是搜索引擎搜索不到
-	- #### SPA
+	- #### SSR
 		>  Server-Side Rendering(服务器端渲染)的缩写
 		> 又想SPA而又不影响SEO，可以将SEO的关键信息直接在后台就渲染成HTML，而保证搜索引擎的爬虫都能爬取到关键数据
 		> 缺点 window、docment和alert等，如果使用的话需要对运行的环境加以判断
+- ### vue数据劫持
+	> 指的是在访问或者修改对象的某个属性时，通过一段代码拦截这个行为，进行额外的操作或者修改返回结果
+	> `Object.defineProperty`和`Proxy`来实现
+	- #### Object.defineProperty
+		> defineProperty 只能重定义属性的`读取（get）`和`设置（set）`行为
+		```javascript
+			defineProperty(obj,prop,descriptor)
+				descriptor = {
+					// 属性描述符
+					value: 属性的值
+					writable: 如果为false，属性的值就不能被重写。
+					// 存储描述符
+					get: 一旦目标属性被访问就会调回此方法，并将此方法的运算结果返回用户。
+					set: 一旦目标属性被赋值，就会调回此方法。
+					`属性描述符和存储描述符不能同时存在!!!`
+					// 通用
+					configurable: 如果为false，则任何尝试删除目标属性或修改属性性以下特性（writable,configurable, enumerable）的行为将被无效化。
+					enumerable: 是否能在for...in循环中遍历出来或在Object.keys中列举出来
+				}
+		```
+
+	- #### Proxy
+		> 可以定义 get、set、in、delete、函数调用等更多行为 `defineProperty是监听对象的属性get或set，Proxy可以直接监听对象而非属性`
+		> Proxy(target, handler)
+		> `target`是用Proxy包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理）。
+		> `handler`是一个对象，其属性是当执行一个操作时定义代理的行为的函数
+		> `Reflect`是一个内置的对象，它提供拦截 JavaScript 操作的方法
+		```javascript
+			const input = document.getElementById('input');
+			const p = document.getElementById('p');
+			const obj = {};
+
+			const newObj = new Proxy(obj, {
+				get: function(target, key, receiver) {
+					console.log(`getting ${key}!`);
+					return Reflect.get(target, key, receiver);
+				},
+				set: function(target, key, value, receiver) {
+					console.log(target, key, value, receiver);
+					if (key === 'text') {
+						input.value = value;
+						p.innerHTML = value;
+					}
+					return Reflect.set(target, key, value, receiver);
+				},
+			});
+
+			input.addEventListener('keyup', function(e) {
+				newObj.text = e.target.value;
+			});
+
+			`handler都有哪些方法呀`
+			handler.getPrototypeOf() // 在读取代理对象的原型时触发该操作，比如在执行 Object.getPrototypeOf(proxy) 时。
+			handler.setPrototypeOf() // 在设置代理对象的原型时触发该操作，比如在执行 Object.setPrototypeOf(proxy, null) 时。
+			handler.isExtensible() // 在判断一个代理对象是否是可扩展时触发该操作，比如在执行 Object.isExtensible(proxy) 时。
+			handler.preventExtensions() // 在让一个代理对象不可扩展时触发该操作，比如在执行 Object.preventExtensions(proxy) 时。
+			handler.getOwnPropertyDescriptor() // 在获取代理对象某个属性的属性描述时触发该操作，比如在执行 Object.getOwnPropertyDescriptor(proxy, "foo") 时。
+			handler.construct() // 在给一个目标对象为构造函数的代理对象构造实例时触发该操作，比如在执行new proxy() 时。
+			handler.defineProperty() // 在定义代理对象某个属性时的属性描述时触发该操作，比如在执行 Object.defineProperty(proxy, "foo", {}) 时。
+			`常用`
+			handler.has() // 在判断代理对象是否拥有某个属性时触发该操作，比如在执行 "foo" in proxy 时。
+			handler.get() // 在读取代理对象的某个属性时触发该操作，比如在执行 proxy.foo 时。
+			handler.set() // 在给代理对象的某个属性赋值时触发该操作，比如在执行 proxy.foo = 1 时。
+			handler.deleteProperty() // 在删除代理对象的某个属性时触发该操作，比如在执行 delete proxy.foo 时。
+			handler.ownKeys() // 在获取代理对象的所有属性键时触发该操作，比如在执行 Object.getOwnPropertyNames(proxy) 时。
+			handler.apply() // 在调用一个目标对象为函数的代理对象时触发该操作，比如在执行 proxy() 时。
+		```
+
 ## React
 -----------------------------------------------
 - ### 生命周期
