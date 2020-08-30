@@ -1,20 +1,48 @@
-Css 双向绑定
 [css](#css)
-- [选择器](#选择器)
+- [选择器](#选择器)? TODO:
 - [css定位背景图片](#css定位背景图片)
-- [transform](#transform)
+- [transform](#transform)?TODO:
 - [重绘和回流](#重绘和回流)
-- [flex布局](#flex布局)
+- [flex布局](#flex布局)?TODO:
 - [垂直水平居中](#垂直水平居中)
 - [元素透明](#元素透明)
-- [清除浮动](#清除浮动)
+- [清除浮动](#清除浮动)?TODO:
 - [伪类和伪元素](#伪类和伪元素)
 - [盒模型](#盒模型)
 
 [浏览器](#浏览器)
-- [302和304](#302和304) ?
-- [各种攻击](#各种攻击) ?
+- [302和304](#302和304)
+- [各种攻击](#各种攻击)
+	- [XSS](#XSS)
+	- [CSRF](#CSRF) 
 - [cookie和sessionk](#cookie和session)
+- [输入url到看到页面都经历了啥](#输入url到看到页面都经历了啥) TODO: js和css的加载顺序
+- [https](#https)
+	- [http的缺点](#http的缺点)
+	- [https的优势和关键点](#https的优势和关键点)
+- [http2.0](#http2.0)?
+ - [http1.0缺点](#http1.0缺点)
+ - [多路复用MultiPlexing](#多路复用MultiPlexing)
+ - [头部header压缩](#头部header压缩)
+ - [服务端推送ServerPush](#服务端推送ServerPush)
+ - [http3](#http3)
+- [CDN](#CDN) TODO:
+- [DOMContentLoaded和load事件](#DOMContentLoaded和load事件)
+- [jwt](#jwt) TODO:
+- [首屏优化方案](#首屏优化方案)
+	- [减少组件库](#减少组件库)
+	- [动态路由拆分codeSplitting](#动态路由拆分codeSplitting)TODO: 总结一下，考的几率不大
+	- [preload](#preload)
+	- [prefetch](#prefetch)
+	- [Prerendering](#Prerendering)
+	- [preconnect](#preconnect)
+	- [async&&defer](#async&&defer)
+	- [图片懒加载](#图片懒加载)
+	- [SSR](#SSR)
+	- [ServiceWOrker缓存](#ServiceWOrker缓存)
+
+[webpack](#webpack)TODO:
+- [codingSplitting]
 
 [Commen](#Commen)
 - [如何理解mvvm](#如何理解mvvm) 
@@ -22,9 +50,10 @@ Css 双向绑定
 	- [Model层](#Model层)
 	- [ViewModel层](#ViewModel层)
 	- [数据绑定](#数据绑定)
-- [refs在vue和react里面的使用](#refs在vue和react里面的使用) ?
-- [vue和React的相同点](#vue和React的相同点) ? 
-- [vue和react的diff算法](#vue和react的diff算法) ?
+- [refs在vue和react里面的使用](#refs在vue和react里面的使用) ?TODO:
+- [vue和React的相同点](#vue和React的相同点)
+- [vue和React里面的key](#vue和React里面的key)
+- [vue和react的diff算法](#vue和react的diff算法) ?TODO:
 - [路由hash和history](#路由hash和history)
 	- [hash](#hash) 
 	- [hashRouterHandler的实现](#hashRouterHandler的实现)  
@@ -38,22 +67,29 @@ Css 双向绑定
 	- [SPA](#SPA) 
 	- [SEO](#SEO) 
 	- [SSR](#SSR) 
+- [window.performance](#window.performance) 
+	- [performance.memory](#performance.memory)
+	- [performance.navigation](#performance.navigation)
+	- [performance.timing](#performance.timing)
 - [vue数据劫持](#vue数据劫持)
+ - [Object.defineProperty](#Object.defineProperty)
+ - [Proxy](#Proxy)
 
-[React](#React)
+[React](#React)TODO:
 - [生命周期](#生命周期)?
 - [class和function](#class和function)?
 	- [优缺点](#优缺点)
 	- [使用场景](#使用场景)
+	- [mobx和redux](#mobx和redux) ?
 	
-[小程序相关](#小程序相关)
+[小程序相关](#小程序相关)TODO:
 - [小程序生命周期](#小程序生命周期)
 - [mpvue生命周期](#mpvue生命周期)
-- uniapp生命周期
-- taro生命周期
-- 如何实现0.5px
-- rem和px的转换
-- 小程序的适配问题
+- [uniapp生命周期](#uniapp生命周)
+- [taro生命周期](#taro生命周期)
+- [如何实现0.5px](#如何实现0.5px)
+- [rem和px的转换](#rem和px的转换)
+- [小程序的适配问题](#小程序的适配问题)
 
 [js](#JS)
 - [栈和堆](#栈和堆)
@@ -69,6 +105,7 @@ Css 双向绑定
 	- [TDZ(tempral dead zoon)](#TDZ)
 - [继承](#继承)
 	- [__proto__和prototype](#__proto__和prototype)
+	- [原型对象上函数内部this指向问题](#原型对象上函数内部this指向问题)
 	- [组合式继承](#组合式继承)
 	- [组合寄生式继承](#组合寄生式继承)
 	- [class继承](#class继承)
@@ -82,12 +119,28 @@ Css 双向绑定
 	- [如何判断一个数据类型是普通对象](#如何判断一个数据类型是普通对象)
 - [如何理解闭包](#如何理解闭包)
 - [Js垃圾回收机制](#Js垃圾回收机制)
+ - [标记清除](#标记清除)
+ - [引用计数](#引用计数)
+ - [总结](#总结)
 - [缓存相关](#缓存相关)
 	- [强制缓存](#强制缓存)
-- [输入url到看到页面都经历了啥](#到看到页面都经历了啥)?
+	- [协商缓存](#协商缓存)
+	- [ServiceWorker](#ServiceWorker)
+	- [memoryCache](#memoryCache)
+	- [diskCache](#diskCache)
+	- [networkRequest](#302和304)
 - [EventLoop运行机制](#EventLoop运行机制)
-- [事件](#事件)?
+	- [浏览器进程与线程](#浏览器进程与线程)
+	- [macrotask和microtask](#macrotask和microtask)
+	- [总结事件执行机制](#总结事件执行机制) TODO: 检查到这里
+- [事件](#事件) TODO:
+	- [冒泡和捕获](#冒泡和捕获)
+	- [addEventListenerVSonload](#addEventListenerVSonload)
+	- [如何实现一个事件的发布订阅](#如何实现一个事件的发布订阅)
 - [foreach&&forIn&&forOf](#foreach&&forIn&&forOf)
+	- [foreach](#foreach)
+	- [for...in](#for...in)
+	- [for...of](#for...of)
 - [深拷贝和浅拷贝](#深拷贝和浅拷贝)
 	- [浅拷贝](#浅拷贝)
 	- [深拷贝](#深拷贝)
@@ -98,8 +151,9 @@ Css 双向绑定
 	- [寄生组合继承与Object.create()的关系](#寄生组合继承与Object.create()的关系)
 	- [Map和WeakMap](#Map和WeakMap)
 - [DOCTYPE的作用](#DOCTYPE的作用)
-- [call-apply-bind区别&&实现](#call-apply-bind区别&&实现) to see
-- [promise的理解实现](#promise的理解实现) to see
+- [call-apply-bind区别&&实现](#call-apply-bind区别&&实现) TOSEE
+- [promise的理解实现](#promise的理解实现) TOSEE
+	- [异步相关概念和代码执行顺序](#异步相关概念和代码执行顺序)
 	- [概念和用法](#概念和用法)
 	- [实现](#实现)
 	- [async/await](#async/await) ?
@@ -120,6 +174,18 @@ Css 双向绑定
 - [location.href](#location.href)?
 - [es6-es10新特性](#es6-es10新特性)?
 - [importVSrequier](#importVSrequier)
+- [JS中浮点数精度问题](#JS中浮点数精度问题)
+- [window.onload](#window.onload)?
+- [express和koa中间件的使用不同之处](#express和koa中间件的使用不同之处)?
+
+[算法](#算法)TODO:
+- [时间复杂度和空间复杂度]
+- [异步求和]
+- [大位数加减乘除]
+- [链表]
+- [排序]
+- [最长公用首字符串](#最长公用首字符串)
+
 ### CSS
 -----------------------------------------------
 - ### 选择器
@@ -651,43 +717,42 @@ Array.from(arguments) // es6
 			two2.getNumOne(); // 4
 			two2.getNumTwo(); // 6
 		```
-- #### 组合寄生式继承
-	> 寄生式继承(包装成另一个对象，但是不能做到函数复用)来继承父类型的原型 + 借用构造函数继承(同上)
-	```javascript
-	// inheritPrototype接收两个参数：子类型的构造函数和父类型的构造函数
-	function inheritPrototype(child, parent) {
-			// 创建父类型原型的副本
-			const prototype = Object.create(parent.prototype); 
-			// 为创建的副本添加constructor属性，从而弥补因重写原型而失去的默认的constructor属性
-			prototype.constructor = child;
-			// 将创建的副本赋值给子类型的原型
-			child.prototype = prototype;
-	}
+	- #### 组合寄生式继承
+		> 寄生式继承(包装成另一个对象，但是不能做到函数复用)来继承父类型的原型 + 借用构造函数继承(同上)
+		```javascript
+		// inheritPrototype接收两个参数：子类型的构造函数和父类型的构造函数
+		function inheritPrototype(child, parent) {
+				// 创建父类型原型的副本
+				const prototype = Object.create(parent.prototype); 
+				// 为创建的副本添加constructor属性，从而弥补因重写原型而失去的默认的constructor属性
+				prototype.constructor = child;
+				// 将创建的副本赋值给子类型的原型
+				child.prototype = prototype;
+		}
 
-	function One(num1) {
-			this.numOne = num1;
-			this.numList = [1,2];
-	}
-	One.prototype.getNumOne = function() {
-			return this.numOne;
-	}
+		function One(num1) {
+				this.numOne = num1;
+				this.numList = [1,2];
+		}
+		One.prototype.getNumOne = function() {
+				return this.numOne;
+		}
 
-	function Two(num1, num2) {
-			One.call(this, num1)
-			this.numTwo = num2;
-	}
-	inheritPrototype(Two, One) // 在组合继承里面 这句话是 Two.prototype = new One();
-	Two.prototype.getNumTwo = function() {
-			return this.numTwo;
-	}
+		function Two(num1, num2) {
+				One.call(this, num1)
+				this.numTwo = num2;
+		}
+		inheritPrototype(Two, One) // 在组合继承里面 这句话是 Two.prototype = new One();
+		Two.prototype.getNumTwo = function() {
+				return this.numTwo;
+		}
 
-	var two = new Two(3, 5);
-	two.numList.push(6); 
-	console.log(two.numList); // [1, 2, 6]
-	two.getNumOne(); // 3
-	two.getNumTwo(); // 5
-
-	```
+		var two = new Two(3, 5);
+		two.numList.push(6); 
+		console.log(two.numList); // [1, 2, 6]
+		two.getNumOne(); // 3
+		two.getNumTwo(); // 5
+		```
 
 - ### 如何判断数据类型
 	- #### instanceOf
@@ -735,7 +800,6 @@ Array.from(arguments) // es6
 			typeof x; `Error` // typeof 运行时就会抛出一个 ReferenceError
 			let x;
 		```
-	
 	- #### 判断两者是否相等
 		> there are six falsy values: `false, 0, '', null, undefined, and NaN.` Everything else is truthy
 		```javascript
@@ -745,7 +809,6 @@ Array.from(arguments) // es6
 	- #### toString
 		> Object原型上未被覆盖的toString()方法，使用call来改变this指向
 		> 会得到[object, Boolean | Number | String| Null | Undefined | Symbol | Object | Function | Array | Error | RegExp | Math | json | global]这样的结果，并且是准确的
-	
 	- #### undefined与null
 		> 两个都代表无`undefined == null`
 		> 由来：最初JS只设置了null作为表示"无"的值。并根据C语言的传统，null被设计成可以自动转为0 `Number(null) 0` `5 + null = 5`
@@ -756,7 +819,6 @@ Array.from(arguments) // es6
 		- 调用函数时，应该提供的参数没有提供，该参数等于undefined
 		- 对象没有赋值的属性，该属性的值为undefined
 		- 函数没有返回值时，默认返回undefined
-
 	- #### 如何判断一个数据类型是普通对象
 		> 这里经常采坑的是 我们通常希望得到一个不是null的对象
 		```javascript
@@ -856,21 +918,20 @@ Array.from(arguments) // es6
 				);
 			});
 		```
-	- #### memory cache
+	- #### memoryCache
 		> 会缓存js和图片等文件
 		> 内存中的缓存，在尝试读取本地缓存时，总是先读内存，再读硬盘，毕竟访问内存更快。原则上可以存任何东西
 		> 内存缓存会将编译解析后的文件，直接存入该进程的内存中，占据该进程一定的内存资源，以方便下次运行使用时的快速读取。但进程关闭，缓存都清空
 		> 与 `memory cache` 相关的机制有 `preloader` 和 `preload` 两种：
-	- #### disk cache
+	- #### diskCache
 		> 是持久存储
 		> 硬盘缓存则是直接将缓存写入硬盘文件中，读取缓存需要对该缓存存放的硬盘文件进行I/O操作，然后重新解析该缓存内容，读取复杂，速度比内存缓存慢。但是要比发网络请求要快很多
-	- #### network request
+	- #### networkRequest
 
-- ### 输入url到看到页面都经历了啥
 - ### 说说数组的常用方法和对应实现
-- ### 如何实现一个事件的发布订阅
 - ### EventLoop运行机制
 	> 概念定义：callStack是用来执行JS代码 callbackQueue用来存异步事件callback EventLoop是个协调者，他一直给callStack介绍工作，不让它闲着
+	- #### 浏览器进程与线程
 	> 浏览器默认每个Tab页面一个进程，互不影响，主要用于页面渲染，脚本执行，事件处理等
 	> 浏览器的渲染进程`是多线程的`JS是`单线程`的，一个进程包含多个线程
 	> 一个进程的内部包含如下线程
@@ -911,6 +972,9 @@ Array.from(arguments) // es6
 		- 渲染完毕后，JS线程继续接管，开始下一个宏任务（从事件队列中获取)
 
 - ### 事件
+	- #### 冒泡和捕获
+	- #### addEventListenerVSonload
+	- #### 如何实现一个事件的发布订阅
 
 - ### foreach&&forIn&&forOf
 	- #### foreach
@@ -1184,13 +1248,36 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 			fBound.prototype = new Fn();
 			return fBound;
 		}
+
+		Function.prototype.myBind = function(context) {
+			let self = this;
+			let args = [...arguments].slice(1);
+			var bound = function() {
+					let newArgs = [...arguments];
+					// 作为构造函数使用
+					if(this instanceof bound) {
+							return self.apply(this, args.concat(newArgs))
+					} else {
+							return self.apply(context, args.concat(newArgs))
+					}
+			}
+			// 维护原型关系
+			if(this.prototype) {
+					bound.prototype = this.prototype;
+			}
+			return bound;
+	}
+
 ```
 - ### promise的理解实现
 	- #### 异步相关概念和代码执行顺序
 		> js单线程，我们所谓的异步也是假的
 		> 异步的四种解决方案: 回调函数、事件监听、发布/订阅、Promise对象
+		> macrotasks: script(整体代码),setTimeout, setInterval, setImmediate, I/O, UI rendering
+		> microtasks: process.nextTick, Promises, Object.observe, MutationObserver
 		> 下面这些的操作顺序
 		```javascript
+			`test1`
 			const foo = function() {
 				console.log('foo begins')
 				setTimeout(function() {
@@ -1205,6 +1292,7 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 			bar()
 			// fooo begins/ barexecuted/ foo finishes
 
+			`test2`
 			let promise = new Promise(function(resolve, reject) {
 				console.log('Promise');
 				resolve();
@@ -1215,10 +1303,9 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 			});
 
 			console.log('Hi!');
-			// Promise
-			// Hi!
-			// resolved
+			// Promise // Hi! // resolved
 
+			`test3`
 			const p1 = new Promise(function (resolve, reject) {
 				setTimeout(() => reject(new Error('fail')), 3000)
 			})
@@ -1232,19 +1319,40 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 				.catch(error => console.log(error))
 			// Error: fail
 
-			// 这是一个给定状态值后的promise对象也就是reject函数永远都不会被执行
-			var original = Promise.resolve(33);
+			`test4`
+			var original = Promise.resolve(33);// 这是一个给定状态值后的promise对象也就是reject函数永远都不会被执行
 			var cast = Promise.resolve(original) // 这里cast和original相等
 			cast.then(function(value) {
 				console.log('value: ' + value);
 			});
 			console.log('original === cast ? ' + (original === cast));
-
 			/*
 			*  打印顺序如下，这里有一个同步异步先后执行的区别
 			*  original === cast ? true
 			*  value: 33
 			*/
+
+			`test5`
+			setImmediate(function(){
+					console.log(1);
+			},0);
+			setTimeout(function(){
+					console.log(2);
+			},0);
+			new Promise(function(resolve){
+					console.log(3);
+					resolve();
+					console.log(4);
+			}).then(function(){
+					console.log(5);
+			});
+			console.log(6);
+			process.nextTick(function(){
+					console.log(7);
+			});
+			console.log(8);
+			// 3 4 6 8 7 5 2 1
+			`process.nextTick > promise.then > setTimeout > setImmediate`
 		```
 
 	- #### 概念和用法
@@ -1374,7 +1482,7 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 				root   E:\\nginx ;
 				index demo.html demo.htm;
 			}	
-			# 匹配localhost请求地址中的'/api'字段并用设置的proxy_pass属性值替换
+			<!-- 匹配localhost请求地址中的'/api'字段并用设置的proxy_pass属性值替换 -->
 			location /api { 
 					rewrite  ^/api/(.*)$ /$1 break;
 					proxy_pass   http://api.map.baidu.com/location/ip; 
@@ -1710,22 +1818,137 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 		> `编译时加载`: ES6 模块不是对象，而是通过 export 命令显式指定输出的代码，import时采用静态命令的形式。即在import时可以指定加载某个输出值，而不是加载整个模块，这种加载称为“编译时加载”。
 		> CommonJS 加载的是一个对象（即module.exports属性），该对象只有在脚本运行完才会生成。而 ES6 模块不是对象，它的对外接口只是一种静态定义，在代码静态解析阶段就会生成。
 
+- ### JS中浮点数精度问题
+	> 会出现 0.1 + 0.2 = 0.30000000000000004 的问题
+	> 问题的由来：js用64位比特来存一个number类型
+	> `(1位正负号 + 11位存多少次方 + 58位存尾数) = 64`
+	> 计算0.1+0.2的时候，十进制的0.1和0.2会被转换成二进制的, 而浮点数用二进制表示时是无穷的
+		0.1 -> 0.0001 1001 1001 1001...(1100循环)
+		0.2 -> 0.0011 0011 0011 0011...(0011循环)
+	> 所以再转换为十进制，就成了0.30000000000000004
+		0.1 + 0.2 = 0.0100110011001100110011001100110011001100110011001100
+	> 解决办法
+	- #### toFixed
+		> 是小数点后指定位数取整，从小数点开始数起
+		> 缺点：1.005.toFixed(2) 返回的是 1.00 而不是 1.01 在四舍五入的判断上有问题
+	- #### toPrecision
+		> 处理精度，精度是从左至右第一个不为0的数开始数起。
+		parseFloat(1.4000000000000001.toPrecision(12)) === 1.4  // True
+	- #### 转成int类型
+		```javascript
+			/**
+			 * 精确加法
+			 * 0.1 + 0.2 == 0.3 //false  (0.1*10 + 0.2*10)/10 == 0.3 //true
+			*/
+			function add(num1, num2) {
+				const num1Digits = (num1.toString().split('.')[1] || '').length;
+				const num2Digits = (num2.toString().split('.')[1] || '').length;
+				const baseNum = Math.pow(10, Math.max(num1Digits, num2Digits));
+				return (num1 * baseNum + num2 * baseNum) / baseNum;
+			}
+		```
+	> `小数部分的位运算`：小数转换为二进制的方法：对小数点以后的数乘以2，有一个结果吧，取结果的整数部分（不是1就是0喽），然后再用小数部分再乘以2，再取结果的整数部分……以此类推，直到小数部分为0或者位数已经够了就OK了。
+		
+- ### express和koa中间件的使用不同之处
+
+## webpack
+
 ## 浏览器
 -----------------------------------------------
 - ### 302和304
-> 302代表暂时重定向，304代表资源没有变动用本地缓存就行
-> 相关字段
+	> 302代表暂时重定向，304代表资源没有变动用本地缓存就行
+	> 302返回location字段，这个字段告诉我们资源被重定向到哪里
+	> 当浏览器拿到状态码是304 的时候，就会从本地资源中拿请求的资源或者代理服务器直接返回本地的资源，304属于走缓存
+	> 相关字段
+		> - If-modified-Since/Last-Modified
+		> - If-None-Match/Etag
 
 - ### 各种攻击
-	> XSS：恶意攻击者往 Web 页面里插入恶意 Script 代码，当用户浏览该页之时，嵌入其中 Web 里面的 Script 代码会被执行，从而达到恶意攻击用户的目的。
-	> CSRF：CSRF 攻击是攻击者借助受害者的 Cookie 骗取服务器的信任，可以在受害者毫不知情的情况下以受害者名义伪造请求发送给受攻击服务器，从而在并未授权的情况下执行在权限保护之下的操作。
+	> #### XSS
+		> (Cross Site Scripting) 跨站脚本攻击
+		> 恶意攻击者往 Web 页面里插入恶意 Script 代码，当用户浏览该页之时，嵌入其中 Web 里面的 Script 代码会被执行，从而达到恶意攻击用户的目的。
+		> 比如：在网页 input 或者 textarea 中输入 <script>alert('xss')</script>或者其他脚本
+		> 如何避免？ 避免 XSS 的方法之一主要是将用户输入的内容进行过滤。对所有用户提交内容进行可靠的输入验证，包括对 URL、查询关键字、POST数据等，仅接受指定长度范围内、采用适当格式、采用所预期的字符的内容提交，对其他的一律过滤 或者 将不可信数据插入到HTML对这些数据进行URL编码或者html编码
+
+	> #### CSRF
+		> (Cross-site request forgery) 跨站请求伪造 冒充用户在站内的正常操作
+		> CSRF 攻击是攻击者借助受害者的 Cookie 骗取服务器的信任，可以在受害者毫不知情的情况下以受害者名义伪造请求发送给受攻击服务器，从而在并未授权的情况下执行在权限保护之下的操作。
+		> 如何防御：1.验证 HTTP Referer 字段 2.在请求地址中添加 token 并验证 3.在 HTTP 头中自定义属性并验证
 
 - ### cookie和session
 	> 描述：HTTP协议是无状态的协议，所以服务端需要记录用户的状态, 那这种机制就是session
-	> session是个为http增加状态的一种概念，cookie可以说是这种概念
+	> session是个为http增加状态的一种概念，cookie可以说是这种概念的一种实现
 	> Session是在服务端保存的一个数据结构，用来跟踪用户的状态，这个数据可以保存在集群、数据库、文件中； Cookie是客户端保存用户信息的一种机制，用来记录用户的一些信息，也是实现Session的一种方式。
 	> cookie是存储于浏览器内存中的
 
+- ### 输入url到看到页面都经历了啥
+	- `DNS解析`：将域名解析成IP地址 向 DNS 服务器发送域名，DNS 服务器查询到与域名相对应的 IP 地址，然后返回给浏览器
+	- `TCP连接三次握手`：TCP三次握手, 主要目的为了防止已失效的连接请求报文段突然又传送到了服务端，造成server端一直等待，浪费资源。
+		> 第一次握手：`第一次握手，由浏览器发起，告诉服务器我要发送请求了`客户端A将标志位SYN置为1,随机产生一个值为seq=X（X的取值范围为=1234567）的数据包到服务器，客户端A进入SYN_SENT状态，等待服务端B确认
+		> 第二次握手：`第二次握手，由服务器发起，告诉浏览器我准备接受了，你赶紧发送吧`服务端B收到数据包后由标志位SYN=1知道客户端A请求建立连接，服务端B将标志位SYN和ACK都置为1，ack=X+1，随机产生一个值seq=Y，并将该数据包发送给客户端A以确认连接请求，服务端B进入SYN_RCVD状态。
+		> 第三次握手：`第三次握手，由浏览器发送，告诉服务器，我马上就发了，准备接受吧`客户端A收到确认后，检查ack是否为X+1，ACK是否为1，如果正确则将标志位ACK置为1，ack=Y+1，并将该数据包发送给服务端B，服务端B检查ack是否为Y+1，ACK是否为1，如果正确则连接建立成功，客户端A和服务端B进入ESTABLISHED状态，完成三次握手，随后客户端A与服务端B之间可以开始传输数据了
+	- 发送HTTP请求
+	- 服务器处理请求并返回HTTP报文
+	- #### 浏览器解析渲染页面
+		- 根据HTML文件解析出DOM Tree
+		- 根据CSS解析出 CSSOM Tree(CSS规则树)
+		- 将 DOM Tree 和 CSSOM Tree合并，构建Render tree(渲染树)
+		- reflow(回流)：根据Render tree进行节点信息计算（Layout）
+		- repaint(重绘)：根据计算好的信息绘制整个页面（Painting）
+	- #### (连接技术)TCP四次挥手
+		> 第一次：`(由浏览器告诉服务器，我请求报文发送完了，你准备关闭吧)`客户端向服务端发送报文，Fin、Ack、Seq，表示已经没有数据传输了。并进入 FIN_WAIT_1 状态。
+		> 第二次：`(由服务器告诉浏览器，我请求报文接受完了，我准备关闭了，你也准备吧)`服务端向客户端发送报文，Ack、Seq，表示同意关闭请求。此时主机发起方进入 FIN_WAIT_2 状态。
+		> 第三次：`(由服务器告诉浏览器，我响应报文发送完了，你准备关闭吧)` 服务端向客户端发送报文段，Fin、Ack、Seq，请求关闭连接。并进入 LAST_ACK 状态。
+		> 第四次: `(由浏览器告诉服务器，我响应报文接受完了，我准备关闭了，你也准备吧)` 客户端向服务端发送报文段，Ack、Seq。然后进入等待 TIME_WAIT 状态。被动方收到发起方的报文段以后关闭连接。发起方等待一定时间未收到回复，则正常关闭。
+
+- ### https
+	`http`: IP TCP HTTP    `https`: IP TCP TSL/SSL HTTP 
+	> 主要作用： 对数据进行加密，并建立一个信息安全通道，来保证传输过程中的数据安全, 对网站服务器进行真实身份认证
+	- #### http的缺点
+		- 明文传输，内容会被窃听
+		- 不验证通信方的身份，因此可能遭受伪装
+		- 无法保证内容完整性，内容可能已经被篡改
+	- #### https的优势和关键点： 
+		- 数据隐私性：内容经过对称加密，每个连接生成一个唯一的加密密钥
+		- 数据完整性：内容传输经过完整性校验
+		- 加密过程：在交换密钥环节使用非对称加密方式，之后的建立通信交换报文阶段则使用对称加密方式。
+		- 关于ca证书的细节: 服务器先在第三方登记一下公钥证书，客户端发起SSL连接的时候就发给客户端这个证书，客户端自己来验证这个证书是否正确，如果是对的就用上面的公钥去加密
+		
+- ### http2.0
+	- ### http1.0缺点
+		> HTTP/1.1协议虽然可以在同一个TCP连接上发送多个请求，但是这多个请求是有顺序的，必须处理完第一个请求才会响应下一个请求。如果第一个请求处理的特别慢，后面的所有请求就需要排队
+		> TCP 连接数限制 对于同一个域名，浏览器最多只能同时创建 6 ~ 8 个TCP连接
+		> 有时候请求头字段冗余甚至比请求体都大
+
+		> `http2.0的优点`
+		- #### 多路复用MultiPlexing
+		> 单一长连接，二进制格式传输，请求优先级设置
+		> 即连接共享，即每一个request都是是用作连接共享机制的。一个request对应一个id，这样一个连接上可以有多个request，每个连接的request可以随机的混杂在一起，接收方可以根据request的 id将request再归属到各自不同的服务端请求里面。多路复用原理图：
+		![multiplexing](../images/multiplexing.png)
+		- #### 头部header压缩
+		header压缩。前面提到HTTP1.x的header很多时候都是重复多余的。选择合适的压缩算法可以减小包的大小和数量。
+		- #### 服务端推送ServerPush
+		> HTTP 2 新增的另一个强大的新功能是，服务器可以对一个客户端请求发送多个响 应。 换句话说，除了对最初请求的响应外，服务器还可以向客户端推送额外资源，而无需客户端明确地请求
+		> 比如正在请求一个页面时，服务器会把页面相关的 logo，CSS 等文件直接推送到客户端，而不会等到请求来的时候再发送，因为服务器认为客户端会用到这些东西。这相当于在一个 HTML 文档内集合了所有的资源。
+		- #### http3
+		> 比较吸引人的一点：连接迁移，(主要是在客户端)当由 Wifi 转移到 4G 时，连接不 会被断开
+
+- ### CDN
+
+- ### DOMContentLoaded和load事件
+	> `DOMContentLoaded`
+	> 当初始的 HTML 文档被完全加载和解析完成之后,`而无需等待样式表、图像和子框架的完全加载`
+	> 注意：DOMContentLoaded 事件必须等待其所属script之前的样式表加载解析完成才会触发
+	> `load`
+	> when the `whole page has loaded`, including all dependent resources such as stylesheets and images.
+	```javascript
+		document.addEventListener('DOMContentLoaded', (event) => {
+			console.log('DOM fully loaded and parsed');
+		});
+		window.addEventListener('load', (event) => {
+			console.log('page is fully loaded');
+		});
+	```
 ## Commen
 -----------------------------------------------
 - ### 如何理解mvvm
@@ -1750,6 +1973,46 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 	- 都是响应式，推崇单向数据流
 	- 都有成熟的社区，都支持服务端渲染
 - ### vue和react的diff算法
+- ### vue和React里面的key
+	> `经常遇到的问题`：不带key属性的情况下，在“娱乐新闻”下选中第二项然后切换到“社会新闻”，"社会新闻"里的第二项也会是被选中的状态，因为这里复用了组件，保留了之前的状态。要解决这个问题，可以为列表项带上新闻id作为唯一key，那么每次渲染列表时都会完全替换所有组件，使其拥有正确状态
+	> key的作用就是更新组件时判断两个节点是否相同。相同就复用，不相同就删除旧的创建新的。为了在diff算法执行时更快的找到对应的节点，提高diff速度
+	> 所谓`刻意依赖默认行为以获取性能上的提升`就是：不带key时节点能够复用，省去了销毁/创建组件的开销，同时只需要修改DOM文本内容而不是移除/添加节点
+	> `原地复用`不产生副作用的情况下，不用key效率最快, 但是如果有副作用，就一定要用key，且用key通过`map查找比遍历查找效率更快`
+	> `用key的主要作用是不产生副作用`，跟不用key去比效率就没意义了，不是一个层面上的事，`效率较快是和遍历查找相比而言`
+	```javascript
+	// oldCh 是一个旧虚拟节点数组
+		if (isUndef(oldKeyToIdx)) {
+			oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx)
+		}
+		if(isDef(newStartVnode.key)) {
+			// map 方式获取
+			idxInOld = oldKeyToIdx[newStartVnode.key]
+		} else {
+			// 遍历方式获取
+			idxInOld = findIdxInOld(newStartVnode, oldCh, oldStartIdx, oldEndIdx)
+		}
+
+		//创建map函数
+		function createKeyToOldIdx (children, beginIdx, endIdx) {
+			let i, key
+			const map = {}
+			for (i = beginIdx; i <= endIdx; ++i) {
+				key = children[i].key
+				if (isDef(key)) map[key] = i
+			}
+			return map
+		}
+
+		// 遍历寻找
+		// sameVnode 是对比新旧节点是否相同的函数
+		function findIdxInOld (node, oldCh, start, end) {
+				for (let i = start; i < end; i++) {
+					const c = oldCh[i]
+					
+					if (isDef(c) && sameVnode(node, c)) return i
+				}
+			}
+	```
 - ### 路由hash和history
 	- #### hash
 	> 监听onhashchange事件，`仅 # 之前的内容包含在 http 请求中`,因此改变 hash 不会重新加载页面,下面#号后面就是hash
@@ -1809,7 +2072,8 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 		> 主要靠window.history这个对象里面的api 最常用的三个方法`back、forward、go` 两个可以自定义目标url`pushState(obj, title, url)：前进到指定的URL   replaceState(obj, title, url)：用 url 替换当前的路由`
 		> 都不会刷新页面
 		> 实现 看不懂
-`
+
+- ### React和Vue里面的key的作用
 
 ## Vue 
 -----------------------------------------------
@@ -1824,6 +2088,8 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 		> - updated: 当数据发生更新并在DOM渲染完成后updated钩子便会被调用，在此时组件的DOM已经更新，可以执行依赖于DOM的操作。
 		> - beforeDestroy: 在Vue实例被销毁之前beforeDestroy钩子便会被调用，在此时实例仍然完全可用。
 		> - destroyed: 在Vue实例被销毁之后destroyed钩子便会被调用，就是啥都没有了
+		> - activeted: 被keep-alive 缓存的组件激活时调用。 
+		> - deactiveted: 被keep-alive 缓存的组件被替换掉时调用。
 	<!DOCTYPE html>
 <html>
 <head>
@@ -1946,18 +2212,18 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 
 	```
 - ### keepAlive
-> keepalive 是 Vue 内置的一个组件，可以使被包含的组件保留状态，或避免重新渲染 。也就是所谓的组件缓存、、
-> 跳转到详情页面时，需要保持列表页的滚动条的深度，等返回的时候依然在这个位置，这样可以提高用户体验
-> include代表只缓存那几个组件，里面是组件名
-> 具体参见keepalive用法.vue
-```Html
-<keep-alive>
-	<router-view />
-</keep-alive>
-<keep-alive :include="['ListView', 'DetailView']">
-	<router-view />
-</keep-alive>
-```
+	> keepalive 是 Vue 内置的一个组件，可以使被包含的组件保留状态，或避免重新渲染 。也就是所谓的组件缓存、、
+	> 跳转到详情页面时，需要保持列表页的滚动条的深度，等返回的时候依然在这个位置，这样可以提高用户体验
+	> include代表只缓存那几个组件，里面是组件名
+	> 具体参见keepalive用法.vue
+	```Html
+	<keep-alive>
+		<router-view />
+	</keep-alive>
+	<keep-alive :include="['ListView', 'DetailView']">
+		<router-view />
+	</keep-alive>
+	```
 
 - ### SPA&&SEO&&SSR
 	- #### SPA
@@ -1969,8 +2235,117 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 		> 说白了就是搜索引擎搜索不到
 	- #### SSR
 		>  Server-Side Rendering(服务器端渲染)的缩写
-		> 又想SPA而又不影响SEO，可以将SEO的关键信息直接在后台就渲染成HTML，而保证搜索引擎的爬虫都能爬取到关键数据
+		> 更好的 SEO，由于搜索引擎爬虫抓取工具可以直接查看完全渲染的页面。
+		> 又想SPA而又不影响SEO，可以将SEOHTML，而保证搜索引擎的爬虫都能爬取到关键数据
 		> 缺点 window、docment和alert等，如果使用的话需要对运行的环境加以判断
+		> 更快的内容到达时间 (time-to-content)，特别是对于缓慢的网络情况或运行缓慢的设备。无需等待所有的 JavaScript 都完成下载并执行，才显示服务器渲染的标记，所以你的用户将会更快速地看到完整渲染的页面。通常可以产生更好的用户体验，并且对于那些「内容到达时间(time-to-content) 与转化率直接相关」的应用程序而言，服务器端渲染 (SSR) 至关重要。
+		
+- ### window.performance
+	- #### performance.memory
+		> 浏览器内存情况
+		> `usedJSHeapSize`，表示被使用的 JS 堆栈内存
+		> `totalJSHeapSize`，表示当前 JS 堆栈内存总大小
+		> `jsHeapSizeLimit`，表示内存大小限制,是浏览器总内存大小，每个网站的这个值都是一样的
+	- #### performance.navigation
+		> 页面加载原因
+		> `redirectCount`表示到达当前页面，经过重定向的次数
+		> `type`加载此页面的原因，0代表正常点击 1代表刷新 2代表从历史记录里面进来
+	- #### performance.timing
+		![performanceTiming阶段图](../images/performanceTiming.webp)
+		> 用处
+		1. 连接建立的时间
+		3. 网站内容响应的时间
+		4. 各项图片的加载时间
+		> `计算首屏加载`
+		首屏时间 = 地址栏输入网址后回车 - 浏览器第一屏渲染完成
+		可以在window.onload监听函数里面加上下面这句 不过此时不只是首屏加载完，是整个首页都加载完，所以一定有误差
+		大致可以算出首屏加载时间，注意是大致
+		Date.now() - performance.timing.navigationStart;
+		> `计算白屏时间`
+		什么时候页面开始展示,或者是获取到网页首字节的耗时
+		从浏览器输入地址并回车后到页面`开始有内容`的时间 过程包括`dns查询、建立tcp连接、发送首个http请求`（如果使用https还要介入TLS的验证时间）、返回html文档、html文档head解析完毕
+		performance.timing.responseStart - performance.timing.navigationStart;
+		> `网页从开始到加载结束的耗时`
+		performance.timing.loadEventEnd - performance.timing.navigationStart
+		> `DNS 域名解析耗时`
+		performance.timing.domainLookupEnd - performance.timing.domainLookupStart;
+		> `TCP 连接耗时`
+		performance.timing.connectEnd - performance.timing.connectStart;
+
+- ### 首屏优化方案
+	- #### 减少组件库
+		> 优化打包后的体积尽量减少首屏下载的js文件
+		> 下个webpack-bundle-analyzer来分析每个包都是多大,stat模式代表没被处理的原生模块大小，parse代表output之后每个模块的大小
+		> moment -> dayjs   lodash -> 
+		
+	- #### 动态路由拆分codeSplitting
+		> use the import() syntax in webpacks 这个需要在webpack的output里面配置 `chunkFilename: '[name].bundle.js',`
+		> 注意webpack4之后就不会再commenJs里面的module.exports
+		> const Foo = () => import('./Foo.vue') in Vue
+		> 也可以自定义把几个模块打包到一个bundel里面, 用webpack这个注释就行
+		> const Foo = () => import(/* webpackChunkName: "group-foo" */ './Foo.vue')
+		> const Bar = () => import(/* webpackChunkName: "group-foo" */ './Bar.vue')
+
+	> `提前加载`&&prefetch&&preconnect
+	- #### preload
+		> `加载最重要的资源,专注于当前页面`
+		> `不阻塞页面渲染的!!!!`不会阻塞 window 的 onload 事件。
+		> priotify：high
+		> `作用`： 允许预加载在 CSS 和JavaScript 中定义的资源，并允许决定何时应用每个资源, 一般用来加载图片或者字体什么的 
+		> `不会二次下载`：当页面上使用到这个资源时候 preload 资源还没下载完，这时候不会造成二次下载，会等待第一次下载并执行脚本。
+		> `浏览器如何对待他`：浏览器`一定`会加载preload声明的资源 一旦`页面关闭`了，preload就会`立即停止`资源加载
+		> `用法`：我们在页面 onload 之后可以通过 preload 来加载次屏所需要的资源，在用户浏览完首屏内容`滚动`时能够更快地看到次屏的内容。
+		> <link rel="preload">
+		> <link rel="preload" href="image.png">
+		> <link rel="preload" href="https://example.com/fonts/font.woff" as="font" crossorigin>
+		> <link rel="preload" href="/css/mystyles.css" as="style">
+		> 当浏览器解析到这行代码就会去加载 href 中对应的资源`但不执行，待到真正使用到的时候再执行`
+		> 或者在请求头加上link这个字段：Link: <https://example.com/other/styles.css>; rel=preload; as=style 这样都不用解析页面，更快
+
+	- #### prefetch
+		> priotify：low
+		> Prefetch专注于下一个页面将要加载的资源并`以低优先级加载`
+		> 允许浏览器在后台（空闲时）获取将来可能用得到的资源，并且将他们`存储在浏览器的缓存中`。
+		> 基本都是等`当前页面加载完毕之后才会加载prefetch里面的内容`
+		> 当用户点击了一个带有 prefetched 的连接，它将可以立刻`从缓存中加载内容`。
+		> `即使页面关闭`，prefetch 发起的请求仍会进行`不会中断`。
+		> 浏览器`不一定`会加载preload声明的资源
+		> `rel=dns-prefetching`: 允许浏览器在用户浏览页面时在后台运行`DNS 的解析` 
+		> <link rel="prefetch" href="/uploads/images/pic.png">
+		> </uploads/images/pic.png>; rel=prefetch
+		> <link rel="dns-prefetch" href="//fonts.googleapis.com">
+		> <link rel="dns-prefetch" href="//www.google-analytics.com"> 
+		> <link rel="dns-prefetch" href="//opensource.keycdn.com">
+		> <link rel="dns-prefetch" href="//cdn.domain.com">
+
+	- #### Prerendering
+		> 与prefetching非常相似，都优化了可能导航到的下一页上的资源的加载
+		> 区别是 prerendering `在后台渲染了整个页面，和整个页面所有的资源` 或者可以叫`HTML 预处理`
+
+	- #### preconnect
+		> 允许浏览器在一个 HTTP 请求正式发给服务器前预先执行一些操作`(DNS 解析，TLS 协商，TCP 握手)`
+		![preconnect](../images/preconnect.png)
+		> allows the browser to set up early connections before an HTTP request is actually sent to the server. Connections such as DNS Lookup, TCP Handshake, and TLS negotiation can be initiated beforehand, eliminating roundtrip latency for those connections and saving time for users.
+
+	- #### async&&defer
+		<script       src="myscript.js"></script>
+		<script async src="myscript.js"></script>
+		<script defer src="myscript.js"></script>
+		> 正常的script文件会先下载并运行，然后才解析下面的html文件 `阻塞 HTML 的解析`
+		> async (asynchronous) 下载js文件的时候不阻塞html的解析，但是下载完成立即执行js，这时候会阻塞html的解析
+		> With defer, defer 加载脚本执行会在所有元素解析完成，DOMContentLoaded 事件触发之前完成执行。browser will run your script when the page finished parsing. (	`not necessary finishing downloading all image files`. This is good.)
+		![async/defer](../images/async&&defer.png)
+
+	> 两者主要差别
+	> The main difference between both directives is that prefetch aims to fetch resources for the next navigation which are low priority. preload however, focusses on the current navigation and fetches resources with high priority
+
+	- #### 图片懒加载
+		> 值得庆幸的是，越来越多的浏览器支持原生的懒加载，通过给img标签加上loading="lazy"来开启懒加载模式
+		> 具体参见图片懒加载实现.js
+	
+	- #### SSR也可以帮助优化首屏加载
+	- #### ServiceWOrker缓存
+
 - ### vue数据劫持
 	> 指的是在访问或者修改对象的某个属性时，通过一段代码拦截这个行为，进行额外的操作或者修改返回结果
 	> `Object.defineProperty`和`Proxy`来实现
@@ -2045,6 +2420,7 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 - ### class和function
 	- #### 优缺点
 	- #### 使用场景
+- ### mobx和redux
 
 ## 小程序相关
 -----------------------------------------------
@@ -2057,3 +2433,47 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 - ### 小程序的适配问题
 
 
+## 算法
+-----------------------------------------------
+- [时间复杂度和空间复杂度]
+- [异步求和]
+- [大位数加减乘除]
+- [链表]
+- [排序]
+- [最长公用首字符串](#最长公用首字符串)
+- ### 最长公用首字符串
+	```javascript
+	`解析：` // 多个字符串的最长公共前缀为两两字符串的最长公共前缀的最长公共前缀，我们可以归并比较两最长公共前缀字符串的最长公共前缀，知道最后归并比较成一个，则为字符串数组的最长公共前缀：LCP(S1, S2, ..., Sn) = LCP(LCP(S1, Sk), LCP(Sk+1, Sn))
+	var longestCommonPrefix = function(strs) {
+			if (strs === null || strs.length === 0) return "";
+			return lCPrefixRec(strs)
+	};
+
+	// 若分裂后的两个数组长度不为 1，则继续分裂
+	// 直到分裂后的数组长度都为 1，
+	// 然后比较获取最长公共前缀
+	function lCPrefixRec(arr) {
+		let length = arr.length
+		if(length === 1) {
+			return arr[0]
+		}
+		let mid = Math.floor(length / 2),
+				left = arr.slice(0, mid),
+				right = arr.slice(mid, length)
+		return lCPrefixTwo(lCPrefixRec(left), lCPrefixRec(right))
+	}
+
+	// 求 str1 与 str2 的最长公共前缀
+	function lCPrefixTwo(str1, str2) {
+			let j = 0
+			for(; j < str1.length && j < str2.length; j++) {
+					if(str1.charAt(j) !== str2.charAt(j)) {
+							break
+					}
+			}
+			return str1.substring(0, j)
+	}
+	```
+
+
+TODO: 把各种生命周期都补上，看算法, 看基本实现，总结我的项目的经验

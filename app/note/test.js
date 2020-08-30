@@ -185,3 +185,102 @@ class Promise {
 		this.callbacks.forEach(callback => this._handle(callback))
 	}
 }
+
+function asyncPool(poolLimit, array, fn) {
+	let i = 0
+	const ret = []
+	const executing = []
+	const enqueue = function() {
+		if (i === array.length) {
+			return Promise.resolve()
+		}
+		const item = array[i]
+		const p = Promise.resolve().then(fn(item, array))
+		ret.push(p)
+		const e = p.then(() => executing.splice(executing.indexOf(e), 1))
+		executing.push(e)
+
+		let r = Promise.resolve()
+		if (executing.length >= poolLimit) {
+			r = Promise.race(executing)
+		}
+		return r.then(() => executing())
+	}
+	return enqueue().then(() => Promise.all(ret))
+}
+
+function one() {
+	name = 'one'
+}
+function two() {
+	one.call(this)
+	age = 18
+}
+inheritPrototype(two, one)
+inheritPrototype(child, parent) {
+	const prototype = object.create(parent.prototyp)
+	prototype.constructor = child
+	child.prototype = prototype
+}
+
+
+function mockNew() {
+	let emptyObj = new Object()
+	let constructor = Array.prototype.shift.call(arguments)
+	emptyObj.constructor = constructor
+	emptyObj.__proty__ = constructor.prototype
+	let result = constructor.apply(emptyObj, arguments)
+	return result
+}
+
+function myCall(context) {
+	context = context || window
+	context._fn = this
+	const args = [...arguments].slice(1)
+	const result = context._fn(args)
+	return results
+}
+
+function bind(context) {
+	let self = this
+	context = context || window
+	let args = [...args].slice(1)
+	const bound = function() {
+		let newArgs = [...arguments]
+		if (this instanceof bound) {
+			return self.apply(this, args.concat(newArgs))
+		} else {
+			return self.apply(context, args.concat(newArgs))
+		}
+	}
+	bound.prototype = context.property
+	return bound
+}
+
+function lcp(arr) {
+	if (!arr || !arr.length) {
+		return ''
+	}
+	lcpPreCircle(arr)
+}
+
+function lcpPreCircle(arr) {
+	const length = arr.length
+	const mid = Math.floor(length / 2)
+	const leftArr = arr.slice(0, mid)
+	const rightArr = arr.slice(mid)
+
+	if (arr.length <= 1) {
+		return arr[0]
+	}
+
+	return lcpTwoMax(lcpPreCircle(left), lcpPreCircle(right))
+}
+
+function lcpTwoMax(first, second) {
+	for (let i = 0; i < first.length && i < second.length; i++) {
+		if (first.charAt(i) === second.charAt(i)) {
+			return first.substring(0, i)
+		}
+	}
+}
