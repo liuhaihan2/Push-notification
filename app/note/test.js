@@ -284,3 +284,471 @@ function lcpTwoMax(first, second) {
 		}
 	}
 }
+
+// 除法
+function accDiv(arg1, arg2) {
+	let t1 = 0, t2 = 0, r1, r2
+	try {
+		t1 = arg1.toString().split(".")[1].length
+		t2 = arg2.toString().split(".")[1].length
+		r1 = Number(arg1.toString().replace('.', ''))
+		r2 = Number(arg2.toString().replace('.', ''))
+	} catch (err) {
+		console.log(err)
+	}
+	return (r1 / r2) * Math.pow(10, t2 - t1)
+}
+
+// 乘法
+function accMul(arg1, arg2) {
+	let m, r1 = arg1.toString(), r2 = arg2.toString()
+	try {
+		m += r1.split('.')[1].length
+		m += r2.split('.')[1].length
+	} catch (err) {
+		console.log(err)
+	}
+	return Number(r1.replace('.', '')) * Number(r2.replace('.', '')) / Math.pow(10, m)
+}
+
+// 加法
+function accAdd(arg1, arg2) {
+	let m, r1, r2
+	try {
+		r1 = arg1.toString().split('.')[1].length
+		r2 = arg2.toString().split('.')[1].length
+		m = Math.pow(10, Math.max(r1, r2))
+	} catch (err) {
+		console.log('err', err)
+	}
+	return (arg1 * m + arg2 * m) / m
+}
+
+// 减法
+function accRed(arg1, arg2) {
+	let r1, r2, m
+	try {
+		r1 = arg1.toString().split('.')[1].length
+		r2 = arg2.toString().split('.')[1].length
+		m = Math.pow(10, Math.max(r1, r2))
+	} catch (err) {
+		console.log('err', err)
+	}
+	return (arg1 * m - arg2 * m) / m
+}
+
+function bigAdd(arg1, arg2) {
+	const [{ length: aLen }, { length: bLen }] = [arg1, arg2]
+	let res = '', cursor = 1, carry = 0
+	while(arg1[aLen - cursor] || arg2[bLen - cursor] || carry) {
+		const sum = arg1[aLen - cursor] + arg2[bLen - cursor] + carry
+		res = `${sum % 10}${res}`
+		carry = +(sum > 9)
+		cursor++
+	}
+	return res
+}
+
+function add(a, b) {
+	const res = '', carry = 0
+	while(a.length || b.length) {
+		const sum = a.substr(-14) + b.substr(-14) + carry	
+		res = `${sum.toString().substr(-14)}${res}`
+		carry = sum.toString.substr(0, sum.length - 14)
+		a = a.toString().substr(0, a.length - 14)
+		b = b.toString().substr(0, b.length - 14)
+	}
+}
+function* myGenerator() {
+  console.log(yield '1')  //test1
+  console.log(yield '2')  //test2
+  console.log(yield '3')  //test3
+}
+
+function run(generator) {
+	const gen1 = generator()
+	function _next(value) {
+		const res = gen1.next(value)
+		if (res.done) { return res.value }
+		res.value.then((value) => _next(value))
+	}
+	_next()
+}
+
+function runPromise(generator) {
+	return new Promise((resolve, reject) => {
+		const gen1 = generator()
+		function _next(value) {
+			try {
+				const res = gen1.next(value)
+				if (res.done) {
+					return resolve(res.value)
+				}
+				Promise.resolve(res.value).then((res) => {
+					_next(res)
+				})
+			} catch (err) {
+				reject(err)
+			}
+		}
+	})
+}
+
+function* foo() {
+	console.log('hello')
+  yield 'result1'
+  yield 'result2'
+  yield 'result3'
+	console.log('ddd')
+}
+  
+var gen5 = foo()
+console.log(gen5.next())
+// console.log(gen3.next())
+// console.log(gen3.next())
+// console.log(gen3.next())
+
+
+const context = {
+	pre: 0,
+	next: 0,
+	done: false,
+	finish: () => {
+		this.done = true
+		return undefined
+	}
+}
+
+function _gen(_context) {
+	while(1) {
+		switch(_context.pre = _context.next) {
+			case 0:
+				_context.next = 2
+				return 'result1'
+			case 2:
+				_context.next = 4
+				return 'result2'
+			case 4:
+				_context.next = 6
+				return 'result3'
+			case 6:
+			case 'end':
+				_context.next = 6
+				return _context.finish()
+		}
+	}
+}
+
+const gen = function () {
+	return {
+		next: function() {
+			const value = context.done ? undefined : _gen(context)
+			const done = context.done
+			return {
+				value,
+				done
+			}
+		}
+	}
+}
+
+
+//实现co
+function run(generator) {
+	new Promise((resolve, reject) => {
+		const iterator = generator()
+		function _next(value) {
+			try {
+				const res = iterator.next(value)
+				if (res.done) {
+					resolve(res.value)
+				}
+				Promise.resolve(res.value).then(val => _next(val))
+			} catch(err) {
+				reject(err)
+			}
+		}
+		_next()
+	})
+}
+
+function Node(val) {
+	this.data = val
+	this.left = null
+	this.right = null
+	this.show = () => this.data
+}
+
+function BST() {
+	this.root = null
+	this.insert = insert
+}
+
+function insert(val) {
+	const node = new Node(val)
+	if (this.root === null) {
+		this.root = node
+	} else {
+		let parent, current = this.root
+		while(true) {
+			parrent = current
+			if (val < current.data) {
+				current = current.left
+				if (current === null) {
+					parent.left = node
+					break
+				}
+			} else {
+				current = current.right
+				if (current === null) {
+					parent.right = node
+					break
+				}
+			}
+		}
+	}
+}
+
+function fibonacci(n) {
+	if (n === 1 || n === 2)
+	return fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+function binaryFind(arr, target) {
+	let low = 0, high = arr.length - 1, mid
+	while(low <= high) {
+		mid = Math.floor(arr.length / 2)
+		if (arr[mid] === target) {
+			console.log('find it:', mid)
+			return mid
+		} else {
+			if (arr[mid] < target) {
+				high = mid + 1
+			} else {
+				low = mid - 1
+			}
+		}
+	}
+	return -1
+}
+
+// 相同
+function sameTree(tree1, tree2) {
+	if (tree1 === null && tree2 === null) return true	
+	if (tree1 === null || tree2 === null) return false	
+	if (tree1.data !== tree2.data) return false
+	return sameTree(tree1.left, tree2.left) && sameTree(tree1.right, tree2.right)
+}
+
+// 镜像 最开始 tree1 === tree2
+function sameTree(tree1, tree2) {
+	if (tree1 === null && tree2 === null) return true	
+	if (tree1 === null || tree2 === null) return false	
+	if (tree1.data !== tree2.data) return false
+	return sameTree(tree1.left, tree2.right) && sameTree(tree1.right, tree2.left)
+}
+
+// 二叉树最大深度和最小深度
+function maxTreeDep(root) {
+	if (!root) return 0
+	const left_dep = maxTreeDep(root.left)
+	const right_dep = maxTreeDep(root.right)
+	return Math.max(left_dep, right_dep) + 1
+}
+
+function merge(nums1, m, nums2, n) {
+	while(n > 0) {
+		if (nums1[m - 1] > nums2[n - 1]) {
+			nums1[m + n - 1] = nums1[--m]
+		} else {
+			nums1[m + n - 1] = nums2[--n]
+		}
+	}
+}
+
+function debounce(fn, delay = 500) {
+	let timer = null
+	return function(...args) {
+		clearTimeout(timer)
+		timer = setTimeout(function() {
+			fn.apply(this, args)
+		}, delay)
+	}
+}
+
+function throttle(fn, delay = 500) {
+	let flag = true
+	return function() {
+		if (!flag) return
+		flag = false
+		setTimeout(function() {
+			fn.apply(this, args)
+			flag = true
+		}, delay)
+	}
+}
+
+function _call(context) {
+	if (typeof this !== 'function') {
+		throw new TypeError('not func')
+	}
+	const args = [...arguments].slice(1)
+	context = context || window
+	context.fn = this
+	const res = context.fn(...args)
+	delete context.fn
+	return res
+}
+
+Function.prototype.bind = function (context) {
+	let that = this
+	let bindArgs = [...arguments].slice(1)
+	function F() {}
+	function fBound() {
+		let args = [...arguments]
+		return that.apply(this instanceof fBound ? this : context, bindArgs.concat(args))
+	}
+	F.prototype = that.prototype
+	fBound.property = new F()
+	return fBound
+}
+
+function mockNew() {
+	let emptyObj = new Object()
+	let constructor = Array.prototype.shift.call(arguments)
+	emptyObj.constructor = constructor
+	emptyObj.__proty__ = constructor.prototype
+	let result = constructor.apply(emptyObj, arguments)
+	return result
+}
+
+function myInstanceof(left, right) {
+	left = left.__proto__
+	while (true) {
+		if (left === null) {
+			return false
+		}
+		if (left === right.property) {
+			return true
+		}
+		left = left.__proto__
+	}
+}
+
+function isObject(target) {
+	const type = typeof target
+	return target !== null && (type === 'object' || tyep === 'function')
+}
+function deepClone(target, map = new WeakMap()) {
+	if (!isObject(target)) {
+		return target
+	}
+	const copyTarget = Array.isArray(target) ? [] : {}
+	if (map.get(target)) {
+		return map.get(target)
+	}
+	map.set(target, copyTarget)
+
+	for (let key in target) {
+		copyTarget[i] = deepClone(target[key], map)
+	}
+
+	return cloneTarget 
+}
+
+function pool(poolLimit, arr, iterator) {
+	const i = 0
+	const result = []
+	const executing = []
+	const enqueue = function() {
+		if (i === arr.length) return	
+		const p = Promise.resolve().then(() => {iterator(arr[i])})
+		result.push(p)
+		const e = p.then(() => {
+			executing.slice(executing.indexOf(e), 1)
+		})
+		executing.push(e)
+		let r = Promise.resolve()
+		if (executing.length >= poolLimit) {
+			r = Promise.race(executing)
+		}
+		return r.then(() => {
+			enqueue()
+		})
+	}
+	return enqueue().then(() => {
+		Promise.all(result)	
+	})
+}
+
+function check(instance, constructor) {
+	if (!(instance instanceof constructor)) {
+		throw new Error('new ?')
+	}
+}
+
+function protoPrototypes(target, arr) {
+	for (arr) {
+		Object.definePropertiy(target, arr[i].key, {
+
+		})
+	}
+}
+
+function _createClass(constructor, protoPrototypes, staticPrototypes) {
+	if (protoPrototypes.length) {
+		_definePropertys(constructor.property, protoPrototypes)
+	}
+	if (staticPrototypes.length) {
+		_definePropertys(custructor, staticPrototypes)
+	}
+}
+
+function inherrit(sub, sup) {
+	sub.prototype = Object.create(sup.prototype, {
+		custructor: {
+			value: sub
+		}
+	})	
+}
+
+let Parent = function() {
+	function P() {
+		check(this, P)
+		this.name = 'Parent'
+	}
+	_createClass(P, [], [])
+	return p
+}()
+
+let parent1 = new Parent()
+
+let Child = function() {
+	inherits(C, Parent)
+	function C() {
+		check(this, C)
+		this.name = 'child'
+		Parent.call(this)
+	}
+	return C
+}
+
+function co(generator) {
+	return new Promise((resolve, reject) => {
+		const gen = generator()
+		const _next = function(value) {
+			try {
+				const res = gen.next(value)
+				if (res.done) {
+					return resolve(res.value)
+				}
+				Promise.resolve(res.value).then((res) => {
+					_next(res)
+				})
+			} catch(err) {
+				console.log(err)	
+			}
+		}
+		_next()
+	})
+}

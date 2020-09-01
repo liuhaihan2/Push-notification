@@ -1,14 +1,16 @@
 [css](#css)
-- [选择器](#选择器)? TODO:
+- [选择器](#选择器)
 - [css定位背景图片](#css定位背景图片)
 - [transform](#transform)?TODO:
 - [重绘和回流](#重绘和回流)
-- [flex布局](#flex布局)?TODO:
+- [flex布局](#flex布局)
 - [垂直水平居中](#垂直水平居中)
 - [元素透明](#元素透明)
-- [清除浮动](#清除浮动)?TODO:
+- [清除浮动](#清除浮动)
 - [伪类和伪元素](#伪类和伪元素)
 - [盒模型](#盒模型)
+- [BFC](#BFC)
+- [实现固定宽高比4:3的div](#实现固定宽高比4:3的div)
 
 [浏览器](#浏览器)
 - [302和304](#302和304)
@@ -16,7 +18,9 @@
 	- [XSS](#XSS)
 	- [CSRF](#CSRF) 
 - [cookie和sessionk](#cookie和session)
-- [输入url到看到页面都经历了啥](#输入url到看到页面都经历了啥) TODO: js和css的加载顺序
+- [输入url到看到页面都经历了啥](#输入url到看到页面都经历了啥)
+	- [浏览器解析渲染页面](#浏览器解析渲染页面)
+	- [(连接技术)TCP四次挥手](#(连接技术)TCP四次挥手)
 - [https](#https)
 	- [http的缺点](#http的缺点)
 	- [https的优势和关键点](#https的优势和关键点)
@@ -40,6 +44,7 @@
 	- [图片懒加载](#图片懒加载)
 	- [SSR](#SSR)
 	- [ServiceWOrker缓存](#ServiceWOrker缓存)
+- [websocket](#websocket)
 
 [webpack](#webpack)TODO:
 - [codingSplitting]
@@ -60,7 +65,7 @@
 	- [history](#history) 
 
 [Vue](#Vue)
-- [生命周期](#生命周期)
+- [Vue生命周期](#Vue生命周期)
 - [如何实现双向绑定](#如何实现双向绑定)
 - [keepAlive](#keepAlive)
 - [SPA&&SEO&&SSR](#SPA&&SEO&&SSR)
@@ -76,7 +81,7 @@
  - [Proxy](#Proxy)
 
 [React](#React)TODO:
-- [生命周期](#生命周期)?
+- [React生命周期](#Reat生命周期)?
 - [class和function](#class和function)?
 	- [优缺点](#优缺点)
 	- [使用场景](#使用场景)
@@ -132,10 +137,9 @@
 - [EventLoop运行机制](#EventLoop运行机制)
 	- [浏览器进程与线程](#浏览器进程与线程)
 	- [macrotask和microtask](#macrotask和microtask)
-	- [总结事件执行机制](#总结事件执行机制) TODO: 检查到这里
+	- [总结事件执行机制](#总结事件执行机制)
 - [事件](#事件) TODO:
 	- [冒泡和捕获](#冒泡和捕获)
-	- [addEventListenerVSonload](#addEventListenerVSonload)
 	- [如何实现一个事件的发布订阅](#如何实现一个事件的发布订阅)
 - [foreach&&forIn&&forOf](#foreach&&forIn&&forOf)
 	- [foreach](#foreach)
@@ -150,89 +154,170 @@
 	- [new和Object.create()不同](#new和Object.create()不同)
 	- [寄生组合继承与Object.create()的关系](#寄生组合继承与Object.create()的关系)
 	- [Map和WeakMap](#Map和WeakMap)
-- [DOCTYPE的作用](#DOCTYPE的作用)
+- [DOCTYPE的作用](#DOCTYPE的作用) 
 - [call-apply-bind区别&&实现](#call-apply-bind区别&&实现) TOSEE
 - [promise的理解实现](#promise的理解实现) TOSEE
 	- [异步相关概念和代码执行顺序](#异步相关概念和代码执行顺序)
 	- [概念和用法](#概念和用法)
 	- [实现](#实现)
-	- [async/await](#async/await) ?
-	- [generator](#generator)?
+	- [async/await](#async/await) TODO:
+	- [generator](#generator)TODO:
 - [函数的节流和去抖](#函数的节流和去抖)
-- [跨域概念及其实现](#跨域概念及其实现)?
+	- [节流](#节流)
+	- [防抖](#防抖)
+- [跨域概念及其实现](#跨域概念及其实现)
+	- [jsonP](#jsonP)
+	- [CORS](#CORS)
+	- [postMessage](#postMessage)
+	- [nginx反向代理](#nginx反向代理)
 - [class的理解和使用](#class的理解和使用)
 	- [基本用法](#基本用法)
 	- [class继承](#class继承)
 	- [class的this指向问题](#class的this指向问题)
 	- [class实现](#class实现)
 - [箭头函数和普通函数](#箭头函数和普通函数)
-- [buffer&&stream](#buffer&&stream)?
+- [buffer&&stream](#buffer&&stream) TOSEE
+	- [buffer](#buffer)
+	- [stream](#stream)
+	- [pipe](#pipe)
 - [函数式编程](#函数式编程)
 	- [函数柯里化](#函数柯里化)
 	- [什么是高阶函数](#什么是高阶函数)
 	- [高阶函数与高阶组件](#高阶函数与高阶组件)
-- [location.href](#location.href)?
-- [es6-es10新特性](#es6-es10新特性)?
 - [importVSrequier](#importVSrequier)
 - [JS中浮点数精度问题](#JS中浮点数精度问题)
-- [window.onload](#window.onload)?
 - [express和koa中间件的使用不同之处](#express和koa中间件的使用不同之处)?
+- [小知识点](#小知识点)
+	- [location.href](#location.href)
+	- [innerHTMLVSdocument.write](#innerHTMLVSdocument.write)
+	- [字符串容易记错的方法](#字符串容易记错的方法) TODO:
+- [es6-es10新特性](#es6-es10新特性)?
+- [AST](#AST)
 
 [算法](#算法)TODO:
-- [时间复杂度和空间复杂度]
+- [时间复杂度和空间复杂度](#时间复杂度和空间复杂度)
+- [最长公用首字符串](#最长公用首字符串)
 - [异步求和]
 - [大位数加减乘除]
 - [链表]
 - [排序]
-- [最长公用首字符串](#最长公用首字符串)
+- [获取对象指定path的值](#获取对象指定path的值)
 
 ### CSS
 -----------------------------------------------
 - ### 选择器
-	:nth-last-child(n) 
-	:nth-of-type(n) 
-	:nth-last-of-type(n) 
-	:last-child 
-	:first-of-type 
-	:only-child 
-	:only-of-type 
-	:empty 
-	:checked 
-	:enabled 
-	:disabled 
-	::selection 
-	:not(s)
+	- #### 基本选择器
+		- `# myid`: id选择器
+		- `.myclassname`: 类选择器
+		- `div, h1, p`: 标签选择器
+	- #### 组合选择器
+	> `E,F`: 同时匹配元素E或元素F
+	> `E F (后代选择器)`: 匹配E元素所有的后代（不只是子元素、子元素向下递归）元素F
+	> `E>F (子元素选择器)`: 匹配E元素第一层的所有F
+	> `E+F (相邻选择器)`: 匹配E元素之后的相邻的同级元素F
+	> `E~F (普通相邻选择器（弟弟选择器）)`: 匹配E元素之后的同级元素F（无论直接相邻与否）
+	- #### nth-child和:nth-of-type之间的差异
+	> `:nth-child`，意味着选择一个元素如果：
+		> 1. 这是个段落元素
+		> 2. 这是父标签的第二个孩子元素 父标签的第一个元素不一定是<p>
+  > `:nth-of-type`，意味着选择一个元素如果：
+		> 1. 选择父标签的第二个段落子元素
+	```html
+		<section>
+			<div>我是一个普通的div标签</div>
+			<p>我是第1个p标签</p> <!-- nth-child selected-->
+			<p>我是第2个p标签</p>  <!-- nth-of-type selected-->
+		</section>
+	```
+
+	- #### :last-child
+		> 代表父元素的最后一个子元素。
+
+	- #### :only-child 
+		> 匹配没有任何兄弟元素的元素
+		```css
+		/* Selects each <p>, but only if it is the */
+		/* only child of its parent */
+		p:only-child {
+			background-color: lime;
+		}
+		```
+	
+	- #### :not(s)
+		```css
+		/* 非 <p> 元素 */ 
+		body :not(p) {
+			text-decoration: underline;
+		}
+
+		/* 既不是 <div> 也不是 <span> 的元素 */
+		body :not(div):not(span) {
+			font-weight: bold;
+		}
+		```
+	> 可继承的样式：font-size font-family color, UL LI DL DD DT;
+	> 不可继承的样式：borderpadding margin width height ;
+
 - ### css背景图片相关
 	- #### background-clipbackground-clip:
 	> 规定背景的绘制区域 - backround-origin: 规定背景图片的定位区域
+
 - ### transform
 	> : translate(150px, 100px);
+
 - ### 重绘和回流
 	> reflow:当render树中的一部分或者全部因为大小边距等问题发生改变而需要重建的过程叫做回流, 就是当一些物理部分改变的时候，包括margin,padding,height,width,border等
 	> repaint:当元素的一部分属性发生变化，如外观背景色不会引起布局变化而需要重新渲染的过程叫做重绘 就是一些修饰的属性改变的时候，比如颜色。 `回流一定会伴随着重绘，但是重绘不一定会引起回流。回流的代价比重绘高。`
 
 - ### flex布局
-> flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto
+> flex属性是`flex-grow`, `flex-shrink` 和 `flex-basis`的简写，默认值为`0 1 auto`
 - flex-grow: 默认为0，即如果存在剩余空间，也不放大
 - flex-shrink: 定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小,0就不缩小
 - flex-basis：它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。auto表示项目本来大小
 
 - ### 垂直水平居中
+ > 详见垂直水平居中.html
 
 - ### float和inline的区别和联系
 
 - ### 元素透明
-	- overflow:hidden/* 占据空间，无法点击 */
-	- opacity:0/* 占据空间，可以点击 */
-	- visibility:hidden/* 占据空间，无法点击 */
-	- display:none
-	- position:absolute/* left top 设置的非常远 */
-	- z-index:-1000/* 不占据空间，无法点击 */
+```css
+	 overflow: hidden;/* 占据空间，无法点击 */
+	 opacity: 0;/* 占据空间，可以点击 */
+	 visibility: hidden;/* 是继承属性 占据空间，无法点击 只会触发repaint（重绘），因为没有发现位置变化，不进行渲染。*/
+	 display: none; /* 不是继承属性 会触发reflow（回流），进行渲染 */
+	 position: absolute; /* left top 设置的非常远 */
+	 z-index: -1000 /* 不占据空间，无法点击 */
+```
 	
 - ### 清除浮动
+```css
+/* 在浮动元素后面添加一个空的div */
+.blankDiv {
+	clear: both;
+}
+
+/* 通过清除伪元素的浮动 */
+.clearfix:after {
+	content: '.';
+	height: 0;
+	display: block;
+	clear: both;
+}
+
+/* 变成BFC 因为BFC在计算高度的时候，内部浮动元素的高度也要计算在内。 */
+.topDiv {
+	width: 500px;
+	padding: 4px;
+	border: 2px solid black;
+	/* 区别在这里 */
+	overflow: auto;
+}
+```
 
 - ### 伪类和伪元素：
-> 伪类本质上是为了弥补常规CSS选择器的不足，以便获取到更多信息, 伪元素本质上是创建了一个有内容的虚拟容器；
+	> `伪类`: 本质上是为了弥补常规CSS选择器的不足，以便获取到更多信息, 伪元素本质上是创建了一个有内容的虚拟容器； `用于当元素处于某个状态时，为其添加对应的样式	`
+	> 伪元素： 用于创建不在文档树中的元素，并为其添加样式
 ```css
 	q:lang(de)::after{
 			content: " (German) ";
@@ -250,6 +335,101 @@
 - box-sizing: content-box(default)
 - box-sizing: border-box border算在width里面
 - box-sizing: inherit
+
+- ### BFC
+	> Block Formatting Context（块级格式化上下文）
+	- #### BFC规则
+		> 1. 内部的Box会在垂直方向，一个接一个地放置。
+		> 2. Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠。
+		> 3. 每个盒子（块盒与行盒）的margin box的左边，与包含块border box的左边相接触(对于从左往右的格式化，否则相反)。即使存在浮动也是如此。
+		> 4. BFC的区域不会与float box重叠。
+		> 5. BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。
+		> 6. 计算BFC的高度时，浮动元素也参与计算。
+	- #### 如何创建BFC
+		> 1. float的值不是none。
+		> 2. position的值不是static或者relative。
+		> 3. overflow的值不是visible。
+		> 4. display的值是inline-block、table-cell、flex、table-caption或者inline-flex。
+	- ### BFC的作用
+		> 1. 利用BFC避免margin重叠
+		> 2. 自适应两栏布局
+		> 3. 清除浮动
+
+- ### 实现固定宽高比4:3的div
+	> 当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的
+	```css
+	.element {
+			/* 16:9宽高比，则设padding-bottom:56.25% */
+			/* height: 0px, 防止矩形被里面的内容撑出多余的高度*/
+			width: 100vw; 
+			height: 0px; 
+			padding-bottom: 56.25%;
+			background: pink;
+	}
+	.element {
+		width: 100vw;
+		height: 75vw; 
+	}
+	```
+
+- ### rem&&vw&&em&&calc&&lineheight
+	> 默认浏览器设置的字体大小为16px
+	- #### vw&vh
+		> 浏览器100vw表示的就是浏览器的视窗宽度(Viewport)。打个比方说，如果你的浏览器是1334px，那么对就的100vw = 1334px
+		> vw：viewpoint width，视窗宽度，1vw等于视窗宽度的1%。
+		> vh：viewpoint height，视窗高度，1vh等于视窗高度的1%。
+		> `vw、vh 与 % 百分比的区别`: % 是相对于父元素的大小设定的比率，vw、vh 是视窗大小决定的。
+	- #### em
+		> 相对单位，参考物是父元素的font-size，具有继承的特点。
+		> 如果字体大小是16px（浏览器的默认值），那么 1em = 16px
+	- #### calc
+		> 支持各种计算和单位 px rem em vh等
+		>	width: calc(12% + 5em)
+	- #### dpr
+		> dpr是设备像素比，`是css里面1px所能显示的像素点的个数`，dpr的值越大，显示的越精细;window.devicePixelRatio获取到当前设备的dpr
+	- #### rem实现适配的原理
+		> `rem`: 相对根节点html的字体大小来计算，不会像em那样，依赖于父元素的字体大小，而造成混乱
+		> 而rem相当于百分比布局。
+		> `原理`： 动态获取当前视口宽度width，除以一个固定的数n，得到rem的值。表达式为rem = width / n。
+		```javascript
+			// 通过dpr设置缩放比，实现布局视口大小，
+			var scale = 1 / devicePixelRatio;
+			document
+				.querySelector('meta[name="viewport"]')
+				.setAttribute('content','initial-scale='+ scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+			// 这里的意思是，clientWidth / 10 得到是布局视口下的rem基准值（以iphone6为例 1rem＝75px），那么设计稿正好也是 750，所以对应的关系 clientWidth / 10＝＝设计稿的尺寸/x, 那么x=设计稿的尺寸/rem基准值。 如果是iphone6 plus rem基准值等于clientWidth / 10 等于124.2，那么x＝750/124.2。
+			document
+				.documentElement.style.fontSize = document.documentElement.clientWidth / 10 + ‘px’
+		
+			// 让html字体大小一直等于屏幕宽度的百分之一 一般需要在页面dom ready、resize和屏幕旋转中设置
+			document.documentElement.style.fontSize = document.documentElement.clientWidth / 100 + 'px'; 
+		```
+- ### css 预处理器
+	> less sass stylus postcss
+	> 何为CSS预处理器？应该就是一种可以将你根据它的规则写出来的格式转成css的东西(还是讲的通俗一点)
+
+- ### postcss
+	> 其实，它什么都不是。它可以理解为一种插件系统
+	> PostCSS 是一个用 JavaScript 工具和插件转换 CSS 代码的工具。
+	> PostCSS 与主流的构建工具，如 Webpack、Grunt 和 Gulp 都可以进行集成；
+	> c完成集成之后，选择满足功能需求的 PostCSS 插件并进行配置
+	> PostCSS is a tool for transforming CSS with JS plugins. These plugins can support variables and mixins, transpile future CSS syntax, inline images, and more.
+	> 我们都知道”babel“的存在，可以让我们使用比较新的js语法，`postcss则可以理解为CSS的”babel“`，可以让我们使用比较新的CSS语法
+	> postcss 不是类似less的CSS预处理器， 而是一种允许用JS插件来转变样式的工具。 postcss提供了一个解析器，它能够将CSS解析成抽象语法树(AST)
+	诸如自动为CSS添加浏览器前缀的插件autoprefixer、当前移动端最常用的px转rem插件px2rem，还有支持尚未成为CSS标准但特定可用的插件cssnext
+
+- ### cssModules
+> 它不是将 CSS 改造成编程语言，而是功能很单纯，只加入了局部作用域和模块依赖
+	> CSS的规则是全局的，任何一个组件的样式规则，对整个页面有效；
+产生局部作用域的唯一方法，就是使用一个独一无二的class名字，不会与其他选择器重名，这就是CSS Modules的实现原理：将每个类名编译成独一无二的哈希值；
+> webpack打开cssmodules:loader: "style-loader!css-loader?modules"
+> CSS Modules 允许使用:global(.className)的语法，声明一个全局规则。凡是这样声明的class，都不会被编译成哈希字符串。
+
+- ### vertial-align
+> 只对行内元素有效
+内联元素span、strong、em、img、button、input等
+display值为inline、inline-block、inline-table或table-cell的元素
+
 
 ## JS
 -----------------------------------------------
@@ -973,8 +1153,13 @@ Array.from(arguments) // es6
 
 - ### 事件
 	- #### 冒泡和捕获
-	- #### addEventListenerVSonload
+		> 捕获的流程为：window -> document -> html -> body -> ... -> 目标元素。
+		> 冒泡的流程为：目标元素 -> ... -> body -> html -> document -> window。
+		> `取消事件的默认动作`: event.preventDefault()
+		> `阻止事件冒泡`: event.stopPropagation()
+		> `阻止剩下的事件处理程序被执行。如果一个元素上绑定了三个事件，在其中一个事件上调用了这个方法，那其他 的两个事件将不会被执行`: event.stopImmediatePropagation()
 	- #### 如何实现一个事件的发布订阅
+		> 具体参见vue实现订阅发布.js
 
 - ### foreach&&forIn&&forOf
 	- #### foreach
@@ -1061,12 +1246,15 @@ Array.from(arguments) // es6
 
 				const keys = isArray ? undefined : Object.keys(target);
 
-				// for (const key in target) { cloneTarget[key] = clone(target[key], map) }
+				for (const key in target) {
+					cloneTarget[key] = clone(target[key], map)
+				}
+
 				forEach(keys || target, (value, key) => {
 						if (keys) {
 								key = value;
 						}
-						cloneTarget[key] = clone2(target[key], map);
+						cloneTarget[key] = clone(target[key], map);
 				});
 
 				return cloneTarget;
@@ -1204,32 +1392,32 @@ console.log(Math.max.call(null, arr1)); // NaN
 console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 
 	`call 和 apply 的实现其实差不多`
-	Function.prototype.call = function (context) {
-		// 如果 context 存在，使用 context，如果 context 不存在，使用 window；如果 context 是普通类型，转成对象。
-		context = context ? Object(context) : window;
-		context.fn = this;
-		let args = [];
-		for(let i = 1; i < arguments.length; i++) {
-			args.push('arguments['+i+']');
+	Function.prototype._call = function (context) {
+		if (typeof this !== 'function') {
+				throw new TypeError('not funciton')
 		}
-
-		let r = eval('context.fn('+args+')');
-		delete context.fn;
-		return r;
+		const args = [...arguments].slice(1);
+		context = context || window;
+		context.fn = this;
+		const res = context.fn(...args);
+		delete context.fn
+		return res;
 	}
-
-	Function.prototype.apply = function (context, args) {
+	Function.prototype._apply = function(context) {
 		// 如果 context 存在，使用 context，如果 context 不存在，使用 window；如果 context 是普通类型，转成对象。
-		context = context ? Object(context) : window;
-		context.fn = this;
-
-		if(!args){
-			return context.fn();
+		if (typeof this !== 'function') {
+				throw new TypeError('not funciton')
 		}
-
-		let r = eval('context.fn('+args+')');
+		context = context || window;
+		context.fn = this;
+		let res;
+		if(arguments[1]) {
+				res = context.fn(...arguments[1]);
+		} else {
+				res = context.fn();
+		}
 		delete context.fn;
-		return r;
+		return res;
 	}
 
 	`bind 的实现`
@@ -1244,7 +1432,7 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 				return that.apply(this instanceof fBound ? this : context, bindArgs.concat(args));
 			}
 
-			fn.prototype = this.prototype;
+			Fn.prototype = this.prototype;
 			fBound.prototype = new Fn();
 			return fBound;
 		}
@@ -1354,7 +1542,6 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 			// 3 4 6 8 7 5 2 1
 			`process.nextTick > promise.then > setTimeout > setImmediate`
 		```
-
 	- #### 概念和用法
 		> 三种状态 `Pending`、`Resolved`和`Rejected`
 		> `不可逆`只能从Pending->Resolved  Pending->Rejected 
@@ -1388,12 +1575,52 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 			```
 	- #### 实现
 		> 具体参见Promise实现.js
-
 	- #### async/await
   > async用于声明一个function是异步的，而await用于等待一个异步方法执行完成, 规定await只能出现在async函数中，async函数返回的是一个Promise对象
   [todo1](https://juejin.im/post/6844903917583597575#heading-5)
   [todo2](https://juejin.im/post/6844903976698118151#heading-4)
+	> 具体实现见await/async实现.js
 	- #### generator
+	> 实现简单的generator
+	```javascript
+		function* foo() {
+			yield 'result1'
+			yield 'result2'
+			yield 'result3'
+		}
+		g.next()  // {value: "result1", done: false}
+		g.next()  // {value: "result2", done: false}
+		g.next()  // {value: "result3", done: false}
+		g.next()  // {value: undefined, done: true}
+
+		`解析: 需要一个invoke包裹函数，一个context上下文记录，一个*gen解析块`
+		const context = {
+
+		}
+	```
+	> 实现简单的generator的co，也就是自执行，有点类似于async/await
+	```javascript
+		function runPromise(generator) {
+			return new Promise((resolve, reject) => {
+				const gen = generator()
+				function _next(value) {
+					try {
+						const res = gen.next(value)
+						if (res.done) {
+							return resolve(res.value)
+						}
+						Promise.resolve(res.value).then((res) => {
+							_next(res)
+						})
+					} catch (err) {
+						reject(err)
+					}
+				}
+				_next()
+			})
+		}
+	```
+		
   [todo3](https://www.liaoxuefeng.com/wiki/1022910821149312/1023024381818112)
 
 - ### 函数的节流和去抖
@@ -1433,7 +1660,8 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 	> 可以跨域：<img src=XXX> <link href=XXX> <script src=XXX>
 	- #### jsonP
 		> 使用script标签的src发送HTTP请求，服务器直接返回一段JS代码的函数调用，将服务器数据放在函数实参中，前端提前写好响应的函数准备回调，接收数据，实现跨域数据交互；
-	- #### CORS(Cross-origin resource sharing)
+	- #### CORS
+		> Cross-origin resource sharing
 		> 服务端设置 Access-Control-Allow-Origin 就可以开启 CORS。 该属性表示哪些域名可以访问资源，如果设置通配符则表示所有网站都可以访问资源
 		> 浏览器将CORS请求分成两类：`简单请求: GET HEAD POST && Content-Type: text/plain,multipart/form-data,application/x-www-form-urlencoded`和`非简单请求: 不是简单请求的都是`	
 		> `复杂请求`： 复杂请求的CORS请求，会在正式通信之前，增加一次HTTP查询请求OPTION"预检"请求
@@ -1488,6 +1716,7 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 					proxy_pass   http://api.map.baidu.com/location/ip; 
 			}	
 			
+
 - ### class的理解和使用
 	> class仅仅是对原型对象运用的语法糖 `typeof class === 'function'` 可见它不是新的数据类型，只是封装好的语法糖
 	- #### 基本用法
@@ -1517,7 +1746,7 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 			console.log(typeof Person);//function
 			console.log(Person===Person.prototype.constructor);//true
 		```
-- #### class继承
+	- #### class继承
 	> 继承是通过`extend`这个关键字实现的
 	> `super`
 	> 用来访问父类的构造器或者函数用的, super只能访问父类的方法和变量，`不能访问私有变量`
@@ -1582,33 +1811,33 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 		Worker.hello() // hello, i'm a static func
 		Tom.hello() // student.sayName is not a function
 	```
-- #### class的this指向问题
-	> 由于 class 内部是`严格模式`，所以 this 实际指向的是`undefined`
-	```javascript
-	class Logger {
-		printName(name = 'there') {
-			this.print(`Hello ${name}`);
-		}
+	- #### class的this指向问题
+		> 由于 class 内部是`严格模式`，所以 this 实际指向的是`undefined`
+		```javascript
+		class Logger {
+			printName(name = 'there') {
+				this.print(`Hello ${name}`);
+			}
 
-		print(text) {
-			console.log(text);
+			print(text) {
+				console.log(text);
+			}
 		}
-	}
-	const logger = new Logger();
-	logger.printName() // Hello there
-	const { printName } = logger;
-	printName(); // TypeError: Cannot read property 'print' of undefined
+		const logger = new Logger();
+		logger.printName() // Hello there
+		const { printName } = logger;
+		printName(); // TypeError: Cannot read property 'print' of undefined
 
-	`解决办法`
-  constructor() {
-    this.printName = this.printName.bind(this);
-  }
-	constructor() {
-    this.getThis = () => this; // 箭头函数内部的this总是指向定义时所在的对象
-  }
-- #### class实现
-	> class仅仅是对原型对象运用的语法糖 `typeof class === 'function'` 可见它不是新的数据类型，只是封装好的语法糖
-	> 具体参见class实现.js
+		`解决办法`
+		constructor() {
+			this.printName = this.printName.bind(this);
+		}
+		constructor() {
+			this.getThis = () => this; // 箭头函数内部的this总是指向定义时所在的对象
+		}
+	- #### class实现
+		> class仅仅是对原型对象运用的语法糖 `typeof class === 'function'` 可见它不是新的数据类型，只是封装好的语法糖
+		> 具体参见class实现.js
 
 - ### 箭头函数和普通函数
 	> - 箭头函数不会创建自己的this
@@ -1649,7 +1878,7 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 	obj.b();    // 'GLOBAL'
 
 ```
-- ### buffer&stream
+- ### buffer&&stream
 	- #### buffer
 		> 每当我们使用`Buffer.alloc(size)`请求一个Buffer内存时，Buffer会以`8KB`为界限来判断分配的是大对象还是小对象，小对象存入剩余内存池，不够再申请一个8KB的内存池；`大对象直接采用C++层面申请的内存`。因此，对于一个大尺寸对象，申请一个大内存比申请众多小内存池快很多。
 	- #### stream
@@ -1715,8 +1944,14 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 			}
 			return trueCurry(fn, ...arg, ...arg2)
 		}
+		// 不会有限制
+		function currying(fn) {
+			const args = Array.prototype.slice.call(arguments, 1);
+			return function() {
+				return fn.apply(null, args.concat(Array.prototype.slice.call(arguments)));
+			}
+		}
 
-		```
 	- #### 什么是高阶函数
 		> `一个函数就可以接收另一个函数作为参数`，这种函数就称之为高阶函数
 		> 例如Array.prototype.map, Array.prototype.filter和Array.prototype.reduce是JavaScript原生的高阶函数。
@@ -1791,9 +2026,23 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 		```
 
 
-- ### location.href
-	> window.location.href // 获取当前url
-
+- ### 小知识点
+	- ### location.href
+		> window.location.href // 获取当前url
+	- ### innerHTMLVSdocument.write
+		> document.write是直接将内容写入页面的内容流，会导致页面全部重绘
+		> innerHTML将内容写入某个DOM节点，不会导致页面全部重绘
+			> document.getElementById( 'some-id' ).innerHTML += '<p>here is some text</p>'
+		> 总结：you could use document.write() without any connected HTML, but if you already have HTML that you want to change, then document.innerHTML would be the obvious choice.
+	- ### 字符串容易记错的方法
+		> substring(startIndex, endIndex)
+		> 方法返回一个索引和另一个索引之间的字符串
+		> str.substring(1, 0) == str.substring(0, 1)
+		
+		> substr()
+		> 方法返回从指定位置开始的字符串中指定字符数的字符
+		>	str.substr(start, [length])
+		> 若start为负数,则将该值加上字符串长度后再进行计算（如果加上字符串的长度后还是负数，则从0开始截取）
 - ### es6-es10新特性
 ```javascript
 	`es7 幂运算符**，具有与Math.pow()一样的功能，代码如下`
@@ -1804,6 +2053,40 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 	for (let [key, value] of Object.entries(object1)) {
 		console.log(`${key}: ${value}`)
 	}
+```
+
+- ### AST
+> abstract syntax tree 抽象语法树
+> 之所以说语法是「抽象」的，是因为这里的语法并不会表示出真实语法中出现的每个细节。
+> 抽象语法树其实就是将一类标签转化成通用标识符，从而结构出的一个类似于树形结构的语法树。
+> 有属性 type start end id name啥的
+> 具体见babel转箭头函数.js
+> 利用AST实现预计算的babel插件
+```javascript
+// 预计算简单表达式的插件
+let code = `const result = 1000 * 60 * 60`;
+let babel = require('babel-core');
+let types= require('babel-types');
+let visitor = {
+  BinaryExpression(path) {
+    let node = path.node;
+    if (!isNaN(node.left.value) && ! isNaN(node.right.value)) {
+      let result = eval(node.left.value + node.operator + node.right.value);
+      result = types.numericLiteral(result);
+      path.replaceWith(result);
+      let parentPath = path.parentPath;
+      // 如果此表达式的parent也是一个表达式的话，需要递归计算
+      if (path.parentPath.node.type == 'BinaryExpression') {
+        visitor.BinaryExpression.call(null, path.parentPath)
+      }
+    }
+  }
+}
+let cal = babel.transform(code, {
+  plugins: [
+    {visitor}
+  ]
+});
 ```
 
 - ### importVSrequier
@@ -1850,8 +2133,93 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 	> `小数部分的位运算`：小数转换为二进制的方法：对小数点以后的数乘以2，有一个结果吧，取结果的整数部分（不是1就是0喽），然后再用小数部分再乘以2，再取结果的整数部分……以此类推，直到小数部分为0或者位数已经够了就OK了。
 		
 - ### express和koa中间件的使用不同之处
+	> `Express` 中间件链是基于`回调`的 `线性模型`, 较为庞大，内置了一整套中间件功能，好处是对于大部分应用场合你可以省掉自己选择和组合模块的时间
+	> express当有异步代码时，将会直接跳过继续执行，此时的 next 方法并未执行，需要等待当前队列中的事件全部执行完毕，所以此时我们输出的数据是线性的。当 next 方法直接执行时，本质上所有的代码都已经为同步，所以层层嵌套，最外层的肯定会在最后，输出了类似剥洋葱模型的结果。
+
+	> `Koa` 是基于`Promise`的`洋葱型模型` `Koa的模块化程度更高` 占用空间非常小
+	> Koa的实现主要依赖自身的koa-compose 相比较 Express 而言，Koa 的整体设计和代码实现显得更高级，更精炼 因为在Koa中，只有中间件
+
+	```javascript
+		`这里因为异步的next()其实没有立即执行，所以按照顺序输出`
+		// 第一个中间件start 第一个中间件end 第二个中间件start 第二个中间件end
+		let express = require('express');
+		let app = express();
+		app.use((req, res, next)=> {
+				console.log('第一个中间件start');
+				setTimeout(() => {
+						next();
+				}, 1000)
+				console.log('第一个中间件end');
+		});
+		app.use((req, res, next)=> {
+				console.log('第二个中间件start');
+				setTimeout(() => {
+						next();
+				}, 1000)
+				console.log('第二个中间件end');
+		});
+		app.listen(3000)
+
+		`这里的next()正常执行，所以输出的就好像和洋葱模型一样，但其实还是线性的`
+		let express = require('express');
+		let app = express();
+		app.use((req, res, next)=>{
+				console.log('第一个中间件start');
+				next()
+				console.log('第一个中间件end');
+		});
+		app.use((req, res, next)=>{
+				console.log('第二个中间件start');
+				next()
+				console.log('第二个中间件end');
+		});
+		app.listen(3000);
+		`等价于下面的回调嵌套, 现在这个输出就很明白了`
+		// 第一个中间件start 第二个中间件start 第二个中间件end 第一个中间件end
+		let express = require('express');
+		let app = express();
+
+		app.use((req, res, next)=>{
+				console.log('第一个中间件start');
+				((req, res, next)=>{
+						console.log('第二个中间件start');
+						(function handler(req, res, next) {
+								// do something
+						})()
+						console.log('第二个中间件end');
+				})()
+				console.log('第一个中间件end');
+		});
+
+		app.listen(3000);
+	```
+
+	- #### koa-compose中间件执行器简单实现
+	> 可以看到，一个递归调用，连续调用中间件，返回一个 Promise 链
+	> koa常用中间件： `koa-compose koa-router`
+	```javascript
+	// 简化版
+	function compose(middleware) {
+		return function(context, next) {
+			let index = -1
+			return dispatch(0)
+			function dispatch(i) {
+				index = i
+				const fn = middleware[i] || next
+				if (!fn) return Promise.resolve()
+				return Promise.resolve(fn(context, function next() {
+					return dispatch(i + 1)
+				}))
+			}
+		}
+	}  
+	```
 
 ## webpack
+- ### webpack基本描述
+	> webpack是一个静态模块处理器，当它处理应用程序时，它会递归地构建一个关系依赖图，其中包含应用程序需要的每个模块，然后把所有这些模块打包成一个或多个包。
+	> entry output loader plugin
+- ### 常用的plugin
 
 ## 浏览器
 -----------------------------------------------
@@ -1890,9 +2258,16 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 	- 发送HTTP请求
 	- 服务器处理请求并返回HTTP报文
 	- #### 浏览器解析渲染页面
+		> CSS 优先：引入顺序上，CSS 资源先于 JavaScript 资源。 `JavaScript 应尽量少影响 DOM 的构建。`
+		> 当解析器发现非阻塞资源，例如一张图片，浏览器会请求这些资源并且继续解析。当遇到一个CSS文件时，解析也可以继续进行，但是对于`script`标签（特别是没有 async 或者 defer 属性）会阻塞渲染并停止HTML的解析
+		> 等待获取CSS不会阻塞HTML的解析或者下载，但是它的确阻塞JavaScript，因为JavaScript经常用于查询元素的CSS属性。 当浏览器遇到一个 script 标记时，DOM 构建将暂停，直至脚本完成执行，然后继续构建DOM。每次去执行JavaScript脚本都会严重地阻塞DOM树的构建，如果JavaScript脚本还操作了CSSOM，而正好这个CSSOM还没有下载和构建，浏览器甚至会延迟脚本执行和构建DOM，直至完成其CSSOM的下载和构建。
+		> `总结` JS 会阻塞后续 DOM 解析以及其它资源(如 CSS，JS 或图片资源)的加载。 CSS 不会阻塞后续 DOM 结构的解析，不会阻塞其它资源(如图片)的加载，但是会阻塞 JS 文件的加载。
 		- 根据HTML文件解析出DOM Tree
 		- 根据CSS解析出 CSSOM Tree(CSS规则树)
 		- 将 DOM Tree 和 CSSOM Tree合并，构建Render tree(渲染树)
+		-	将 DOM 与 CSSOM 合并成一个渲染树。
+		-	根据渲染树来布局，以计算每个节点的几何信息。
+		-	将各个节点绘制到屏幕上
 		- reflow(回流)：根据Render tree进行节点信息计算（Layout）
 		- repaint(重绘)：根据计算好的信息绘制整个页面（Painting）
 	- #### (连接技术)TCP四次挥手
@@ -1972,7 +2347,66 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 	- 都使用组件化思想，流程基本一致
 	- 都是响应式，推崇单向数据流
 	- 都有成熟的社区，都支持服务端渲染
+
 - ### vue和react的diff算法
+	- #### vue的diff算法
+	> diff的过程就是调用名为patch的函数，比较新旧节点，一边比较一边给真实的DOM打补丁
+	> Vue Diff使用双向链表，边对比，边更新DOM。
+	> React主要使用diff队列保存需要更新哪些DOM，得到patch树，再统一操作批量更新DOM
+	> 采取diff算法比较新旧节点的时候，比较只会在同层级进行, 不会跨层级比较。
+	![diff比较节点](../images/diff比较节点.png)
+	> patchVnode做了什么？
+	- 1. 找到对应的真实dom，称为el
+	- 2. 判断Vnode和oldVnode是否指向同一个对象，如果是，那么直接return
+	- 3. 如果他们都有文本节点并且不相等，那么将el的文本节点设置为Vnode的文本节点。
+	- 4. 如果oldVnode有子节点而Vnode没有，则删除el的子节点
+	- 5. 如果oldVnode没有子节点而Vnode有，则将Vnode的子节点真实化之后添加到el
+	- 6. 如果两者都有子节点，则执行updateChildren函数比较子节点，这一步很重要
+	```javascript
+	function patch (oldVnode, vnode) {
+			// some code
+			if (sameVnode(oldVnode, vnode)) {
+				patchVnode(oldVnode, vnode)
+			} else {
+				const oEl = oldVnode.el // 当前oldVnode对应的真实元素节点
+				let parentEle = api.parentNode(oEl)  // 父元素
+				createEle(vnode)  // 根据Vnode生成新元素
+				if (parentEle !== null) {
+							api.insertBefore(parentEle, vnode.el, api.nextSibling(oEl)) // 将新元素添加进父元素
+							api.removeChild(parentEle, oldVnode.el)  // 移除以前的旧元素节点
+							oldVnode = null
+				}
+			}
+			// some code 
+			return vnode
+	}
+	patchVnode (oldVnode, vnode) {
+			const el = vnode.el = oldVnode.el
+			let i, oldCh = oldVnode.children, ch = vnode.children
+			if (oldVnode === vnode) return
+			if (oldVnode.text !== null && vnode.text !== null && oldVnode.text !== vnode.text) {
+					api.setTextContent(el, vnode.text)
+			}else {
+					updateEle(el, vnode, oldVnode)
+				if (oldCh && ch && oldCh !== ch) {
+							updateChildren(el, oldCh, ch)
+				}else if (ch){
+							createEle(vnode) //create el's children dom
+				}else if (oldCh){
+							api.removeChildren(el)
+				}
+			}
+	}
+
+	```
+
+	- #### react的diff算法
+	> React Diff 会帮助我们计算出 Virtual DOM 中真正发生变化的部分，并且只针对该部分进行实际的DOM操作，而不是对整个页面进行重新渲染
+	> 两棵树只对同一层级节点进行比较，只要该节点不存在了，那么该节点与其所有子节点会被完全删除,不在进行进一步比较。
+	> `tree diff的特点`: 两棵树只对同一层级节点进行比较，只要该节点不存在了，那么该节点与其所有子节点会被完全删除,不在进行进一步比较
+	> `component diff的特点`: 不同类型的组件，那么diff算法会把要改变的组件判断为dirty component,从而替换整个组件的所有节点, 就算结构再相似的组件，只要 React 判断是不同的组件，就不会判断是否为不同类型的组件，就不会比较其结构，而是删除组件以及其子组件，并创建新的组件以及其子节点。
+	> `element diff的特点`: 插入： 新的组件不在原来的集合中，而是全新的节点，则对集合进行插入操作。 删除：组件已经在集合中，但集合已经更新，此时节点就需要删除。 移动：组件已经存在于集合中，并且集合更新时，组件并没有发生更新，只是位置发生改变，例如：(A,B,C,D) → (A,D,B,C), 如果为传统diff则会在检测到旧集合中第二位为B，新集合第二位为D时删除B，插入D，并且后面的所有节点都要重新加载，而 React diff 则是通过向同一层的节点添加 唯一key 进行区分，并且移动。 
+
 - ### vue和React里面的key
 	> `经常遇到的问题`：不带key属性的情况下，在“娱乐新闻”下选中第二项然后切换到“社会新闻”，"社会新闻"里的第二项也会是被选中的状态，因为这里复用了组件，保留了之前的状态。要解决这个问题，可以为列表项带上新闻id作为唯一key，那么每次渲染列表时都会完全替换所有组件，使其拥有正确状态
 	> key的作用就是更新组件时判断两个节点是否相同。相同就复用，不相同就删除旧的创建新的。为了在diff算法执行时更快的找到对应的节点，提高diff速度
@@ -2077,7 +2511,7 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 
 ## Vue 
 -----------------------------------------------
-- ### 生命周期
+- ### Vue生命周期
 	> Vue实例需要经过创建、初始化数据、编译模板、挂载DOM、渲染、更新、渲染、卸载等一系列过程，这个过程就是Vue的生命周期
 	> 在Vue的整个生命周期中提供很多钩子函数在生命周期的不同时刻调用:
 		> - beforeCreate: 啥都没有 可以展示Loading
@@ -2346,6 +2780,20 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 	- #### SSR也可以帮助优化首屏加载
 	- #### ServiceWOrker缓存
 
+- ### 各种轮训
+	![各种轮训优缺点对比图](../images/各种轮训优缺点对比图.png)
+	- #### 短轮询Polling
+	> 实现思路: 浏览器端每隔几秒钟向服务器端发送http请求，服务端在收到请求后，不论是否有数据更新，都直接进行响应
+	> 缺点：非常的消耗资源，服务端响应完成就会关闭这个Tcp连接，下一次请求再次建立Tcp连接。
+	- #### 长轮询Long-Polling
+	> 实现思路：客户端发送请求后服务器端不会立即返回数据，服务器端会阻塞请求连接不会立即断开，直到服务器端有数据更新或者是连接超时才返回，客户端才再次发出请求新建连接、如此反复从而获取最新数据
+	> 优点：长轮询和短轮询比起来，明显减少了很多不必要的http请求次数，相比之下节约了资源。
+	> 缺点：连接挂起也会导致资源的浪费。
+
+- ### websocket
+	> 属于传输层的协议，建立在 TCP 协议之上，服务器端的实现比较容易。没有同源限制，客户端可以与任意服务器通信。
+	> 具体见websocket使用实例.js
+
 - ### vue数据劫持
 	> 指的是在访问或者修改对象的某个属性时，通过一段代码拦截这个行为，进行额外的操作或者修改返回结果
 	> `Object.defineProperty`和`Proxy`来实现
@@ -2416,8 +2864,102 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 
 ## React
 -----------------------------------------------
-- ### 生命周期
+- ### Reat生命周期
+	> `componentWillMount()`: 组件即将被渲染到页面之前触发，此时可以进行开启定时器、向服务器发送请求等操作 
+	> `render()`: 组件渲染
+	> `componentDidMount()` : 组件已经被渲染到页面中后触发：此时页面中有了真正的DOM的元素，可以进行DOM相关的操作
+	> `componentWillReceiveProps()`: 组件接收到属性时触发
+	> `shouldComponentUpdate()`: 当组件接收到新属性，或者组件的状态发生改变时触发。组件首次渲染时并不会触发, 
+	> `一般我们通过shouldComponentUpdate函数来优化性能：`一个React项目需要更新一个小组件时，很可能需要父组件更新自己的状态。而一个父组件的重新更新会造成它旗下所有的子组件重新执行render()方法，形成新的虚拟DOM，再用diff算法对新旧虚拟DOM进行结构和属性的比较，决定组件是否需要重新渲染
+	> `componentWillUpdate()`: 组件即将被更新时触发
+	> `componentDidUpdate()`: 组件被更新完成后触发。页面中产生了新的DOM的元素，可以进行DOM操作
+	> `componentWillUnmount()`: 组件被销毁时触发。这里我们可以进行一些清理操作，例如清理定时器，取消Redux的订阅事件等等。
+
 - ### class和function
+	> Function 组件捕获 render 后的值。
+	> function 是按值传入的props，但是class是用this.props，这个this是实时变化的
+	> 经常出现的问题： 如果你关注一个人，然后切换到另外一个人的条目，我的组件不应该困惑于我要关注的是谁。class 的实现明显是个错误
+	> 但是如果就想获取未来转态怎么办，这个时候class就是对的，function就是错的，咋整
+	> 在 function 组件中，你也可以有一个共享于所有组件 renders 的可变值，它叫做 `“ref”`：
+	```javascript
+	`解决办法1, 在click的时候做一个快照，记录点击按钮的时候uesr的值，然后作为参数传入showMessage`
+	class ProfilePage extends React.Component {
+  showMessage = (user) => {
+    alert('Followed ' + user);
+  };
+  handleClick = () => {
+    const {user} = this.props;
+    setTimeout(() => this.showMessage(user), 3000);
+  };
+  render() {
+    return <button onClick={this.handleClick}>Follow</button>;
+		}
+	}
+
+	`解决办法2, 在click的时候做一个快照，记录点击按钮的时候uesr的值，然后作为参数传入showMessage`
+	class ProfilePage extends React.Component {
+		render() {
+			// 捕获 props！
+			const props = this.props;
+
+			// 注意： 我们在 *render 里面*
+			// 这不是 class 方法。
+			const showMessage = () => {
+				alert('Followed ' + props.user);
+			};
+
+			const handleClick = () => {
+				setTimeout(showMessage, 3000);
+			};
+
+			return <button onClick={handleClick}>Follow</button>;
+		}
+	}
+
+
+	`现在，我们想让这个function变成实时的`
+	function MessageThread() {
+		const [message, setMessage] = useState('');
+
+		const showMessage = () => {
+			alert('You said: ' + message);
+		};
+
+		const handleSendClick = () => {
+			setTimeout(showMessage, 3000);
+		};
+
+		const handleMessageChange = (e) => {
+			setMessage(e.target.value);
+		};
+
+		return (
+			<>
+				<input value={message} onChange={handleMessageChange} />
+				<button onClick={handleSendClick}>Send</button>
+			</>
+		);
+	}
+
+	`这个时候就用到了ref  它是进入可变命令世界的逃脱仓。你可能熟悉 “DOM refs”，但这个原理要通俗的多，它只是一个你可以往里面放东西的箱子。`
+	function MessageThread() {
+		const [message, setMessage] = useState('');
+		const latestMessage = useRef('');
+
+		const showMessage = () => {
+			alert('You said: ' + latestMessage.current);
+		};
+
+		const handleSendClick = () => {
+			setTimeout(showMessage, 3000);
+		};
+
+		const handleMessageChange = (e) => {
+			setMessage(e.target.value);
+			latestMessage.current = e.target.value;
+		};
+
+	```
 	- #### 优缺点
 	- #### 使用场景
 - ### mobx和redux
@@ -2435,12 +2977,148 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 
 ## 算法
 -----------------------------------------------
-- [时间复杂度和空间复杂度]
-- [异步求和]
-- [大位数加减乘除]
+- ### 时间复杂度和空间复杂度
+	> 复杂度也叫渐进复杂度，包括时间复杂度和空间复杂度，一个表示执行的快慢，一个表示内存的消耗，用来分析算法执行效率与数据规模之间的增长关系，可以粗略的表示，越高阶复杂度的算法，执行效率越低。
+	- #### 时间复杂度
+	```javascript
+	`T(n) = O(1)`
+	`代码永远只会运行100次`
+	function total() {
+      var sum = 0;
+      for(var i=0;i<100;i++) {
+        sum += i;
+      }
+    }
+	` T(n) = O(n)`
+	function total(n) { // 1
+				var sum = 0; // 2
+				for (var i = 0; i < n; i++) { // 3
+					sum += i; // 4
+				} //5 
+			} //6
+			
+	`T(n) = O(n2)n的平方`
+	function total(n) { // 1
+			var sum = 0; // 2
+			for (var i = 0; i < n; i++) { // 3 
+				for (var j = 0; j < n; j++) { // 4
+					sum = sum + i + j; // 5
+				}
+			}
+		}
+
+	`T(n) = O(n2)n的平方`
+	function total(n) { 
+      // 第一个 for 循环
+      var sum1 = 0; 
+      for (var i = 0; i < n; i++) {
+        for (var j = 0; j < n; j++) {
+          sum1 = sum1 + i + j; 
+        }
+      }
+      // 第二个 for 循环
+      var sum2 = 0;
+      for(var i=0;i<1000;i++) {
+        sum2 = sum2 + i;
+      }
+      // 第三个 for 循环
+      var sum3 = 0;
+      for (var i = 0; i < n; i++) {
+        sum3 = sum3 + i;
+      }
+		}
+		
+	`T(n) = T1(n) * T2(n) = O(n*n)=O(n2)n的平方`
+  function f(i) {
+      var sum = 0;
+      for (var j = 0; j < i; j++) {
+        sum += j;
+      }
+      return sum;
+    }
+    function total(n) {
+      var res = 0;
+      for (var i = 0; i < n; i++) {
+        res = res + f(i); // 调用 f 函数
+      }
+    }
+
+	`T(n) = O(log2n)`
+	`变量 i 从 1 开始取值，每循环一次乘以 2，当大于 n 时，循环结束`
+	`2x = n 可以得出 x = log2n`
+	`这里我们忽略对数中的底数 O(log2n), O(log3n)统一变成 O(logn)`
+	function total1(n) {
+				var sum = 0;
+				var i = 1;
+				while (i <= n) {
+					sum += i;
+					i = i * 2;
+				}
+			}
+			function total2(n) {
+				var sum = 0;
+				for (var i = 1; i <= n; i = i * 2) {
+					sum += i;
+				}
+			}
+
+	`无法评估 m 和 n 谁的量级比较大 所以都不能忽略`
+	`T(n) = O(m+n)`
+	function total(m,n) {
+      var sum1 = 0;
+      for (var i = 0; i < n; i++) {
+        sum1 += i;
+      }
+      var sum2 = 0;
+      for (var i = 0; i < m; i++) {
+        sum2 += i;
+      }
+      return sum1 + sum2;
+    }
+
+	`无法评估 m 和 n 谁的量级比较大 所以都不能忽略`
+	`T(n) = O(m*n)`
+	function total(m,n) {
+      var sum1 = 0;
+      for (var i = 0; i < n; i++) {
+        sum1 += i;
+      }
+      var sum2 = 0;
+      for (var i = 0; i < m; i++) {
+        sum2 += i;
+      }
+      return sum1 * sum2;
+    }
+	```
+	> `T(n) = O(f(n))`
+	> 在这个公式中，T(n) 表示代码的执行时间；n 表示数据规模的大小；f(n) 表示每行代码执行的次数总和；O 表示代码的执行时间 T(n) 与 f(n) 表达式成正比。
+	> 如何分析：
+		> - 只关注循环执行次数最多的一段代码
+		> - 加法法则：总复杂度等于量级最大的那段代码的复杂度。
+		> - 乘法法则：嵌套代码的复杂度等于嵌套内外代码复杂度的乘积
+
+- #### 空间复杂度
+	> 表示算法的存储空间和数据规模之间的关系。
+	> 也就是 n 和存储空间大小的关系
+	> 常见的空间复杂度只有 O(1)、O(n)、O(n2)。其他的话很少会用到。
+	```javascript
+		`O(n)`
+		function initArr(n) {
+      var arr = [];
+      for (var i = 0; i < n; i++) {
+        arr[i] = i;
+      }
+    }
+	```
+- ### 异步求和
+
+- ### 大位数加减乘除
+	> js的number类型有个最大安全值，即2的53次方(9007199254740992)
+	> 具体见大位数加减乘除
 - [链表]
 - [排序]
 - [最长公用首字符串](#最长公用首字符串)
+
 - ### 最长公用首字符串
 	```javascript
 	`解析：` // 多个字符串的最长公共前缀为两两字符串的最长公共前缀的最长公共前缀，我们可以归并比较两最长公共前缀字符串的最长公共前缀，知道最后归并比较成一个，则为字符串数组的最长公共前缀：LCP(S1, S2, ..., Sn) = LCP(LCP(S1, Sk), LCP(Sk+1, Sn))
@@ -2474,6 +3152,611 @@ console.log(Math.max.apply(null, arr1)); //  19 直接可以用arr1传递进去
 			return str1.substring(0, j)
 	}
 	```
+- ### 获取对象指定path的值
+```javascript
+	const get = (object = {}, path = '', defaultValue = '') => {
+		if (!path) {
+			return defaultValue
+		}
+		const travel = reg => String.prototype.split.call(path, reg)
+			.filter(Boolean)
+			.reduce((target, key) =>
+				(target !== null && target !== undefined ? target[key] : target), object)
+		return travel(/[/,[\].]+?/) || defaultValue
+	}
+```
 
+- ### 数组相关
+- #### 数组打平
+```javascript
 
-TODO: 把各种生命周期都补上，看算法, 看基本实现，总结我的项目的经验
+function flat(arr){
+	if(Object.prototype.toString.call(arr) != "[object Array]"){return false};
+	let res=[];
+    arr.map(item=>{
+        if(item instanceof Array){
+            res.push(...flat(item));
+        }else{
+            res.push(item)
+        }
+    });
+    return res;
+};	
+var arr = [1,2,[3,4,5,[6,7,8],9],10,[11,12]];
+flat(arr);
+// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+function _flat(arr, depth) {
+  if(!Array.isArray(arr) || depth <= 0) {
+    return arr;
+  }
+  return arr.reduce((prev, cur) => {
+    if (Array.isArray(cur)) {
+      return prev.concat(_flat(cur, depth - 1))
+    } else {
+      return prev.concat(cur);
+    }
+  }, []);
+}
+
+var arr = [1,2,[3,4,5,[6,7,8],9],10,[11,12]];
+var arr1 = arr.toString().split(',').map((val)=>{
+	return parseInt(val)
+});
+[1,2,[3,[4]]].flat(2)
+// 测试例子
+_flat([1,2,3,[4,5,[6,7]]], 1); // => [1, 2, 3, 4, 5, [6, 7]]
+_flat([1,2,3,[4,5,[6,7]]], 2); // => [1, 2, 3, 4, 5, 6, 7]
+
+```
+- #### 数组去重
+```javascript
+	const uniq = (arr = [], ieratee) => {
+		if (!arr.length) {
+			return []
+		}
+		if (!ieratee) {
+			return [...new Set(arr)]
+		}
+		const result = []
+		const observe = []
+		for (let i = 0; i < arr.length; i++) {
+			const computed = typeof ieratee === 'function' ? ieratee(arr[i]) : arr[i][ieratee]
+			if (!observe.includes(computed) || !computed) {
+				observe.push(computed)
+				result.push(arr[i])
+			}
+		}
+		return result.length ? result : arr
+	}
+	// 方法一
+function uniq1 (arr) {
+  return [...new Set(arr)];
+}
+// 方法二
+function uniq2 (arr) {
+  return Array.from(new Set(arr));
+}
+// 方法三
+function uniq3 (arr) {
+  return arr.reduce((prev, cur) => {
+    if (!prev.includes(cur)) {
+        prev.push(cur);
+    }
+    return prev;
+  }, [])
+}
+// 方法四
+function uniq4 (arr) {
+  const res = [];
+  const map = {};
+  arr.forEach(item => {
+    if(!map[item]) {
+      res.push(item);
+      map[item] = true;
+    }
+  })
+  return res;
+}
+
+```
+
+- ### 排序相关
+> 具体见js排序.js
+
+- ### 链表
+- #### 反转链表
+```javascript
+  reverseList(){
+		if(this.head == null) return null;
+		let cur = this.head;
+		let prev = null;
+		while( cur!==null ){
+			let nextNode = cur.next
+			cur.next = prev
+			prev = cur
+			cur = nextNode
+		}
+	this.head = prev
+	}
+
+	var reverseList = function (head) {
+  let pre = null
+  while (head) {
+    next = head.next
+    head.next = pre
+    pre = head
+    head = next
+  }
+  return pre
+}
+```
+- #### 判断链表是否有循环
+```javascript
+ hasCircle() {
+        let fast = this.head;
+        let slow = this.head;
+        while (fast !== null && fast.next !== null) {
+            fast = fast.next.next
+            slow = slow.next
+            if (slow === fast) return true
+        }
+        return false
+    }
+```
+- #### 整合两个链表
+```javascript
+   function merge(list1, list2) {
+        if (list1 == null) return list2;
+        else if (list2 == null) return list1;
+        let mergehead = null;
+        if (list1.val <= list2.val) {
+          mergehead = list1;
+          mergehead.next = merge(list1.next, list2);
+        } else {
+          mergehead = list2;
+          mergehead.next = this.merge(list1, list2.next);
+        }
+        return mergehead;
+      }
+```
+- #### 链表排序
+```javascript
+// 创建节点
+class Node {
+    constructor(value) {
+        this.val = value;
+        this.next = null;
+    }
+}
+// 创建链表
+class NodeList {
+    constructor(arr) {
+        let head = new Node(arr.shift());
+        let next = head;
+        arr.forEach(item => {
+            next.next = new Node(item);
+            next = next.next;
+        })
+        return head;
+    }
+}
+// 交换两个链表的值
+function swap(p,q) {
+     let val = p.val;
+     p.val = q.val;
+     q.val = val;
+}
+// 找到基准值
+function partion(begin,end) {
+    let val = begin.val;
+    let p = begin;
+    let q = begin.next;
+    while(q !== end) {
+        if(q.val < val) {
+            p = p.next;
+            swap(p, q) // 交换小的值
+        }
+        q = q.next; // 指针后移
+    }
+    swap(p, begin);// 交换基准值
+    return p;
+}
+// 利用快排递归
+function sort(begin,end = null) {
+    if(begin !== end) {
+        let part = partion(begin,end);
+        // 两路快排
+        sort(begin,part);
+        sort(part.next,end);
+    }
+    return begin
+}
+
+```
+- #### 删除排序链表中的重复元素
+```javascript
+var deleteDuplicates = function(head) {
+	    var l = head;
+	    if(l==null) return null
+	    while(l.next){
+	        if(l.val == l.next.val){
+	            l.next = l.next.next;
+	        }else{
+	            l = l.next;
+	        }
+	    }
+	    return head;
+	};
+
+```
+
+- ### 二叉树
+> `二叉排序树`: 如果二叉排序树是平衡的，则n个节点的二叉排序树的高度为,其查找效率为log 2的n+1次方，近似于折半查找。如果二叉排序树完全不平衡，则其深度可达到n，查找效率为O(n)，退化为顺序查找。一般的，二叉排序树的查找性能在O(log 2的n+1次方)到O(n)之间
+
+- #### JS实现一个二叉查找树
+```javascript
+// 一个节点
+function Node(data,left,right) {
+    this.left = left;
+    this.right = right;
+    this.data = data;
+    this.show = () => {return this.data}
+}
+// 二叉查找树
+function BST() {
+		this.root = null //初始化,root为null
+		this.insert = insert
+}
+function insert(data) {
+    var node = new Node(data,null,null);
+    if(this.root === null) {
+        this.root = node
+    } else {
+        var current = this.root;
+        var parent;
+        while(true) {
+            parent = current;
+            if(data < current.data) {
+                current = current.left; //到左子树
+                if(current === null) {  //如果左子树为空，说明可以将node插入在这里
+                    parent.left = node;
+                    break;  //跳出while循环
+                }
+            } else {
+                current = current.right;
+                if(current === null) {
+                    parent.right = node;
+                    break;
+                }
+            }
+        }
+    }
+}
+var bst = new BST()；
+bst.insert(10);
+bst.insert(8);
+bst.insert(2);
+bst.insert(7);
+bst.insert(5);
+```
+
+- #### 二叉树的最大深度
+```javascript
+var maxDepth = function(root) {
+	    if(!root) return 0;
+	    var left_depth = maxDepth(root.left);
+	    var right_depth = maxDepth(root.right);
+	    return Math.max(left_depth, right_depth)+1;
+	};
+
+```
+- #### 判断两个二叉树是否相同
+```javascript
+var isSameTree = function(p, q) {
+	    if (p===null && q===null) return true;
+	    if (p===null || q===null) return false;
+	    if (p.val != q.val) return false;
+	    return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+	};
+
+```
+- #### 判断一个二叉树是否是镜像的
+```javascript
+var isSymmetric = function(root) {
+	    if (!root) return true;
+	    var leftAndRight = function(left, right){
+	        if (!left && !right) return true;
+	        if (!left || !right) return false;
+	        if (left.val != right.val) return false;
+	        return leftAndRight(left.left, right.right) && leftAndRight(left.right, right.left);
+	    }
+	    return leftAndRight(root.left, root.right);
+	};
+
+```
+- #### 层次遍历
+```javascript
+	var levelOrderBottom = function(root) {
+	    var queue = [];
+	    var result = [];
+	    if(root) queue.push(root);
+	    while(queue.length){
+	        var arr = [];
+	        var len = queue.length
+	        for(var i=0; i<len; i++){
+	            var curNode = queue.shift();
+	            arr.push(curNode.val);
+	            if(curNode.left) queue.push(curNode.left);
+	            if(curNode.right) queue.push(curNode.right);
+	        }
+	        result.unshift(arr);
+	    }
+	    return result;
+	};
+
+```
+
+- ### 实现红绿灯
+```javascript
+  function delay(timer) {
+      return () => (
+           new Promise(resolve => {
+              setTimeout(resolve, timer);
+          })
+      )
+  }
+ const red = delay(10000);
+ const green = delay(5000);
+ const yellow = delay(2000);
+ const traffic = document.getElementById('traffic');
+ (function resStart(){
+    traffic.innerText = '红';
+     red().then(()=> {
+        traffic.innerText = '绿';
+        return green();
+     })
+     .then(()=> {
+        traffic.innerText = '黄';
+        return yellow();
+     })
+     .then(()=> {
+        return resStart();
+     })
+ })()
+
+```
+
+- ### URL参数字典实现
+```javascript
+function getURLParams (href = window.location.href) {
+  const result = {};
+  let param = null;
+  const reg = /[?&](.*?)=([^&#]*)/g;
+  param = reg.exec(href);
+  while (param) {
+    try {
+      result[param[1]] = decodeURIComponent(param[2]);
+    } catch (e) {
+      try {
+        result[param[1]] = unescape(param[2]);
+      } catch (escapeErr) {
+        result[param[1]] = param[2];
+      }
+    }
+    param = reg.exec(href);
+  }
+  return result;
+}
+getURLParams('https://www.xx.cn/api?keyword=&level1=&local_batch_id=&elective=&local_province_id=33');
+// { keyword: "", level1: "", local_batch_id: "", elective: "", local_province_id: "33" }
+getURLParams('https://www.xx.cn/api?keyword=&level1=&local_batch_id=&elective=800&local_province_id=33');
+// { keyword: "", level1: "", local_batch_id: "", elective: "800", local_province_id: "33" }
+getURLParams('https://www.xx.cn/api?keyword=&level1=&local_batch_id=&elective=800,700&local_province_id=33');
+// { keyword: "", level1: "", local_batch_id: "", elective: "800,700", local_province_id: "33" }
+
+```
+
+- ### 实现sleep
+```javascript
+// 方法一 - promise
+function sleep(time) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, time)
+  })
+}
+// 测试例子
+sleep(1000).then(() => {
+  console.log(1);
+})
+// 方法二 - Generator
+function * sleep(time) {
+  yield new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  })
+}
+// 测试例子
+sleep(1000).next().value.then(() => {
+  console.log(2);
+});
+// 方法三 - async/await
+function sleep(time) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, time)
+  })
+}
+async function sleepDoSomething(time) {
+  let res = await sleep(time);
+  console.log(3);
+  return res;
+}
+// 测试例子
+sleepDoSomething(1000);
+
+```
+- ### 将一个同步callback包装成promise形式
+```javascript
+function promisify(original) {
+    return function (...args) {
+        return new Promise((resolve, reject) => {
+            args.push(function callback(err, ...values) {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(...values)
+            });
+            original.call(this, ...args);
+        });
+    };
+}
+
+```
+
+### 二叉树的最小深度
+```javascript
+var minDepth = function(root) {
+	    if (!root) return 0;
+	    if (!root.left&&!root.right) return 1;
+	    if (!root.left) return minDepth(root.right)+1;
+	    if (!root.right) return minDepth(root.left)+1;
+	    return Math.min(minDepth(root.left), minDepth(root.right))+1;
+	};
+
+```
+ 
+### 二进制求和
+```javascript
+	var addBinary = function(a, b) {
+	    var res = [];
+	    var num = 0;
+	    var addOne = 0;//是否进位
+	    //字符串对其
+	    while(a.length < b.length){
+	        a = 0 + a;
+	    }
+	    while(b.length < a.length){
+	        b = 0 + b;
+	    }
+	    for (var i=a.length-1; i>=0; i--){
+	        num = parseInt(a[i])+parseInt(b[i])+addOne;
+	        if(num>=2){
+	            res[i] = num-2;
+	            addOne = 1;
+	        }else{
+	            res[i] = num;
+	            addOne = 0;
+	        }
+	    }
+	    if(addOne>0){
+	        res.unshift(1);
+	    }
+	    return res.join('');
+	};
+c
+```
+- ### 回文字符串
+```javascript
+var isPalindrome = function(s) {
+	    var str1 = s.toUpperCase().replace(/\W/g,'');
+	    var str2 = str1.split('').reverse().join('');
+	    return str1==str2;
+	};
+```
+
+- ### 是否是回文字符串
+```javascript
+var isPalindrome = function(x) {
+    	var num = x.toString();
+    	return x == num.split('').reverse().join('');
+	};  
+
+	//方法2 找到中间位置，然后两边对比	
+	var isPalindrome = function(x) {
+	    var str = x.toString();
+	    var len = str.length;
+	    var halfLen = (len-1)/2;
+	    for (var i=0; i<halfLen; i++){
+	        if(str.charAt(i)!==str.charAt(len-1-i)){
+	            return false;
+	        }
+	    }
+	    return true;
+	}; 
+
+```
+- ### 反转有符号整数
+```javascript
+var reverse = function(x) {
+	    var num = x.toString().split('').reverse();
+	    var res = parseInt(num.join(''));
+	    if(res>2**31) return 0;
+	    return x>0?res:-res;
+	};
+```
+
+- ### 合并两个有序数组
+```javascript
+var merge = function(nums1, m, nums2, n) {
+	    for (let i=0; i<n; i++){
+	        nums1[m+i] = nums2[i]
+	    }
+	    nums1.sort(function(a, b){
+	        return a-b;
+	    })
+	};
+
+var merge = function(nums1, m, nums2, n) {
+	while(n > 0) {
+		if(nums1[m - 1] >= nums2[n-1]) {
+				nums1[n + m - 1] = nums1[--m]
+		} else {
+				nums1[n + m - 1] = nums2[--n]
+		}
+	}
+};
+```
+
+- ### 斐波那切数列
+```javascript
+function cStairs(n) {
+	if(n === 1 || n === 2) {
+			return n;
+	}
+	return cStairs(n-1) + cStairs(n-2)
+}
+function fibonacci(n, n1, n2) {
+	if(n <= 1) {
+			return n2
+	}
+	return fibonacci(n - 1, n2, n1 + n2)
+}
+
+```
+
+- ### 二分法查找
+```javascript
+function binaryFind(arr, target) {
+    var low = 0,
+        high = arr.length - 1,
+        mid;
+    while (low <= high) {
+        mid = Math.floor((low + high) / 2);
+        if (target === arr[mid]) {
+            return `找到了${target},在第${mid + 1}个`
+        }
+        if (target > arr[mid]) {
+            low = mid + 1;
+        } else if (target < arr[mid]) {
+            high = mid - 1;
+        }
+    }
+    return -1
+}
+
+```
